@@ -1,65 +1,106 @@
-/** @jsx jsx */
-import { jsx } from "theme-ui"
-import { useStaticQuery, graphql } from "gatsby"
+import React from "react"
+import { Link } from "gatsby"
 
-import Header from "./header"
-import Logo from "./logo"
-import Navigation from "./navigation"
-
-import "../assets/scss/style.scss"
-import Footer from "./footer"
-import Theme from "../components/theme"
-import Search from "../components/search"
-
-const query = graphql`
-  query LayoutQuery {
-    site {
-      siteMetadata {
-        siteTitle: title
-      }
-    }
-    siteSearchIndex {
-      index
-    }
-  }
-`
-
-const Layout = ({ children, className, props }) => {
-  const { site, siteSearchIndex } = useStaticQuery(query)
-  const { siteTitle } = site.siteMetadata
-
+const Layout = props => {
+  const { title, children } = props
+  const [toggleNav, setToggleNav] = React.useState(false)
   return (
-    <div className="primary-container">
-      <Header>
-        <Logo title={siteTitle} />
-        <div sx={layoutStyle.nav}>
-          <div sx={{ display: ["flex", "flex", "flex", "none"] }}>
-            <Search searchIndex={siteSearchIndex.index} />
+    <div className={`site-wrapper ${toggleNav ? `site-head-open` : ``}`}>
+      <header className="site-head">
+        <div id="menu" className="site-head-container">
+          <a
+            className="nav-burger"
+            href={`#menu`}
+            onClick={() => setToggleNav(!toggleNav)}
+          >
+            <div
+              className="hamburger hamburger--collapse"
+              aria-label="Menu"
+              role="button"
+              aria-controls="navigation"
+            >
+              <div className="hamburger-box">
+                <div className="hamburger-inner" />
+              </div> <div className="hamburger-text-menu-text hidden">Menu</div>
+            </div>
+          </a>
+          <nav id="swup" className="site-head-left">
+            <ul className="nav" role="menu">
+              {/* <li className="nav-home nav-current" role="menuitem">
+                <Link to={`/`}>Home</Link>
+              </li> */}
+              <li className="nav-about" role="menuitem">
+                <Link to={`/about`}>About</Link>
+              </li>
+              <li className="nav-elements" role="menuitem">
+                <Link to={`/elements`}>Elements</Link>
+              </li>
+              <li className="nav-tags" role="menuitem">
+                <Link to={`/tags`}>Tags</Link>
+              </li>
+            </ul>
+          </nav>
+          <div className="site-head-center">
+            <Link className="site-head-logo" to={`/`}>
+              {title}
+            </Link>
           </div>
-          <Navigation />
+          <div className="site-head-right">
+            <div className="social-links">
+              <a
+                href="https://www.facebook.com"
+                title="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Facebook
+              </a>
+              <a
+                href="https://twitter.com"
+                title="Twitter"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Twitter
+              </a>
+              <Link
+                to={`/rss.xml`}
+                title="RSS"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                RSS
+              </Link>
+              <a
+                href="https://github.com/jooplaan/gatsby-london-night-and-day"
+                title="GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
         </div>
-        <div sx={layoutStyle.appearance}>
-          <Search searchIndex={siteSearchIndex.index} />
-          <Theme />
+      </header>
+      <main id="site-main" className="site-main">
+        <div id="swup" className="transition-fade">
+          {children}
         </div>
-      </Header>
-      <main className={"container " + className}>{children}</main>
-      <Footer />
+      </main>
+      <footer className="site-foot">
+        &copy; {new Date().getFullYear()} <Link to={`/`}>{title}</Link> &mdash;
+        Built with{" "}
+        <a
+          href="https://gatsbyjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Gatsby
+        </a>
+      </footer>
     </div>
   )
 }
 
 export default Layout
-
-const layoutStyle = {
-  appearance: {
-    display: ["none", "none", "none", "flex"],
-    alignItems: "center",
-    gap: 4,
-  },
-  nav: {
-    display: "flex",
-    alignItems: "center",
-    gap: 4,
-  },
-}
