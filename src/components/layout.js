@@ -7,7 +7,7 @@ import Logo from "./logo"
 import Navigation from "./navigation"
 
 import "../assets/scss/style.scss"
-import Footer from "./footer"
+// import Footer from "./footer"
 import Theme from "../components/theme"
 import Search from "../components/search"
 
@@ -44,7 +44,7 @@ const Layout = ({ children, className, props }) => {
         </div>
       </Header>
       <main className={"container " + className}>{children}</main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
