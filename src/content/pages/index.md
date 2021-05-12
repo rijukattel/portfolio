@@ -8,5 +8,4 @@ cta:
   ctaText: Know more
   ctaLink: /about
 ---
-
-He is a award winning gaming graphic designer, based in sunny side of California. Working as Principal designer at Bethesda
+A "cinephilic", "hodophilic", music-loving, and an enthusiastic idiot who happens to be a Computer Engineer.
