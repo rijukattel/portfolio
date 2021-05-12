@@ -1,90 +1,88 @@
-const path = require(`path`)
-const _ = require("lodash");
+const path = require("path")
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
-  const tagPage = path.resolve(`./src/templates/tag-page.js`)
-  
-  return graphql(
-    `
-      {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-                tags
-              }
+  const blogList = path.resolve(`./src/templates/blog-list.js`)
+
+  const result = await graphql(`
+    {
+      allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+        edges {
+          node {
+            id
+            frontmatter {
+              slug
+              template
+              title
             }
           }
         }
       }
-    `
-  ).then(result => {
-    if (result.errors) {
-      throw result.errors
     }
+  `)
 
-    // Create blog posts pages.
-    const posts = result.data.allMarkdownRemark.edges
-    const tagSet = new Set();
+  // Handle errors
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
 
-    posts.forEach((post, index) => {
-      const previous = index === posts.length - 1 ? null : posts[index + 1].node
-      const next = index === 0 ? null : posts[index - 1].node
+  // Create markdown pages
+  const posts = result.data.allMarkdownRemark.edges
+  let blogPostsCount = 0
 
-      // Get tags for tags pages.
-      if (post.node.frontmatter.tags) {
-        post.node.frontmatter.tags.forEach(tag => {
-          tagSet.add(tag);
-        });
-      }
+  posts.forEach((post, index) => {
+    const id = post.node.id
+    const previous = index === posts.length - 1 ? null : posts[index + 1].node
+    const next = index === 0 ? null : posts[index - 1].node
 
-      createPage({
-        path: post.node.fields.slug,
-        component: blogPost,
-        context: {
-          slug: post.node.fields.slug,
-          previous,
-          next,
-        },
-      })
+    createPage({
+      path: post.node.frontmatter.slug,
+      component: path.resolve(
+        `src/templates/${String(post.node.frontmatter.template)}.js`
+      ),
+      // additional data can be passed via context
+      context: {
+        id,
+        previous,
+        next,
+      },
     })
 
-    // Create tags pages.
-    tagSet.forEach(tag => {
-      createPage({
-        path: `/tags/${_.kebabCase(tag)}/`,
-        component: tagPage,
-        context: {
-          tag
-        }
-      });
-    });
+    // Count blog posts.
+    if (post.node.frontmatter.template === "blog-post") {
+      blogPostsCount++
+    }
+  })
 
+  // Create blog-list pages
+  const postsPerPage = 9
+  const numPages = Math.ceil(blogPostsCount / postsPerPage)
 
-    return null
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+      component: blogList,
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+      },
+    })
   })
 }
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
+exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
-
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+    const slug = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
-      name: `slug`,
       node,
-      value,
+      name: `slug`,
+      value: slug,
     })
   }
 }

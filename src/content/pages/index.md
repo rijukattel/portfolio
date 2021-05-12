@@ -1,11 +1,11 @@
 ---
 template: index-page
 slug: /
-title: Aaditya Karmacharya
-tagline: Always active..
-featuredImage: /assets/fredrick-tendong-hvyepjyehdq-unsplash.jpg
+title: Wyatt Morriss
+tagline: Graphic Designer
+featuredImage: /assets/toa-heftiba-0rlfirsdvzu-unsplash.jpg
 cta:
-  ctaText: Get to know him more
+  ctaText: Know more
   ctaLink: /about
 ---
 

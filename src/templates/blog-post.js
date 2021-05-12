@@ -1,82 +1,139 @@
-import React from "react"
-import { graphql } from "gatsby"
-import Img from "gatsby-image"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Link, graphql } from "gatsby"
+import { GatsbyImage } from "gatsby-plugin-image"
+import { RiArrowRightLine, RiArrowLeftLine } from "react-icons/ri"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.markdownRemark
-    const siteTitle = this.props.data.site.siteMetadata.title
-
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO
-          title={post.frontmatter.title}
-          description={post.frontmatter.description || post.excerpt}
-        />
-        <article
-          className={`post-content ${post.frontmatter.thumbnail || `no-image`}`}
-        >
-          <header className="post-content-header">
-            <h1 className="post-content-title">{post.frontmatter.title}</h1>
-          </header>
-
-          {post.frontmatter.description && (
-            <p className="post-content-excerpt">{post.frontmatter.description}</p>
-          )}
-
-          {post.frontmatter.thumbnail && (
-            <div className="post-content-image">
-              <Img
-                className="kg-image"
-                fluid={post.frontmatter.thumbnail.childImageSharp.fluid}
-                alt={post.frontmatter.title}
-              />
-            </div>
-          )}
-
-          <div
-            className="post-content-body"
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
-
-          <footer className="post-content-footer">
-            {/* There are two options for how we display the byline/author-info.
-        If the post has more than one author, we load a specific template
-        from includes/byline-multiple.hbs, otherwise, we just use the
-        default byline. */}
-          </footer>
-        </article>
-      </Layout>
-    )
-  }
+const styles = {
+  "article blockquote": {
+    "background-color": "cardBg",
+  },
+  pagination: {
+    a: {
+      color: "muted",
+      "&.is-active": {
+        color: "text",
+      },
+      "&:hover": {
+        color: "text",
+      },
+    },
+  },
 }
 
-export default BlogPostTemplate
+const Pagination = props => (
+  <div className="pagination -post" sx={styles.pagination}>
+    <ul>
+      {props.previous && props.previous.frontmatter.template === "blog-post" && (
+        <li>
+          <Link to={props.previous.frontmatter.slug} rel="prev">
+            <p
+              sx={{
+                color: "muted",
+              }}
+            >
+              <span className="icon -left">
+                <RiArrowLeftLine />
+              </span>{" "}
+              Previous
+            </p>
+            <span className="page-title">
+              {props.previous.frontmatter.title}
+            </span>
+          </Link>
+        </li>
+      )}
+      {props.next && props.next.frontmatter.template === "blog-post" && (
+        <li>
+          <Link to={props.next.frontmatter.slug} rel="next">
+            <p
+              sx={{
+                color: "muted",
+              }}
+            >
+              Next{" "}
+              <span className="icon -right">
+                <RiArrowRightLine />
+              </span>
+            </p>
+            <span className="page-title">{props.next.frontmatter.title}</span>
+          </Link>
+        </li>
+      )}
+    </ul>
+  </div>
+)
+
+const Post = ({ data, pageContext }) => {
+  const { markdownRemark } = data // data.markdownRemark holds your post data
+  const { frontmatter, html, excerpt } = markdownRemark
+
+  const Image = frontmatter.featuredImage
+    ? frontmatter.featuredImage.childImageSharp.gatsbyImageData
+    : ""
+  const { previous, next } = pageContext
+
+  let props = {
+    previous,
+    next,
+  }
+
+  return (
+    <Layout className="page">
+      <Seo
+        title={frontmatter.title}
+        description={
+          frontmatter.description ? frontmatter.description : excerpt
+        }
+        image={Image}
+        article={true}
+      />
+      <article className="blog-post">
+        <header className="featured-banner">
+          <section className="article-header">
+            <h1>{frontmatter.title}</h1>
+            <time sx={{color: "muted"}}>{frontmatter.date}</time>
+          </section>
+          {Image ? (
+            <GatsbyImage
+              image={Image}
+              alt={frontmatter.title + " - Featured image"}
+              className="featured-image"
+            />
+          ) : (
+            ""
+          )}
+        </header>
+
+        <div
+          className="blog-post-content"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      </article>
+      {(previous || next) && <Pagination {...props} />}
+    </Layout>
+  )
+}
+
+export default Post
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
-    site {
-      siteMetadata {
-        title
-        author
-      }
-    }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+  query BlogPostQuery($id: String!) {
+    markdownRemark(id: { eq: $id }) {
       id
-      excerpt(pruneLength: 160)
       html
+      excerpt(pruneLength: 148)
       frontmatter {
-        title
         date(formatString: "MMMM DD, YYYY")
+        slug
+        title
         description
-        thumbnail {
+        featuredImage {
           childImageSharp {
-            fluid(maxWidth: 1360) {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(layout: FULL_WIDTH)
           }
         }
       }

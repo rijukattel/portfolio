@@ -40,7 +40,7 @@ end a line with two or more spaces, then type return.
 
 ### Headers
 
-Markdown supports two styles of headers, [Setext][1] and [atx][2].
+Markdown supports two styles of headers, [Setext] [1] and [atx] [2].
 
 Optionally, you may "close" atx-style headers. This is purely
 cosmetic -- you can use this if you think it looks better. The
@@ -216,9 +216,9 @@ To produce a code block in Markdown, simply indent every line of the
 block by at least 4 spaces or 1 tab.
 
 ```javascript
-import React from "react";
-import { Link, useStaticQuery, graphql } from "gatsby";
-import Navigation from "../components/navigation";
+import React from "react"
+import { Link, useStaticQuery, graphql } from "gatsby"
+import Navigation from "../components/navigation"
 
 export default ({ children }) => {
   const data = useStaticQuery(
@@ -231,7 +231,7 @@ export default ({ children }) => {
         }
       }
     `
-  );
+  )
   return (
     <div className="site-wrapper">
       <header className="site-header">
@@ -242,8 +242,8 @@ export default ({ children }) => {
       </header>
       {children}
     </div>
-  );
-};
+  )
+}
 ```
 
 This is a normal paragraph:
