@@ -107,6 +107,18 @@ module.exports = {
         icon: "static" + settings.meta.iconimage,
       },
     },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `limelight`,
+          `source sans pro\:300,400,400i,700`, // you can also specify font weights and styles
+          `raleway\:500`,
+        ],
+        display: "swap",
+      },
+    },
     "gatsby-plugin-offline",
+    `gatsby-plugin-styled-components`,
   ],
 }

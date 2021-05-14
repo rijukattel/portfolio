@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
+import { useState } from "react"
 import { Link } from "gatsby"
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri"
 import Theme from "../components/theme"
@@ -30,48 +30,41 @@ const ListLink = props => (
   </li>
 )
 
-class Navigation extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { showMenu: false }
-    this.handleToggleClick = this.handleToggleClick.bind(this)
+const Navigation = () => {
+  const [showMenu, setShowMenu] = useState(false)
+
+  const handleToggleClick = () => {
+    setShowMenu(!showMenu)
   }
 
-  handleToggleClick() {
-    this.setState(state => ({
-      showMenu: !state.showMenu,
-    }))
-  }
+  const listMenuItems = MenuItems.map((menuItem, index) => (
+    <ListLink key={index} to={menuItem.path}>
+      {menuItem.title}
+    </ListLink>
+  ))
 
-  render() {
-    const listMenuItems = MenuItems.map((menuItem, index) => (
-      <ListLink key={index} to={menuItem.path}>
-        {menuItem.title}
-      </ListLink>
-    ))
-    return (
-      <nav className="site-navigation" sx={navStyle.menu}>
-        <button
-          onClick={this.handleToggleClick}
-          className={"menu-trigger" + (this.state.showMenu ? " is-active" : "")}
-        >
-          <div className="icon-menu-line">
-            <RiMenu3Line />
-          </div>
-          <div className="icon-menu-close">
-            <RiCloseLine />
-          </div>
-        </button>
-        <ul>
-          {listMenuItems}
-          <div sx={navStyle.border}></div>
-          <div sx={navStyle.theme}>
-            <Theme />
-          </div>
-        </ul>
-      </nav>
-    )
-  }
+  return (
+    <nav className="site-navigation" sx={navStyle.menu}>
+      <button
+        onClick={handleToggleClick}
+        className={"menu-trigger" + (showMenu ? " is-active" : "")}
+      >
+        <div className="icon-menu-line">
+          <RiMenu3Line />
+        </div>
+        <div className="icon-menu-close">
+          <RiCloseLine />
+        </div>
+      </button>
+      <ul>
+        {listMenuItems}
+        <div sx={navStyle.border}></div>
+        <div sx={navStyle.theme}>
+          <Theme />
+        </div>
+      </ul>
+    </nav>
+  )
 }
 
 export default Navigation

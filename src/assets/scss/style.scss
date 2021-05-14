@@ -7,6 +7,9 @@
 // 	grid-template-rows: 60px auto 60px;
 // 	min-height: 100vh;
 // }
+body {
+  font-family: "Raleway", sans-serif;
+}
 .primary-container main {
   min-height: calc(100vh - 60px - 81px);
 }
@@ -28,14 +31,14 @@
     margin-left: 20px;
   }
   a {
-    color: rgba(255, 255, 255, 0.6);
+    // color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     &:hover {
       color: rgba(255, 255, 255, 0.8);
     }
   }
   a[aria-current="page"] {
-    color: rgba(255, 255, 255, 1);
+    // color: rgba(255, 255, 255, 1);
   }
   .menu-trigger {
     display: none;
