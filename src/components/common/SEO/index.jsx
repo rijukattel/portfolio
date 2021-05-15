@@ -1,7 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Thumbnail from 'assets/thumbnail/thumbnail.png';
-import {
+import site from '../../../data/site.json';
+
+const {
   url,
   defaultDescription,
   social,
@@ -12,7 +14,7 @@ import {
   legalName,
   foundingDate,
   logo,
-} from 'data/config';
+} = site;
 
 export const SEO = ({ title = defaultTitle, description = defaultDescription, location = '' }) => {
   const structuredDataOrganization = `{ 
