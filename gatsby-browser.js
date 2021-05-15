@@ -1,10 +1,6 @@
-export const onServiceWorkerUpdateReady = () => {
-  const answer = window.confirm(
-    `This application has been updated. ` +
-      `Reload to display the latest version?`
-  )
+import React from 'react';
+import ThemeProvider from 'providers/ThemeProvider';
 
-  if (answer === true) {
-    window.location.reload()
-  }
-}
+export const onServiceWorkerUpdateReady = () => window.location.reload(true);
+
+export const wrapRootElement = ({ element }) => <ThemeProvider>{element}</ThemeProvider>;

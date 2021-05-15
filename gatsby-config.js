@@ -1,124 +1,76 @@
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
- */
-const netlifyCmsPaths = {
-  resolve: `gatsby-plugin-netlify-cms-paths`,
-  options: {
-    cmsConfig: `/static/admin/config.yml`,
-  },
-}
+const config = require('./src/data/config.json');
 
-const settings = require("./src/util/site.json")
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 
 module.exports = {
-  siteMetadata: settings.meta,
+  siteMetadata: {
+    title: config.defaultTitle,
+    description: config.defaultDescription,
+    author: config.author,
+  },
   plugins: [
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-styled-components',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-graphql',
       options: {
-        path: `${__dirname}/static/assets/`,
-        name: `assets`,
+        typeName: 'GitHub',
+        fieldName: 'github',
+        url: 'https://api.github.com/graphql',
+        headers: {
+          Authorization: `bearer ${process.env.GATSBY_PORTFOLIO_GITHUB_TOKEN}`,
+        },
+        fetchOptions: {},
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-plugin-nprogress',
       options: {
-        path: `${__dirname}/src/content/`,
-        name: `content`,
-      },
-    },
-    `gatsby-plugin-image`,
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        gfm: true,
-        plugins: [
-          netlifyCmsPaths,
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 1024,
-              showCaptions: true,
-              linkImagesToOriginal: false,
-              tracedSVG: true,
-              loading: "lazy",
-            },
-          },
-          {
-            resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
-            options: {
-              // Fields to index
-              fields: [`title`, `template`, `slug`],
-              // How to resolve each field`s value for a supported node type
-              resolvers: {
-                // For any node of type MarkdownRemark, list how to resolve the fields` values
-                MarkdownRemark: {
-                  template: node => node.frontmatter.template,
-                  title: node => node.frontmatter.title,
-                  slug: node => node.frontmatter.slug,
-                },
-              },
-              // Optional filter to limit indexed nodes
-              filter: (node, getNode) => node.frontmatter.tags !== "exempt",
-            },
-          },
-          `gatsby-remark-responsive-iframe`,
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              classPrefix: "language-",
-              inlineCodeMarker: null,
-              aliases: {},
-              showLineNumbers: false,
-              noInlineHighlight: false,
-              // By default the HTML entities <>&'" are escaped.
-              // Add additional HTML escapes by providing a mapping
-              // of HTML entities and their escape value IE: { '}': '&#123;' }
-              escapeEntities: {},
-            },
-          },
-        ],
-      },
-    },
-    `gatsby-plugin-sass`,
-    `gatsby-plugin-react-helmet`,
-    "gatsby-plugin-theme-ui",
-    `gatsby-plugin-netlify-cms`,
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: settings.ga,
-      },
-    },
-    `gatsby-plugin-sitemap`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: settings.meta.title,
-        short_name: settings.meta.title,
-        start_url: settings.meta.starterUrl,
-        background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
-        display: `standalone`,
-        icon: "static" + settings.meta.iconimage,
+        color: config.themeColor,
+        showSpinner: false,
       },
     },
     {
-      resolve: `gatsby-plugin-google-fonts`,
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
-        fonts: [
-          `limelight`,
-          `source sans pro\:300,400,400i,700`, // you can also specify font weights and styles
-          `raleway\:500`,
-        ],
-        display: "swap",
+        trackingId: config.googleAnalyticsID,
+        head: true,
       },
     },
-    "gatsby-plugin-offline",
-    `gatsby-plugin-styled-components`,
+    // {
+    //   resolve: 'gatsby-plugin-favicon',
+    //   options: {
+    //     logo: './static/favicon/favicon-512.png',
+    //     injectHTML: true,
+    //     icons: {
+    //       android: true,
+    //       appleIcon: true,
+    //       appleStartup: true,
+    //       coast: false,
+    //       favicons: true,
+    //       firefox: true,
+    //       twitter: false,
+    //       yandex: false,
+    //       windows: false,
+    //     },
+    //   },
+    // },
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: config.defaultTitle,
+        short_name: 'starter',
+        start_url: '/',
+        background_color: config.backgroundColor,
+        theme_color: config.themeColor,
+        display: 'minimal-ui',
+        icon: './static/favicon/favicon-512.png',
+      },
+    },
+    'gatsby-plugin-offline',
   ],
-}
+};

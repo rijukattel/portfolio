@@ -1,176 +1,124 @@
-> **Update** Foundation is now built with Gatsby V3, this include many performance update
+# Portfolio for developers
 
----
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev&env=GATSBY_PORTFOLIO_GITHUB_TOKEN,GATSBY_PORTFOLIO_FORMIK_ENDPOINT,GATSBY_PORTFOLIO_RECAPTCHA_KEY&envDescription=All%20env%20variables%20are%20required%20to%20deploy%20the%20project&envLink=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev%2Fblob%2Fmaster%2F.env.development.template&project-name=my-portfolio&repo-name=my-portfolio&demo-title=Portfolio%20demo&demo-description=A%20simple%20portfolio%20for%20developers&demo-url=https%3A%2F%2Fportfolio.smakosh.com&demo-image=https%3A%2F%2Fportfolio.smakosh.com%2Fstatic%2Fthumbnail-16a70559ab07712f83d3ce412dfbb5a6.png)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/63521b78-612e-4a2f-a409-3fa8009e7f3b/deploy-status)](https://app.netlify.com/sites/frosty-perlman-9da1cb/deploys) &nbsp;<a href="https://twitter.com/intent/follow?screen_name=stackrole">
-<img src="https://img.shields.io/twitter/follow/stackrole.svg?label=Follow%20@Stackrole" alt="Follow @stackrole" />
-</a>
+[![Powered by Vercel](./powered-by-vercel.svg)](https://vercel.com?utm_source=smakosh&utm_campaign=oss)
 
-# Foundation
+## Next js version?
 
-A starter to launch your blazing fast personal website and a blog, Built with [Gatsby][gatsby] and [Netlify CMS][netlifycms].
+[There you go](https://github.com/smakosh/next-portfolio-dev)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/stackrole/gatsby-starter-foundation)
+## Theme
 
-Need help launching your website? My DM's are open on <a href="https://twitter.com/stackrole">twitter</a>
+[Gatsby-theme-portfolio](https://github.com/smakosh/gatsby-theme-portfolio)
 
-[![Gatsby Starter Foundation Screenshot](static/assets/gatsby-starter-foundation-light-mode.jpg)](https://stackrole.com/jamstack/foundation/)
+## Features
 
-## 👌 Features
+- Eslint/Prettier configured
+- Scores 100% on a11y / Performance / PWA / SEO
+- PWA (desktop & mobile)
+- Easy to customize
+- Nice project structure
+- Amazing illustrations by [Undraw.co](https://undraw.co)
+- Tablet & mobile friendly
+- Continuous deployment with [Vercel](https://vercel.com/?utm_source=smakosh)
+- Or with Netlify, check [Netlify branch](https://github.com/smakosh/gatsby-portfolio-dev/tree/netlify)
+- A contact form protected by Google Recaptcha
+- Can be deployed with one click
+- Functional components with ~~Recompose~~ React Hooks! ~~ready to migrate to React hooks!~~
+- Fetches your Github pinned projects with most stars (You could customize this if you wish)
+- One click deployment to Vercel
 
-- A Blog and Personal website with Netlify CMS.
-- Responsive Web Design
-- Dark / Light Mode
-- Customize theme color from CMS
+## Design
 
-    ![gatsby-starter-foundation-dark-mode.jpg](https://media.giphy.com/media/Pb4yImVfcF6MDYuuGm/giphy.gif)
+Project on [Behance](https://www.behance.net/gallery/74172961/Free-Gatsby-portfolio-for-developers)
 
-- Search bar
-- Customize content of Homepage, About and Contact page.
-- Customize content of Homepage, About and Contact page.
-- Add / Modify / Delete blog posts.
-- Edit website settings, Add Google Analytics and make it your own all with in the CMS.
-- SEO Optimized
-- Social media icons
-- OpenGraph structured data
-- Twitter Cards meta
-- Beautiful XML Sitemaps
-- Netlify Contact Form, Works right out of the box after deployment.
-- Invite collaborators into Netlify CMS, without giving access to your Github account via Git Gateway
-- Gatsby Incremental Builds with Netlify.
-
-[![Gatsby Starter Foundation Screenshot](static/assets/gatsby-starter-foundation-dark-mode.jpg)](https://stackrole.com/demos/foundation)
-
-## 🚀 Quick Deploy
-
-Just click on the **Deploy to Netlify** button.
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/stackrole/gatsby-starter-foundation)
-
-This would fork `gatsby-starter-foundation` to your Github account and start building your website on [Netlify](https://netlify.com). Once the deployment is done. Your website will be live and website address would look like **site-name.netlify.app**
-
-### Further Instructions
-
-- [Access to Netlify CMS](#access-to-netlify-cms)
-- [Editing content and Adding posts](#editing-content-and-adding-posts)
-- [Customing Site details](#customing-site-details)
-- [Adding Custom domain to netlify website](#adding-custom-domain-to-netlify-website)
-- [Install Locally](#install-locally)
-- [Folder Structure](#folder-structure)
-- [Learning Gatsby](#learning-gatsby)
-- [Thank you from Stackrole](#thank-you)
-
-## ⚙ Access to Netlify CMS
-
-- Goto app.netlify.com > select your website from the list
-- Goto identity and Click **Enable Identiy**
-- Click on **Invite Users** and invite yourself. You will receive an email and you need to accept the invitation to set the password.
-- Now headover to Settings > Identity > Services and **Enable Git Gateway**
-- You can also manage who can register and log in to your CMS. Goto Settings > Identity > Registration >Registration Preferences. I would prefer to keep it to **Invite Only**, if i am the only one using it.
-- Now, goto to **site-name.netlify.app/admin/**, and login with your credentials.
-
-## 📝 Editing content and Adding posts
-
-Once you are in your Netlify CMS, you can navigate to Posts and Pages. Here you will find a list of existing pages and posts.
-
-You can select any existing post or page to start editing or add a **New Post**. Have fun :)
-
-## ⚙ Customing Site details
-
-You can find all the website settings such website Site title, Website URL, Google anlaytics etc,.. in your Netlify CMS `Admin > Settings > General`
-
-## 🌐 Adding Custom domain to netlify website
-
-We have written a short article on [Custom domain with Netlify website](custom-domain)
-
-## 🖥 Install Locally
-
-Use the Gatsby CLI to create a new site, specifying the `gatsby-starter-foundation` starter.
+## Structure
 
 ```bash
-gatsby new gatsby-starter-foundation https://github.com/stackrole/gatsby-starter-foundation
+.
+├── data
+│   └── config              # SEO related tags
+├── src
+│   └── assets              # Assets
+│   │   │── icons             # icons
+│   │   │── illustrations     # illustrations from (undraw.co)
+│   │   └── thumbnail         # cover of your website when it's shared to social media
+│   ├── components          # Components
+│   │   │── common            # Common components
+│   │   │── landing           # Components used on the landing page
+│   │   └── theme             # Header & Footer
+│   └── pages               # Pages
+└── static                  # favicon & Netlify redirects
 ```
 
-> You need Node and Gatsby-CLI installed, check out Gatsby [Setup Instructions](https://www.gatsbyjs.org/tutorial/part-zero/)
+## Prerequisites
 
-### Start developing
+### Online
 
-Navigate into your new site’s directory and start it up.
+1. Create an account at [Formik](https://formik.com/?utm_source=smakosh) and grab your form endpoint url
+2. Grab a Google recaptcha key from [Google Recaptcha](https://www.google.com/recaptcha/admin)
+3. Grab your Github token from [GitHub](https://github.com/settings/tokens/new?scopes=repo&description=portfolio-dev)
+4. Click [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev&env=GATSBY_PORTFOLIO_GITHUB_TOKEN,GATSBY_PORTFOLIO_FORMIK_ENDPOINT,GATSBY_PORTFOLIO_RECAPTCHA_KEY&envDescription=All%20env%20variables%20are%20required%20to%20deploy%20the%20project&envLink=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev%2Fblob%2Fmaster%2F.env.development.template&project-name=my-portfolio&repo-name=my-portfolio&demo-title=Portfolio%20demo&demo-description=A%20simple%20portfolio%20for%20developers&demo-url=https%3A%2F%2Fportfolio.smakosh.com&demo-image=https%3A%2F%2Fportfolio.smakosh.com%2Fstatic%2Fthumbnail-16a70559ab07712f83d3ce412dfbb5a6.png) and pass in your:
+  
+  - Formik form endpoint
+  - Google recaptcha public key
+  - Github token
 
-```shell
-cd my-hello-world-starter/
-gatsby develop
+To Env variables section.
+
+### Locally
+
+1. Create an account at [Formik](https://formik.com/?utm_source=smakosh)
+2. Install [Yarn](https://yarnpkg.com/en/)
+3. Grab a Google recaptcha key from [Google Recaptcha](https://www.google.com/recaptcha/admin)
+4. Grab your Github token from GitHub
+5. Run `cp .env.development.template .env.development`
+6. Run `yarn && yarn start`
+
+> You could run `vercel env pull` to get your env variables from Vercel.
+
+### Deploying locally to Vercel
+
+I highly recommend that you push to GitHub/GitLab and deploy your repository to Vercel instead or just hit the Deploy button.
+
+### Clean the cache
+
+This removes the `.cache/` & `public/` folders
+
+```bash
+yarn reset
 ```
 
-**Open the source code and start editing!**
+## Built with
 
-Your site is now running at `http://localhost:8000`!
+- Adobe XD
+- Gatsby
+- React & GraphQL
+- Formik
+- Google recaptcha
+- VSCode
+- And these useful of JavaScript libraries & Gatsby plugins [package.json](package.json)
 
-_Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
+## License
 
-Open the `gatsby-starter-foundation` directory in your code editor of choice and edit. Save your changes and the browser will update in real time!
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for more details
 
-You can use Netlify CMS in you local just run `npx netlify-cms-proxy-server` and start run `gatsby develop`
+## Contributors
 
-## 📁 Folder Structure
+- [Ajay NS](https://github.com/ajayns) https://github.com/smakosh/gatsby-portfolio-dev/pull/3
+- [Ryan Lee](https://github.com/drdgvhbh) https://github.com/smakosh/gatsby-portfolio-dev/pull/6
+- [David](https://github.com/davidavz) https://github.com/smakosh/gatsby-portfolio-dev/pull/8
+- [Léu Almeida](https://github.com/LeuAlmeida) https://github.com/smakosh/gatsby-portfolio-dev/pull/21
+- [Kudakwashe Mupeni](https://github.com/2wce) https://github.com/smakosh/gatsby-portfolio-dev/pull/20
+- [sasannnn](https://github.com/sasannnn) https://github.com/smakosh/gatsby-portfolio-dev/pull/22
+- [Michael Seifarth](https://github.com/Kageetai) https://github.com/smakosh/gatsby-portfolio-dev/pull/27
+- [Hugo](https://github.com/Kronicom) https://github.com/smakosh/gatsby-portfolio-dev/pull/34 https://github.com/smakosh/gatsby-portfolio-dev/pull/35
+- [manula thejan](https://github.com/manula2004) https://github.com/smakosh/gatsby-portfolio-dev/pull/38
+- [Benjamin Lo](https://github.com/benji011) https://github.com/smakosh/gatsby-portfolio-dev/pull/40
+- [Yassine Rais](https://github.com/yassinrais) https://github.com/smakosh/gatsby-portfolio-dev/pull/41
+- [Smakosh](https://smakosh.com)
 
-A quick look at the top-level files and directories you'll see in a Gatsby project.
+## Support
 
-    .
-    ├── node_modules
-    ├── src
-    ├── .gitignore
-    ├── .prettierrc
-    ├── gatsby-browser.js
-    ├── gatsby-config.js
-    ├── gatsby-node.js
-    ├── LICENSE
-    ├── package-lock.json
-    ├── package.json
-    └── README.md
-
-1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
-
-2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
-
-3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
-
-4.  **`.prettierrc`**: This is a configuration file for [Prettier](https://prettier.io/). Prettier is a tool to help keep the formatting of your code consistent.
-
-5.  **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
-
-6.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](https://www.gatsbyjs.org/docs/gatsby-config/) for more detail).
-
-7.  **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
-
-8.  **`LICENSE`**: Gatsby is licensed under the MIT license.
-
-9.  **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
-
-10. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
-
-11. **`README.md`**: A text file containing useful reference information about your project.
-
-## 🎓 Learning Gatsby
-
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
-
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
-
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
-
-## 🙏 Thank you
-
-We really appreciate you taking time to build your website with our `gatsby-starter-foundation`.
-
-I would love to get your feedback and contributions.
-
-Feel free to ping [@stackrole](stackrole) for help regarding your JAMstack website, our DM's are open. And do not forget to share you website with me 😊
-
-[![Check out Stackrole.com - A Jamstack marketplace](static/assets/twitter-header.jpg)](https://stackrole.com)
-
-[gatsby]: https://gatsbyjs.org
-[netlifycms]: https://www.netlifycms.org
-[stackrole]: https://stackrole.com
-[twitter]: https://twitter.com/stackrole
-[custom-domain]: https://stackrole.com/adding-custom-domain-netlify
+If you love this Gatsby template and want to support me, you can do so through my GitHub profile.
