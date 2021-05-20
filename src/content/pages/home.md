@@ -11,6 +11,6 @@ cta:
 
 <!--StartFragment-->
 
-A "cinephilic", "hodophilic", music-loving, and an enthusiastic idiot who happens to be a Computer Engineer.
+## A "cinephilic", "hodophilic", music-loving, and an enthusiastic idiot who happens to be a Computer Engineer.
 
 <!--EndFragment-->
