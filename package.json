@@ -2,7 +2,7 @@
   "name": "raghavkattel",
   "description": "Raghav Kattel- Software Engineer",
   "version": "2.20.11",
-  "author": "Raghav Katte <arg.ahv7@gmail.com>",
+  "author": "Raghav Kattel <arg.ahv7@gmail.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.12.0",
     "framer-motion": "^4.1.16",

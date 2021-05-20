@@ -1,18 +1,16 @@
 ---
 template: home
 slug: /
-title: Advanced Portfolio Starter
-tagline: Dynamic Portfolio Website made using Styled Components and Gatsby
-featuredImage: assets/undraw_ordinary_day_re_v5hy.png
+title: Raghav Kattel
+tagline: Computer Engineer
+featuredImage: assets/124595972_1773004756183327_9048875191044310612_n.jpg
 cta:
-  ctaText: Contact Me
-  ctaLink: /contact
+  ctaText: Know More
+  ctaLink: /about
 ---
 
 <!--StartFragment-->
 
-## What is Lorem Ipsum?
-
-**Lorem Ipsum** is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+A "cinephilic", "hodophilic", music-loving, and an enthusiastic idiot who happens to be a Computer Engineer.
 
 <!--EndFragment-->

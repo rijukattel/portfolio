@@ -1,6 +1,6 @@
 backend:
   name: git-gateway # Refer to https://www.netlifycms.org/docs/authentication-backends/ for auth backend list and instructions
-  branch: master # Branch to update
+  branch: main # Branch to update
   repo: argahv/raghavkattel # Repo for pushing new commits. Make sure to replace with your repo!
   commit_messages:
     create: "Create {{collection}} “{{slug}}”"

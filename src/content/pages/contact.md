@@ -4,4 +4,4 @@ template: contact-page
 slug: /contact
 ---
 
-Contact Page
+If you have got any enquiry OR just wanna have a CHAT sometimes. Feel Free. Maybe I can create something for you.
