@@ -1,0 +1,47 @@
+{
+  "userLocation": "Chitwan, Nepal",
+  "userPhoneCode": "+977",
+  "userPhone": "9865430408",
+  "userTwitter": "argahv",
+  "userAvatar": "https://api.adorable.io/avatars/150/test.png",
+  "dateFormat": "MMM Do, YY",
+  "disqusShortname": "https-starter-arg-netlify-app",
+  "copyright": "Copyright © 2020.",
+  "siteUrl": "https://raghavkattel.com.np",
+  "googleAnalyticsID": "UA-47311644-5",
+  "siteRss": "/rss.xml",
+  "siteTitleShort": "arg",
+  "socialLinks": [
+    {
+      "id": 1,
+      "name": "Github",
+      "link": "https://github.com/argahv",
+      "icon": "assets/github-mark-32px.png"
+    },
+    {
+      "id": 15,
+      "name": "Instagram",
+      "link": "https://instagram.com/argahv",
+      "icon": "assets/icons8-instagram-64.png"
+    },
+    {
+      "id": 3,
+      "name": "Twitter",
+      "link": "https://twitter.com/argahv",
+      "icon": "assets/icons8-twitter-64.png"
+    }
+  ],
+  "siteRssTitle": "Raghav Kattel RSS feed",
+  "dateFromFormat": "YYYY-MM-DD",
+  "userEmail": "arg.ahv7@gmail.com",
+  "userDescription": "",
+  "siteTitle": "Raghav Kattel",
+  "siteLogo": "/logos/logo-1024.png",
+  "siteDescription": "Raghav Kattel- A software engineer",
+  "backgroundColor": "#e0e0e0",
+  "userName": "argahv",
+  "pathPrefix": "/",
+  "postsPerPage": 8,
+  "siteFBAppID": "1825356251115265",
+  "themeColor": "#c62828"
+}

@@ -1,0 +1,16 @@
+{
+  "headers": [
+    {
+      "title": "Blogs",
+      "link": "/blogs"
+    },
+    {
+      "title": "About",
+      "link": "/about"
+    },
+    {
+      "title": "Contact",
+      "link": "/contact"
+    }
+  ]
+}

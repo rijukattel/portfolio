@@ -1,131 +1,198 @@
-const site = require('./src/data/site.json');
+const urljoin = require("url-join");
+const path = require("path");
+const config = require("./data/SiteConfig");
+const { siteTitle } = require("./data/SiteConfig");
 
-const netlifyCmsPaths = {
-  resolve: `gatsby-plugin-netlify-cms-paths`,
-  options: {
-    cmsConfig: `/static/admin/config.yml`,
-  },
-};
-
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
+// Make sure that pathPrefix is not empty
+const validatedPathPrefix = config.pathPrefix === "" ? "/" : config.pathPrefix;
 
 module.exports = {
+  pathPrefix: validatedPathPrefix,
   siteMetadata: {
-    title: site.defaultTitle,
-    description: site.defaultDescription,
-    author: site.author,
+    siteUrl: urljoin(config.siteUrl, config.pathPrefix),
+    rssMetadata: {
+      site_url: urljoin(config.siteUrl, config.pathPrefix),
+      feed_url: urljoin(config.siteUrl, config.pathPrefix, config.siteRss),
+      title: config.siteTitle,
+      description: config.siteDescription,
+      image_url: `${urljoin(
+        config.siteUrl,
+        config.pathPrefix
+      )}/logos/logo-512.png`,
+      copyright: config.copyright,
+    },
   },
   plugins: [
+    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-lodash",
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
-        path: `${__dirname}/static/assets/`,
-        name: `assets`,
+        name: "assets",
+        path: `${__dirname}/static/`,
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
+        name: "posts",
         path: `${__dirname}/src/content/`,
-        name: `content`,
       },
     },
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: "gatsby-transformer-remark",
       options: {
-        gfm: true,
         plugins: [
-          netlifyCmsPaths,
           {
-            resolve: `gatsby-remark-images`,
+            resolve: `gatsby-remark-relative-images`,
+          },
+          {
+            resolve: "gatsby-remark-images",
             options: {
-              maxWidth: 1024,
-              showCaptions: true,
-              linkImagesToOriginal: false,
-              tracedSVG: true,
-              loading: 'lazy',
+              maxWidth: 690,
             },
           },
           {
-            resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
-            options: {
-              // Fields to index
-              fields: [`title`, `template`, `slug`],
-              // How to resolve each field`s value for a supported node type
-              resolvers: {
-                // For any node of type MarkdownRemark, list how to resolve the fields` values
-                MarkdownRemark: {
-                  template: node => node.frontmatter.template,
-                  title: node => node.frontmatter.title,
-                  slug: node => node.frontmatter.slug,
-                },
-              },
-              // Optional filter to limit indexed nodes
-              filter: (node, getNode) => node.frontmatter.tags !== 'exempt',
-            },
+            resolve: "gatsby-remark-responsive-iframe",
           },
-          `gatsby-remark-responsive-iframe`,
+          "gatsby-remark-copy-linked-files",
+          "gatsby-remark-autolink-headers",
+          "gatsby-remark-prismjs",
+        ],
+      },
+    },
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: config.googleAnalyticsID,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-nprogress",
+      options: {
+        color: config.themeColor,
+      },
+    },
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-catch-links",
+    "gatsby-plugin-twitter",
+    "gatsby-plugin-sitemap",
+    {
+      resolve: `gatsby-plugin-disqus`,
+      options: {
+        shortname: config.disqusShortname,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: config.siteTitle,
+        short_name: config.siteTitleShort,
+        description: config.siteDescription,
+        start_url: validatedPathPrefix,
+        background_color: config.backgroundColor,
+        theme_color: config.themeColor,
+        display: "minimal-ui",
+        icons: [
           {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              classPrefix: 'language-',
-              inlineCodeMarker: null,
-              aliases: {},
-              showLineNumbers: false,
-              noInlineHighlight: false,
-              // By default the HTML entities <>&'" are escaped.
-              // Add additional HTML escapes by providing a mapping
-              // of HTML entities and their escape value IE: { '}': '&#123;' }
-              escapeEntities: {},
-            },
+            src: "/logos/logo-192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "/logos/logo-512.png",
+            sizes: "512x512",
+            type: "image/png",
           },
         ],
       },
     },
-    `gatsby-plugin-image`,
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-styled-components',
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-sharp',
+    "gatsby-plugin-offline",
     {
-      resolve: 'gatsby-source-graphql',
+      resolve: "gatsby-plugin-netlify-cms",
       options: {
-        typeName: 'GitHub',
-        fieldName: 'github',
-        url: 'https://api.github.com/graphql',
-        headers: {
-          Authorization: `bearer ${process.env.GATSBY_PORTFOLIO_GITHUB_TOKEN}`,
+        modulePath: path.resolve("src/netlifycms/index.js"), // default: undefined
+        enableIdentityWidget: true,
+        publicPath: "admin",
+        htmlTitle: "Content Manager",
+        includeRobots: false,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-feed",
+      options: {
+        setup(ref) {
+          const ret = ref.query.site.siteMetadata.rssMetadata;
+          ret.allMarkdownRemark = ref.query.allMarkdownRemark;
+          ret.generator = siteTitle;
+          return ret;
         },
-        fetchOptions: {},
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-nprogress',
-      options: {
-        color: site.themeColor,
-        showSpinner: false,
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-google-analytics',
-      options: {
-        trackingId: site.googleAnalyticsID,
-        head: true,
-      },
-    },
-
-    {
-      resolve: 'gatsby-plugin-manifest',
-      options: {
-        name: site.defaultTitle,
-        short_name: site.defaultTitle,
-        start_url: '/',
-        background_color: site.backgroundColor,
-        theme_color: site.themeColor,
-        display: 'minimal-ui',
-        icon: './static/favicon/favicon-512.png',
+        query: `
+        {
+          site {
+            siteMetadata {
+              rssMetadata {
+                site_url
+                feed_url
+                title
+                description
+                image_url
+                copyright
+              }
+            }
+          }
+        }
+      `,
+        feeds: [
+          {
+            serialize(ctx) {
+              const { rssMetadata } = ctx.query.site.siteMetadata;
+              return ctx.query.allMarkdownRemark.edges.map((edge) => ({
+                categories: edge.node.frontmatter.tags,
+                date: edge.node.fields.date,
+                title: edge.node.frontmatter.title,
+                description: edge.node.excerpt,
+                url: rssMetadata.site_url + edge.node.fields.slug,
+                guid: rssMetadata.site_url + edge.node.fields.slug,
+                custom_elements: [
+                  { "content:encoded": edge.node.html },
+                  { author: config.userEmail },
+                ],
+              }));
+            },
+            query: `
+            {
+              allMarkdownRemark(
+                limit: 1000,
+                sort: { order: DESC, fields: [frontmatter___date] },
+              ) {
+                edges {
+                  node {
+                    excerpt
+                    html
+                    timeToRead
+                    fields {
+                      slug
+                      date
+                    }
+                    frontmatter {
+                      title
+                      cover
+                      date
+                      category
+                      tags
+                    }
+                  }
+                }
+              }
+            }
+          `,
+            output: config.siteRss,
+            title: config.siteRssTitle,
+          },
+        ],
       },
     },
     {
@@ -135,11 +202,17 @@ module.exports = {
           `limelight`,
           `source sans pro\:300,400,400i,700`, // you can also specify font weights and styles
           `raleway\:500`,
+          `anton\:400`,
         ],
-        display: 'swap',
+        display: "swap",
       },
     },
-    'gatsby-plugin-offline',
-    `gatsby-plugin-sitemap`,
+    {
+      resolve: "gatsby-plugin-root-import",
+      options: {
+        src: path.join(__dirname, "src"),
+        // pages: path.join(__dirname, "src/pages"),
+      },
+    },
   ],
 };

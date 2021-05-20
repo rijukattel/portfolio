@@ -1,124 +1,249 @@
-# Portfolio for developers
+<div align="center" style="margin-bottom:30px">
+    <a href='https://github.com/vagr9k/gatsby-advanced-starter/blob/master/LICENSE'>
+    <img src="https://img.shields.io/github/license/vagr9k/gatsby-advanced-starter.svg" alt="Logo" />
+    </a>
+    <a href='https://github.com/vagr9k/gatsby-advanced-starter'>
+    <img src="https://img.shields.io/github/v/tag/Vagr9K/gatsby-advanced-starter" alt="Logo" />
+    </a>
+        <a href='https://github.com/vagr9k/gatsby-advanced-starter/stargazers'>
+    <img src="https://img.shields.io/github/stars/Vagr9K/gatsby-advanced-starter" alt="Logo" />
+    </a>
+        <a href="https://twitter.com/intent/tweet?text=A%20cool%20%40gatsbyjs%20starter%3A&url=https%3A%2F%2Fgithub.com%2FVagr9K%2Fgatsby-advanced-starter">
+    <img src="https://img.shields.io/twitter/url/https/github.com/vagr9k/gatsby-advanced-starter.svg?style=social" alt="Logo" />
+    </a>
+</div>
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev&env=GATSBY_PORTFOLIO_GITHUB_TOKEN,GATSBY_PORTFOLIO_FORMIK_ENDPOINT,GATSBY_PORTFOLIO_RECAPTCHA_KEY&envDescription=All%20env%20variables%20are%20required%20to%20deploy%20the%20project&envLink=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev%2Fblob%2Fmaster%2F.env.development.template&project-name=my-portfolio&repo-name=my-portfolio&demo-title=Portfolio%20demo&demo-description=A%20simple%20portfolio%20for%20developers&demo-url=https%3A%2F%2Fportfolio.smakosh.com&demo-image=https%3A%2F%2Fportfolio.smakosh.com%2Fstatic%2Fthumbnail-16a70559ab07712f83d3ce412dfbb5a6.png)
+<div align="center"  style="margin-bottom:30px">
+    <img src="static/logos/logo-1024.png" alt="Logo" width='200px' height='200px'/>
+</div>
 
-[![Powered by Vercel](./powered-by-vercel.svg)](https://vercel.com?utm_source=smakosh&utm_campaign=oss)
+<div align="center">
+    <a href="https://codeclimate.com/github/Vagr9K/gatsby-advanced-starter">
+      <img src="https://codeclimate.com/github/Vagr9K/gatsby-advanced-starter/badges/gpa.svg" alt="Logo" />
+    </a>
+    <a href='https://codeclimate.com/github/Vagr9K/gatsby-advanced-starter'>
+      <img src="https://codeclimate.com/github/Vagr9K/gatsby-advanced-starter/badges/issue_count.svg" alt="Logo" />
+    </a>
+    <a href='https://www.codacy.com/app/Vagr9K/gatsby-advanced-starter?utm_source=github.com&utm_medium=referral&utm_content=Vagr9K/gatsby-advanced-starter&utm_campaign=Badge_Grade'>
+      <img src="https://api.codacy.com/project/badge/Grade/990fb54ea8094f2aa0ed77f14e859820" alt="Logo" />
+    </a>
+    <a href='https://github.com/prettier/prettier'>
+      <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="Logo" />
+    </a>
+</div>
 
-## Next js version?
+# Gatsby Advanced Starter
 
-[There you go](https://github.com/smakosh/next-portfolio-dev)
+A starter skeleton with advanced features for [Gatsby](https://github.com/gatsbyjs/gatsby/).
 
-## Theme
+**NOTE**: This branch contains Gatsby 3 compatible version of the starter.
+To get the Gatsby v2 compatible version, use the [`v2`](https://github.com/Vagr9K/gatsby-advanced-starter/tree/v2) branch.
+To get the Gatsby v1 compatible version, use the [`v1`](https://github.com/Vagr9K/gatsby-advanced-starter/tree/v1) branch.
 
-[Gatsby-theme-portfolio](https://github.com/smakosh/gatsby-theme-portfolio)
+## Lighthouse Audit Score
+
+<div align="center">
+    <a href="https://developers.google.com/web/tools/lighthouse/">
+      <img src="docs/pwa-score.png" alt="Lighthouse Score" />
+    </a>
+</div>
+
+Check out the [Features](#features) to read about all [Progressive Web App](https://developers.google.com/web/progressive-web-apps) capabilities of this starter in detail.
+
+## Why?
+
+This project aims to provide a minimal base for building advanced GatsbyJS powered websites.
+
+It doesn't define any UI limitations in any way and only gives you the basic components for SEO/Social Media/etc while creating a comfortable development environment to get started.
+
+You are free to use any UI framework/styling options.
+
+## How can I use this?
+
+If you are a newcomer to Gatsby who's interested in the implementations of most needed features, this is a great place to start.
+
+If you are interested in a foundation for building ultra-fast websites, you can use this project as a "minimal" starter.
+
+[Demo website.](https://gatsby-advanced-starter-demo.netlify.com)
 
 ## Features
 
-- Eslint/Prettier configured
-- Scores 100% on a11y / Performance / PWA / SEO
-- PWA (desktop & mobile)
-- Easy to customize
-- Nice project structure
-- Amazing illustrations by [Undraw.co](https://undraw.co)
-- Tablet & mobile friendly
-- Continuous deployment with [Vercel](https://vercel.com/?utm_source=smakosh)
-- Or with Netlify, check [Netlify branch](https://github.com/smakosh/gatsby-portfolio-dev/tree/netlify)
-- A contact form protected by Google Recaptcha
-- Can be deployed with one click
-- Functional components with ~~Recompose~~ React Hooks! ~~ready to migrate to React hooks!~~
-- Fetches your Github pinned projects with most stars (You could customize this if you wish)
-- One click deployment to Vercel
+- Gatsby v3 support
+- Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
+- Posts in Markdown
+  - Code syntax highlighting
+  - Embed YouTube videos
+  - Embed Tweets
+- Pagination
+  - Configurable via `SiteConfig.js`
+- Tags
+  - Separate page for posts under each tag
+- Categories
+  - Separate page for posts under each category
+- [Disqus](https://disqus.com/) support
+  - Notifications about new disqus comments
+- `/static/` and content folders are available to use with [gatsby-image](https://www.gatsbyjs.org/docs/gatsby-image/) out of the box for optimized image generation
+- High configurability
+- Separate components for everything:
+  - User social profiles
+  - Copyright information
+  - More!
+- [NetlifyCMS](https://www.netlifycms.org) support out of the box
+- PWA features
+  - Offline support
+  - Web App Manifest support
+  - Loading progress for slow networks
+- SEO
+  - [Google Analytics](https://marketingplatform.google.com/about/analytics/) support
+  - Sitemap generation
+  - robots.txt
+  - General description tags
+  - [Schema.org JSONLD (Google Rich Snippets)](https://schema.org/)
+  - [OpenGraph Tags (Facebook/Google+/Pinterest)](https://ogp.me/)
+  - [Twitter Tags (Twitter Cards)](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/markup)
+- RSS feeds
+- Social features
+  - Twitter tweet button
+  - Facebook share/share count
+  - Reddit share/share count
+  - LinkedIn share button
+  - Telegram share button
+- Development tools
+  - [ESLint](https://eslint.org/) for linting
+  - [Prettier](https://prettier.io/) for code formatting
+  - [React Hooks Linting](https://www.npmjs.com/package/eslint-plugin-react-hooks)
+  - Remark-Lint for linting Markdown
+  - write-good for linting English prose
+  - gh-pages for deploying to GitHub pages
+  - [Netlify](https://www.netlify.com/) deploy configuration
+  - [CodeClimate](https://codeclimate.com/) configuration file and badge
 
-## Design
+NOTE: Feel free to check out [Gatsby Material Starter](https://github.com/Vagr9K/gatsby-material-starter) if you are interested in a more opinionated starter with Material Design in mind.
 
-Project on [Behance](https://www.behance.net/gallery/74172961/Free-Gatsby-portfolio-for-developers)
+## Getting Started
 
-## Structure
+Install this starter by running the following commands from your CLI:
 
-```bash
-.
-├── data
-│   └── config              # SEO related tags
-├── src
-│   └── assets              # Assets
-│   │   │── icons             # icons
-│   │   │── illustrations     # illustrations from (undraw.co)
-│   │   └── thumbnail         # cover of your website when it's shared to social media
-│   ├── components          # Components
-│   │   │── common            # Common components
-│   │   │── landing           # Components used on the landing page
-│   │   └── theme             # Header & Footer
-│   └── pages               # Pages
-└── static                  # favicon & Netlify redirects
+```sh
+gatsby new YourProjectName https://github.com/Vagr9K/gatsby-advanced-starter
+cd YourProjectName
+npm run develop # or gatsby develop
 ```
 
-## Prerequisites
+Note that the [Gatsby CLI](https://www.npmjs.com/package/gatsby-cli) needs to be installed and updated for the `gatsby` command to work.
 
-### Online
+Alternatively you can fork the project, make your changes and merge new upstream features when needed:
 
-1. Create an account at [Formik](https://formik.com/?utm_source=smakosh) and grab your form endpoint url
-2. Grab a Google recaptcha key from [Google Recaptcha](https://www.google.com/recaptcha/admin)
-3. Grab your Github token from [GitHub](https://github.com/settings/tokens/new?scopes=repo&description=portfolio-dev)
-4. Click [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev&env=GATSBY_PORTFOLIO_GITHUB_TOKEN,GATSBY_PORTFOLIO_FORMIK_ENDPOINT,GATSBY_PORTFOLIO_RECAPTCHA_KEY&envDescription=All%20env%20variables%20are%20required%20to%20deploy%20the%20project&envLink=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev%2Fblob%2Fmaster%2F.env.development.template&project-name=my-portfolio&repo-name=my-portfolio&demo-title=Portfolio%20demo&demo-description=A%20simple%20portfolio%20for%20developers&demo-url=https%3A%2F%2Fportfolio.smakosh.com&demo-image=https%3A%2F%2Fportfolio.smakosh.com%2Fstatic%2Fthumbnail-16a70559ab07712f83d3ce412dfbb5a6.png) and pass in your:
-  
-  - Formik form endpoint
-  - Google recaptcha public key
-  - Github token
+- [Fork this repository on GitHub](https://github.com/Vagr9K/gatsby-advanced-starter/fork)
+- Run the following commands:
 
-To Env variables section.
+  ```sh
+  git clone https://github.com/${YourUsername}/${YourForkName} YourForkName # Clone your fork
+  cd YourForkName
+  npm install # or yarn install
+  npm run develop # or yarn develop
+  ```
 
-### Locally
+## Configuration
 
-1. Create an account at [Formik](https://formik.com/?utm_source=smakosh)
-2. Install [Yarn](https://yarnpkg.com/en/)
-3. Grab a Google recaptcha key from [Google Recaptcha](https://www.google.com/recaptcha/admin)
-4. Grab your Github token from GitHub
-5. Run `cp .env.development.template .env.development`
-6. Run `yarn && yarn start`
+Edit the export object in `data/SiteConfig`:
 
-> You could run `vercel env pull` to get your env variables from Vercel.
-
-### Deploying locally to Vercel
-
-I highly recommend that you push to GitHub/GitLab and deploy your repository to Vercel instead or just hit the Deploy button.
-
-### Clean the cache
-
-This removes the `.cache/` & `public/` folders
-
-```bash
-yarn reset
+```js
+module.exports = {
+  siteTitle: "Gatsby Advanced Starter", // Site title.
+  siteTitleShort: "GA Starter", // Short site title for homescreen (PWA). Preferably should be under 12 characters to prevent truncation.
+  siteTitleAlt: "GatsbyJS Advanced Starter", // Alternative site title for SEO.
+  siteLogo: "/logos/logo-1024.png", // Logo used for SEO and manifest.
+  siteUrl: "https://gatsby-advanced-starter-demo.netlify.com", // Domain of your website without pathPrefix.
+  pathPrefix: "/", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
+  siteDescription: "A GatsbyJS starter with Advanced design in mind.", // Website description used for RSS feeds/meta description tag.
+  siteRss: "/rss.xml", // Path to the RSS file.
+  siteRssTitle: "Gatsby Advanced Starter RSS feed", // Title of the RSS feed
+  siteFBAppID: "1825356251115265", // FB Application ID for using app insights
+  googleAnalyticsID: "UA-47311644-5", // GA tracking ID.
+  disqusShortname: "https-vagr9k-github-io-gatsby-advanced-starter", // Disqus shortname.
+  dateFromFormat: "YYYY-MM-DD", // Date format used in the frontmatter.
+  dateFormat: "DD/MM/YYYY", // Date format for display.
+  postsPerPage: 4, // Amount of posts displayed per listing page. Set to zero to disable paging. See the "Pagination" section.
+  userName: "Advanced User", // Username to display in the author segment.
+  userEmail: "AdvancedUser@example.com", // Email used for RSS feed's author segment
+  userTwitter: "", // Optionally renders "Follow Me" in the UserInfo segment.
+  userLocation: "North Pole, Earth", // User location to display in the author segment.
+  userAvatar: "https://api.adorable.io/avatars/150/test.png", // User avatar to display in the author segment.
+  userDescription:
+    "Yeah, I like animals better than people sometimes... Especially dogs. Dogs are the best. Every time you come home, they act like they haven't seen you in a year. And the good thing about dogs... is they got different dogs for different people.", // User description to display in the author segment.
+  // Links to social profiles/projects you want to display in the author segment/navigation bar.
+  userLinks: [
+    {
+      label: "GitHub",
+      url: "https://github.com/Vagr9K/gatsby-advanced-starter",
+      iconClassName: "fa fa-github",
+    },
+    {
+      label: "Twitter",
+      url: "https://twitter.com/Vagr9K",
+      iconClassName: "fa fa-twitter",
+    },
+    {
+      label: "Email",
+      url: "mailto:vagr9k@gmail.com",
+      iconClassName: "fa fa-envelope",
+    },
+  ],
+  copyright: "Copyright © 2019. Advanced User", // Copyright string for the footer of the website and RSS feed.
+  themeColor: "#c62828", // Used for setting manifest and progress theme colors.
+  backgroundColor: "#e0e0e0", // Used for setting manifest background color.
+};
 ```
 
-## Built with
+If want to customize Netlify CMS, e.g. registering custom widgets or styling the preview pane, you can do so by editing `src/netlifycms/index.js`:
 
-- Adobe XD
-- Gatsby
-- React & GraphQL
-- Formik
-- Google recaptcha
-- VSCode
-- And these useful of JavaScript libraries & Gatsby plugins [package.json](package.json)
+```js
+import CMS from "netlify-cms-app";
 
-## License
+CMS.init({
+  config: {
+    backend: {
+      name: "git-gateway",
+    },
+  },
+});
+```
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for more details
+You can also optionally set `pathPrefix`:
 
-## Contributors
+```js
+module.exports = {
+  // Note: it must *not* have a trailing slash.
+  pathPrefix: "/gatsby-advanced-starter", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
+};
+```
 
-- [Ajay NS](https://github.com/ajayns) https://github.com/smakosh/gatsby-portfolio-dev/pull/3
-- [Ryan Lee](https://github.com/drdgvhbh) https://github.com/smakosh/gatsby-portfolio-dev/pull/6
-- [David](https://github.com/davidavz) https://github.com/smakosh/gatsby-portfolio-dev/pull/8
-- [Léu Almeida](https://github.com/LeuAlmeida) https://github.com/smakosh/gatsby-portfolio-dev/pull/21
-- [Kudakwashe Mupeni](https://github.com/2wce) https://github.com/smakosh/gatsby-portfolio-dev/pull/20
-- [sasannnn](https://github.com/sasannnn) https://github.com/smakosh/gatsby-portfolio-dev/pull/22
-- [Michael Seifarth](https://github.com/Kageetai) https://github.com/smakosh/gatsby-portfolio-dev/pull/27
-- [Hugo](https://github.com/Kronicom) https://github.com/smakosh/gatsby-portfolio-dev/pull/34 https://github.com/smakosh/gatsby-portfolio-dev/pull/35
-- [manula thejan](https://github.com/manula2004) https://github.com/smakosh/gatsby-portfolio-dev/pull/38
-- [Benjamin Lo](https://github.com/benji011) https://github.com/smakosh/gatsby-portfolio-dev/pull/40
-- [Yassine Rais](https://github.com/yassinrais) https://github.com/smakosh/gatsby-portfolio-dev/pull/41
-- [Smakosh](https://smakosh.com)
+WARNING: Make sure to edit `static/robots.txt` to include your domain for the sitemap!
 
-## Support
+## Pagination
 
-If you love this Gatsby template and want to support me, you can do so through my GitHub profile.
+By default the starter will show 4 posts per page. The landing page is the first page located on `/` (controlled by the `Listing` component).
+
+You can control the amount of posts via `SiteConfig` by setting the `postsPerPage: ${NUMBER}`.
+
+NOTE: You can also disable the pagination by setting the `postsPerPage: 0`. In this case the landing page will be controlled by the `Landing` component.
+
+## NetlifyCMS
+
+First of all, make sure to edit `static/admin/config.yml` and add your [GitHub/GitLab/NetlifyId credentials](https://www.netlifycms.org/docs/authentication-backends/):
+
+```yml
+backend:
+  name: github # Refer to https://www.netlifycms.org/docs/authentication-backends/ for auth backend list and instructions
+  branch: master # Branch to update
+  repo: vagr9k/gatsby-material-starter # Repo for pushing new commits. Make sure to replace with your repo!
+```
+
+You can visit `/admin/` after and will be greeted by a login dialog (depending on the auth provider you ave chosen above).
+
+For NetlifyCMS specific issues visit the [official documentation](https://www.netlifycms.org/docs/intro/).
+
+# Author
+
+Ruben Harutyunyan ([@Vagr9K](https://twitter.com/Vagr9K))

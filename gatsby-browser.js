@@ -1,6 +1,9 @@
-import React from 'react';
-import ThemeProvider from 'providers/ThemeProvider';
+import React from "react";
+import { AnimatePresence } from "framer-motion";
+import ThemeProvider from "providers/ThemeProvider";
+
+export const wrapRootElement = ({ element }) => (
+  <ThemeProvider>{element}</ThemeProvider>
+);
 
 export const onServiceWorkerUpdateReady = () => window.location.reload(true);
-
-export const wrapRootElement = ({ element }) => <ThemeProvider>{element}</ThemeProvider>;

@@ -1,4 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
+import colors from "theme/colors.json";
 
 export const Global = createGlobalStyle`
   html {
@@ -600,11 +601,13 @@ export const Global = createGlobalStyle`
       }
     }
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto', Helvetica, sans-serif;
-      color: ${({ theme }) => (theme === 'light' ? 'hsla(0, 0%, 0%, 0.8)' : '#fff')};
-      background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#212121')};
+      margin: auto;
+      
+      font-family: 'Raleway', Helvetica, sans-serif;
+      color: ${({ theme }) =>
+        theme === "light" ? "hsla(0, 0%, 0%, 0.8)" : "#fff"};
+      background-color: ${({ theme }) => colors[theme].background};
+      background-image:${({ theme }) => colors[theme].backgroundImage};
       transition: .3s all;
       font-weight: normal;
       word-wrap: break-word;
@@ -614,9 +617,20 @@ export const Global = createGlobalStyle`
       -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
       font-feature-settings: 'kern', 'liga', 'clig', 'calt';
     }
+   body ::selection {
+    color: ${({ theme }) => colors[theme].background};
+    background: ${({ theme }) => colors[theme].primaryColor};
+    };
 
-    a {
+    a,p,h1,h2,h3,h4,h5,h6,pre {
       text-decoration: none;
+      color:${({ theme }) => colors[theme].textColor};
+      transition:.3s;
+    }
+    a:hover{
+      /* text-decoration:underline; */
+      color:${({ theme }) => colors[theme].primaryColor};
+      transition:.4s all;
     }
 
     input, select, textarea, button {
