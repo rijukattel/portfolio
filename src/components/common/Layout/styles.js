@@ -627,6 +627,8 @@ export const Global = createGlobalStyle`
       color:${({ theme }) => colors[theme].textColor};
       transition:.3s;
     }
+
+   
     a:hover{
       /* text-decoration:underline; */
       color:${({ theme }) => colors[theme].primaryColor};

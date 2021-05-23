@@ -1,7 +1,7 @@
 backend:
   name: git-gateway # Refer to https://www.netlifycms.org/docs/authentication-backends/ for auth backend list and instructions
-  # branch: master # Branch to update
-  branch: main # Branch to update
+  branch: master # Branch to update
+  # branch: main # Branch to update
   repo: argahv/raghavkattel # Repo for pushing new commits. Make sure to replace with your repo!
   commit_messages:
     create: "Create {{collection}} “{{slug}}”"
@@ -77,10 +77,10 @@ collections:
                 label: LeftSide
                 widget: "object"
                 fields:
-                  - name: "quote1"
+                  - name: "leftSideTitle"
                     widget: string
                   - name: "leftSideDescription1"
-                    widget: string
+                    widget: markdown
               - name: "rightSide"
                 label: Right Side
                 widget: "object"
@@ -89,16 +89,27 @@ collections:
                     widget: string
                   - name: "ctaShortDesc1Link"
                     widget: string
+
+                  - name: "rightSideTitle"
+                    widget: string
           - label: "Services/Skills"
             name: skills
-            widget: list
+            widget: object
             fields:
-              - name: image
-                widget: image
-              - name: skillTitle
-                label: Skill Name
-              - name: skillDescription
-                label: Description
+              - name: skillHeader
+                label: Title
+                widget: string
+              - name: skillsList
+                label: Skills
+                widget: list
+                fields:
+                  - name: image
+                    widget: image
+                  - name: skillTitle
+                    label: Skill Name
+                  - name: skillDescription
+                    label: Description
+                    widget: markdown
           - label: BannerOne
             name: bannerOne
             widget: object
@@ -108,7 +119,7 @@ collections:
                 widget: string
               - name: bannerOneDesc
                 label: Description
-                widget: string
+                widget: markdown
               - name: bannerOneCta
                 label: CTA
                 widget: object
@@ -131,6 +142,24 @@ collections:
               default: "about-page",
             }
           - { label: "Slug", name: "slug", widget: "hidden", default: "/about" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+      - label: "Projects"
+        name: "projects"
+        file: "src/content/pages/projects.md"
+        fields:
+          - {
+              label: "Template",
+              name: "template",
+              widget: "hidden",
+              default: "projects-page",
+            }
+          - {
+              label: "Slug",
+              name: "slug",
+              widget: "hidden",
+              default: "/projects",
+            }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Body", name: "body", widget: "markdown" }
       - label: "Contact"

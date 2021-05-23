@@ -4,6 +4,7 @@ import { Button, Layout } from "../../components/common";
 import PostListing from "../../components/PostListing/PostListing";
 
 function Listing({ pageContext, data }) {
+  console.log(`data`, data);
   function renderPaging() {
     const { currentPageNum, pageCount } = pageContext;
     const prevPage =
@@ -70,9 +71,11 @@ export const blogQuery = graphql`
           fields {
             slug
             date
+            readingTime {
+              text
+            }
           }
           excerpt
-          timeToRead
           frontmatter {
             title
             tags

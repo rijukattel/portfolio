@@ -7,7 +7,6 @@ import {
   copyright,
   siteRss,
 } from "../../../data/SiteConfig";
-import { Link } from "gatsby";
 
 export const Footer = () => (
   <Wrapper>
@@ -15,7 +14,6 @@ export const Footer = () => (
       <Details>
         <h2>{siteTitle}</h2>
         <span>{copyright}</span>
-        <Link to={siteRss}>SiteMap</Link>
       </Details>
       <Links>
         {socialLinks.map(({ id, name, link, icon }) => (

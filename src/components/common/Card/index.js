@@ -1,3 +1,4 @@
+import Col from "components/Col";
 import { Link } from "gatsby";
 import moment from "moment";
 import { ThemeContext } from "providers/ThemeProvider";
@@ -10,10 +11,10 @@ export const Card = ({
   path = "",
   tags = [],
   cover,
-  title = "",
+  title = <></>,
+  footer,
   date,
-  excerpt = "",
-  timeToRead = "",
+  timeToRead,
   post,
   ...props
 }) => {
@@ -32,12 +33,14 @@ export const Card = ({
       theme={theme}
       {...props}
     >
-      {cover && <img src={cover} alt={title} />}
+      {cover && (
+        <div className="img-container">
+          <img src={cover} alt={title} />
+        </div>
+      )}
       <div className="detail-container">
-        <h3 className="title">
-          <Link to={path}>{title}</Link>
-        </h3>
-        <h3 className="date">{moment(date).format(site.dateFormat)}</h3>
+        <div className="title">{title}</div>
+        <div className="footer">{footer}</div>
       </div>
     </CardStyle>
   );

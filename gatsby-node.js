@@ -65,6 +65,9 @@ exports.createPages = async ({ graphql, actions }) => {
             id
             fields {
               slug
+              readingTime {
+                text
+              }
             }
             tableOfContents
             frontmatter {

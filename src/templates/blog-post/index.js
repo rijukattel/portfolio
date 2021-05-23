@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { graphql } from "gatsby";
-import { Container, Layout } from "components/common";
+import { Layout } from "components/common";
 import UserInfo from "components/UserInfo/UserInfo";
 import Disqus from "components/Disqus/Disqus";
 import PostTags from "components/PostTags/PostTags";
@@ -10,6 +10,7 @@ import SEO from "components/SEO/SEO";
 import config from "../../../data/SiteConfig";
 import Toc from "components/Toc";
 import moment from "moment";
+import { BlogPostContainer } from "./styles";
 
 export default function PostTemplate({ data, pageContext }) {
   const { slug } = pageContext;
@@ -19,6 +20,8 @@ export default function PostTemplate({ data, pageContext }) {
     post.id = slug;
   }
 
+  console.log(`postNode`, postNode);
+
   return (
     <Layout>
       <div>
@@ -26,13 +29,14 @@ export default function PostTemplate({ data, pageContext }) {
           <title>{`${post.title} | ${config.siteTitle}`}</title>
         </Helmet>
         <SEO postPath={slug} postNode={postNode} postSEO />
-        <Toc post={postNode.tableOfContents} />
         <div>
-          <Container>
+          <BlogPostContainer>
             <h1>{post.title}</h1>
+            <h4>{postNode.fields.readingTime.text}</h4>
             <p style={{ fontSize: 18, lineHeight: 1.7 }}>
               {moment(post.date).format(config.dateFormat)}
             </p>
+            <Toc post={postNode.tableOfContents} />
             {post.cover && (
               <div style={{ width: "75%", height: "auto", margin: "auto" }}>
                 <img src={post.cover} alt={post.title} />
@@ -40,7 +44,7 @@ export default function PostTemplate({ data, pageContext }) {
             )}
             {/* eslint-disable-next-line react/no-danger */}
             <div dangerouslySetInnerHTML={{ __html: postNode.html }} />
-          </Container>
+          </BlogPostContainer>
           <div className="post-meta">
             <PostTags tags={post.tags} />
             <SocialLinks postPath={slug} postNode={postNode} />
@@ -58,7 +62,6 @@ export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
-      timeToRead
       excerpt
       tableOfContents
       frontmatter {
@@ -71,6 +74,9 @@ export const pageQuery = graphql`
       fields {
         slug
         date
+        readingTime {
+          text
+        }
       }
     }
   }

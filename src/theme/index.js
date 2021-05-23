@@ -2,9 +2,9 @@ import colors from "./colors.json";
 
 import variables from "./variables.json";
 
-const theme = {
+const themeVar = {
   ...colors,
   ...variables,
 };
 
-export default theme;
+export default themeVar;
