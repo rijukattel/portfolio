@@ -3,15 +3,19 @@ import theme from "theme";
 
 export const SiteDetail = styled.div`
   min-height: 200px;
-  h1 {
+  margin: 25% 0;
+
+  .site-title {
     font-weight: bold;
-    font-size: 50px;
-    margin-top: 7vh;
+    font-size: 60px;
     font-family: "Anton", sans-serif;
   }
-  p {
-    font-size: 18px;
-    line-height: 1.7;
+
+  .tagline {
+    font-family: Limelight;
+  }
+  .hello {
+    color: ${theme["dark"].primaryColor};
   }
 `;
 
@@ -24,8 +28,4 @@ export const LatestBlogsContainer = styled.div`
   }
   .all-link {
   }
-`;
-
-export const CallToAction = styled.div`
-  margin-top: 2rem;
 `;

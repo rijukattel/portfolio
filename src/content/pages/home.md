@@ -1,7 +1,7 @@
 ---
 template: home
 slug: /
-title: "Hello "
+title: "Raghav"
 tagline: "Computer Engineer "
 featuredImage: assets/124595972_1773004756183327_9048875191044310612_n.jpg
 cta:

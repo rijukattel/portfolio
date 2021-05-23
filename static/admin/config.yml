@@ -1,6 +1,7 @@
 backend:
   name: git-gateway # Refer to https://www.netlifycms.org/docs/authentication-backends/ for auth backend list and instructions
-  branch: main # Branch to update
+  branch: master # Branch to update
+  # branch: main # Branch to update
   repo: argahv/raghavkattel # Repo for pushing new commits. Make sure to replace with your repo!
   commit_messages:
     create: "Create {{collection}} “{{slug}}”"
@@ -68,6 +69,57 @@ collections:
               - name: "ctaLink"
                 label: "CTA Link"
                 widget: "string"
+          - label: "Short Description 1"
+            name: shortDescription1
+            widget: "object"
+            fields:
+              - name: "leftSide"
+                label: LeftSide
+                widget: "object"
+                fields:
+                  - name: "quote1"
+                    widget: string
+                  - name: "leftSideDescription1"
+                    widget: string
+              - name: "rightSide"
+                label: Right Side
+                widget: "object"
+                fields:
+                  - name: "ctaShortDesc1Title"
+                    widget: string
+                  - name: "ctaShortDesc1Link"
+                    widget: string
+          - label: "Services/Skills"
+            name: skills
+            widget: list
+            fields:
+              - name: image
+                widget: image
+              - name: skillTitle
+                label: Skill Name
+              - name: skillDescription
+                label: Description
+          - label: BannerOne
+            name: bannerOne
+            widget: object
+            fields:
+              - name: bannerOneTitle
+                label: Banner Title
+                widget: string
+              - name: bannerOneDesc
+                label: Description
+                widget: string
+              - name: bannerOneCta
+                label: CTA
+                widget: object
+                fields:
+                  - name: bannerOneCtaTitle
+                    label: CTA Title
+                    widget: string
+                  - name: bannerOneCtaLink
+                    label: CTA Link
+                    widget: string
+
       - label: "About"
         name: "about"
         file: "src/content/pages/about.md"
