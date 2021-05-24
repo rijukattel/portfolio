@@ -7,7 +7,7 @@ import { SmallBannerStyles } from "./styles";
 const SmallBanner = ({ items }) => {
   return (
     <SmallBannerStyles>
-      <Col className="container" columns={2}>
+      <Col lg={2} md={2} className="container" columns={2}>
         <div className="leftContainer">
           <h1>{items.bannerOneTitle}</h1>
           {items.bannerOneDesc && (

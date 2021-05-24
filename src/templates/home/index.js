@@ -46,7 +46,7 @@ const Home = ({ data }) => {
         </Col>
       </SiteDetail>
       <ShortDescription>
-        <Col className="container" columns={2}>
+        <Col lg={2} md={2} className="container" columns={2}>
           <div className="leftSide">
             <h2>{shortDescription1.leftSide.leftSideTitle}</h2>
             <div

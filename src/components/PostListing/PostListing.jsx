@@ -19,6 +19,8 @@ function PostListing({ postEdges }) {
     });
   });
 
+  console.log(postEdges);
+
   const cardFooter = (date, timeToRead) => (
     <Col className="footer" columns={2} lg={2} md={2} sm={2}>
       <h3 className="date">{moment(date).format(SiteDetail.dateFormat)}</h3>

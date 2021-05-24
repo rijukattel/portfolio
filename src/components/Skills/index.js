@@ -9,7 +9,7 @@ const Skills = ({ skills }) => {
   return (
     <SkillsStyles theme={theme}>
       <h1>{skills.skillHeader}</h1>
-      <Col columns={3}>
+      <Col lg={2} md={2} columns={3}>
         {skills.skillsList.map(({ image, skillTitle, skillDescription }) => (
           <div className="skill-item-container">
             <div className="img-container">
