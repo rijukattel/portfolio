@@ -2,7 +2,7 @@
   "name": "rijukattel",
   "description": "Riju Kattel",
   "version": "2.20.11",
-  "author": "Riju Kattel <rijukattel02@gmail.com>",
+  "author": "Riju Kattel <rijukattel027@gmail.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.12.0",
     "framer-motion": "^4.1.16",
@@ -70,12 +70,11 @@
   },
   "keywords": [
     "gatsby",
-    "riju kattel",
+    "rijukattel",
     "software engineer",
     "tech",
     "nepal",
-    "agriculture",
-    "blogs"
+    "computer engineer"
   ],
   "license": "MIT",
   "main": "n/a",
