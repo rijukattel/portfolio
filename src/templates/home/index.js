@@ -22,9 +22,7 @@ const Home = ({ data }) => {
         <Col columns={2} sm={1} lg={2} md={2}>
           <div className="description">
             <div>
-              <p className="tagline">
-                I'm a <span className="hello">{frontmatter.tagline}</span>
-              </p>
+             
               <h1 className="site-title">
                 <span className="hello">Hello, </span>I'm {frontmatter.title}
               </h1>
