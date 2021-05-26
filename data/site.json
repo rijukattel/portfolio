@@ -1,50 +1,39 @@
 {
   "userLocation": "Chitwan, Nepal",
   "userPhone": "9865430408",
-  "userAvatar": "assets/124595972_1773004756183327_9048875191044310612_o.jpg",
+  "userAvatar": "assets/icons8-react-160.png",
   "dateFormat": "MMM Do, YY",
-  "disqusShortname": "https-starter-arg-netlify-app",
+  "disqusShortname": "sdasdas",
   "copyright": "2021",
   "userTwitter": "argahv",
-  "siteUrl": "https://raghavkattel.com.np",
-  "googleAnalyticsID": "G-V3F9GHP0G5",
+  "siteUrl": "https://rijukattel.com.np",
+  "googleAnalyticsID": "sdassaf",
   "siteRss": "/rss.xml",
-  "siteTitleShort": "Raghav",
+  "siteTitleShort": "Riju",
   "socialLinks": [
-    {
-      "id": 1,
-      "name": "Github",
-      "link": "https://github.com/argahv",
-      "icon": "assets/github-mark-32px.png"
-    },
     {
       "id": 15,
       "name": "Instagram",
-      "link": "https://instagram.com/argahv",
+      "link": "https://instagram.com/reeju01",
       "icon": "assets/icons8-instagram-64.png"
     },
     {
       "id": 3,
       "name": "Twitter",
-      "link": "https://twitter.com/argahv",
+      "link": "https://twitter.com/rijukattel",
       "icon": "assets/icons8-twitter-64.png"
-    },
-    {
-      "name": "Linked In",
-      "link": "https://www.linkedin.com/in/argahv/",
-      "icon": "assets/linkedin.png"
     }
   ],
-  "siteRssTitle": "Raghav Kattel RSS feed",
+  "siteRssTitle": "RijuKattel RSS feed",
   "dateFromFormat": "YYYY-MM-DD",
   "userPhoneCode": "+977",
-  "userEmail": "arg.ahv7@gmail.com",
+  "userEmail": "rijukattel02@gmail.com",
   "userDescription": "",
-  "siteTitle": "Raghav Kattel",
-  "siteLogo": "assets/compre.png",
-  "siteDescription": "Raghav Kattel- A Computer Engineer",
+  "siteTitle": "Riju Kattel",
+  "siteLogo": "assets/icons8-react-160.png",
+  "siteDescription": "Read Blogs and Get to know me",
   "backgroundColor": "#e0e0e0",
-  "userName": "argahv",
+  "userName": "rijukattel",
   "pathPrefix": "/",
   "postsPerPage": 8,
   "siteFBAppID": "1825356251115265",
