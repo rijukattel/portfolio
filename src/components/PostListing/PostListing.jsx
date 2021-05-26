@@ -15,16 +15,16 @@ function PostListing({ postEdges }) {
       title: postEdge.node.frontmatter.title,
       date: postEdge.node.fields.date,
       excerpt: postEdge.node.excerpt,
-      timeToRead: postEdge.node.fields.readingTime.text,
+      timeToRead: postEdge.node.timeToRead,
     });
   });
 
-  console.log(postEdges);
+  console.log(`postEdges`, postEdges);
 
   const cardFooter = (date, timeToRead) => (
     <Col className="footer" columns={2} lg={2} md={2} sm={2}>
       <h3 className="date">{moment(date).format(SiteDetail.dateFormat)}</h3>
-      <h6 className="timeToRead">{timeToRead}</h6>
+      <h6 className="timeToRead">{timeToRead} min read</h6>
     </Col>
   );
   const cardTitle = (link, title) => (

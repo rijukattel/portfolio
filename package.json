@@ -81,6 +81,7 @@
   "scripts": {
     "start": "gatsby develop",
     "dev": "npm run develop",
+    "proxyDev": "npx netlify-cms-proxy-server",
     "serve": "gatsby serve",
     "build": "gatsby build",
     "build:pp": "gatsby build --prefix-paths",

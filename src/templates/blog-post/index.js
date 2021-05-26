@@ -20,8 +20,6 @@ export default function PostTemplate({ data, pageContext }) {
     post.id = slug;
   }
 
-  console.log(`postNode`, postNode);
-
   return (
     <Layout>
       <div>
@@ -32,11 +30,13 @@ export default function PostTemplate({ data, pageContext }) {
         <div>
           <BlogPostContainer>
             <h1>{post.title}</h1>
-            <h4>{postNode.fields.readingTime.text}</h4>
+            <h4>{postNode.timeToRead} min read</h4>
             <p style={{ fontSize: 18, lineHeight: 1.7 }}>
               {moment(post.date).format(config.dateFormat)}
             </p>
-            <Toc post={postNode.tableOfContents} />
+            {postNode.tableOfContents && (
+              <Toc post={postNode.tableOfContents} />
+            )}
             {post.cover && (
               <div style={{ width: "75%", height: "auto", margin: "auto" }}>
                 <img src={post.cover} alt={post.title} />
@@ -64,6 +64,7 @@ export const pageQuery = graphql`
       html
       excerpt
       tableOfContents
+      timeToRead
       frontmatter {
         title
         cover

@@ -127,6 +127,7 @@ export const listingQuery = graphql`
         node {
           id
           excerpt(pruneLength: 140)
+          timeToRead
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
             slug
@@ -136,9 +137,6 @@ export const listingQuery = graphql`
           fields {
             slug
             date
-            readingTime {
-              text
-            }
           }
         }
       }

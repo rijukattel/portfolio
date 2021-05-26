@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   background-color: ${({ theme }) =>
     theme === "light" ? "#d7e1ec" : themeVar["dark"].secondaryColor};
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
   position: sticky;
   top: 0;
   z-index: 1;

@@ -9,6 +9,10 @@ export const SkillsStyles = styled.div`
     border: 5px solid ${({ theme }) => themeVar[theme].primaryColor};
     border-radius: 12px;
     background-color: ${({ theme }) => themeVar[theme].secondaryColor};
+    .desc {
+      text-align: center;
+      text-justify: auto;
+    }
   }
   .img-container {
     margin: 5rem;

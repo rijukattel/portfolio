@@ -5,15 +5,16 @@ import {
   siteTitle,
   socialLinks,
   copyright,
-  siteRss,
+  siteLogo,
 } from "../../../data/SiteConfig";
 
 export const Footer = () => (
   <Wrapper>
     <Flex as={Container}>
       <Details>
-        <h2>{siteTitle}</h2>
-        <span>{copyright}</span>
+        <img src={siteLogo} alt={siteTitle} />
+        {/* <h2>{siteTitle}</h2> */}
+        <p>{copyright}</p>
       </Details>
       <Links>
         {socialLinks.map(({ id, name, link, icon }) => (

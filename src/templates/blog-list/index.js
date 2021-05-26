@@ -71,11 +71,9 @@ export const blogQuery = graphql`
           fields {
             slug
             date
-            readingTime {
-              text
-            }
           }
           excerpt
+          timeToRead
           frontmatter {
             title
             tags

@@ -4,7 +4,6 @@ import { ThemeContext } from "../../../providers/ThemeProvider";
 import { Container } from "../../../components/common";
 import NavbarLinks from "../NavbarLinks";
 import { Wrapper, Brand } from "./styles";
-import { siteTitle } from "../../../../data/SiteConfig";
 
 const Navbar = () => {
   const { theme } = useContext(ThemeContext);
@@ -12,8 +11,8 @@ const Navbar = () => {
   return (
     <Wrapper as={Container}>
       <Brand as={Link} to="/" theme={theme}>
-        {siteTitle}
-      </Brand>
+        Home
+      </Brand>{" "}
       <NavbarLinks desktop />
     </Wrapper>
   );

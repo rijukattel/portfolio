@@ -4,6 +4,7 @@ import { TocStyle } from "./style";
 
 const Toc = ({ post }) => {
   const { theme } = useContext(ThemeContext);
+
   return (
     <TocStyle theme={theme}>
       <nav>

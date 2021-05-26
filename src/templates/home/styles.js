@@ -72,7 +72,7 @@ export const ShortDescription = styled.div`
       line-height: 1.5;
     }
     .desc {
-      font-size: 24px;
+      font-size: 18px;
     }
   }
   .rightSide {

@@ -15,7 +15,7 @@ export const SmallBannerStyles = styled.div`
   }
   .leftContainer {
     .desc {
-      font-size: 24px;
+      font-size: 18px;
     }
   }
   .rightContainer {
