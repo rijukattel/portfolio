@@ -2,7 +2,7 @@
 template: home
 slug: /
 title: Riju
-tagline: a agricultural student
+tagline: agricultural student
 featuredImage: assets/icons8-instagram-64.png
 cta:
   ctaText: Know more
