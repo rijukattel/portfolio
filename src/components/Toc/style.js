@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "theme/colors.json";
+import themeVar from "theme";
 
 export const TocStyle = styled.div`
   nav {
@@ -13,7 +13,7 @@ export const TocStyle = styled.div`
     padding: 10px;
   }
   ul {
-    border-left: 1px solid ${({ theme }) => colors[theme].primaryColor};
+    border-left: 1px solid ${({ theme }) => themeVar[theme].primaryColor};
   }
 
   ul > li {
@@ -28,7 +28,7 @@ export const TocStyle = styled.div`
 
   ul > li > a,
   p {
-    /* color: ${({ theme }) => colors[theme].primaryColor}; */
+    /* color: ${({ theme }) => themeVar[theme].primaryColor}; */
     /* text-decoration: none; */
     border-bottom: 0;
     transition: 1s all ease-in-out;
