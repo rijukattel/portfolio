@@ -15,7 +15,6 @@ const Home = ({ data }) => {
   const postEdges = posts.edges;
 
   const Image = frontmatter.featuredImage;
-  console.log(`data`, data);
 
   return (
     <Layout title={frontmatter.title}>

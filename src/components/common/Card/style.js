@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import colors from "theme/colors.json";
+import themeVar from "theme";
 
 export const CardStyle = styled(motion.div)`
   border-radius: 3px;
-  background-color: ${({ theme }) => colors[theme].secondaryColor};
+  background-color: ${({ theme }) => themeVar[theme].secondaryColor};
   margin: 2px;
   min-height: 350px;
 

@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import styled, { css } from "styled-components";
-import colors from "theme/colors.json";
+import themeVar from "theme";
 
 export const ButtonStyle = styled.button`
   padding: 10px;
@@ -11,8 +11,7 @@ export const ButtonStyle = styled.button`
   ${({ type, theme }) =>
     type === "primary"
       ? css`
-          background-color: ${colors[theme].primaryColor};
-          /* color: ${colors[theme].textColorInv}; */
+          background-color: ${themeVar[theme].primaryColor};
           color: white;
           &:hover {
             filter: brightness(120%);
@@ -22,9 +21,9 @@ export const ButtonStyle = styled.button`
         `
       : css`
           background-color: none;
-          border: 2px solid ${colors[theme].primaryColor};
+          border: 2px solid ${themeVar[theme].primaryColor};
           background: none;
-          color: ${colors[theme].textColor};
+          color: ${themeVar[theme].textColor};
           &:hover {
             filter: brightness(120%);
             transform: scale(1.06);

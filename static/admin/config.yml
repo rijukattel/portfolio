@@ -288,3 +288,75 @@ collections:
             name: copyright
             widget: string
             required: true
+      - name: themes
+        label: Theme
+        file: src/theme/colors.json
+        fields:
+          - label: Colors
+            minimize_collapsed: true
+            name: theme
+            required: true
+            widget: object
+            fields:
+              - label: "light"
+                name: "light"
+                widget: object
+                minimize_collapsed: true
+                fields:
+                  - label: background
+                    name: background
+                    widget: color
+                    enableAlpha: true
+                    allowInput: true
+                  - label: primaryColor
+                    name: primaryColor
+                    widget: color
+                    enableAlpha: true
+                    allowInput: true
+                  - label: backgroundImage
+                    name: backgroundImage
+                    widget: color
+                    enableAlpha: true
+                    allowInput: true
+
+                  - label: textColor
+                    name: textColor
+                    enableAlpha: true
+                    allowInput: true
+                    widget: color
+                  - label: secondaryColor
+                    name: secondaryColor
+                    enableAlpha: true
+                    allowInput: true
+                    widget: color
+              - label: "dark"
+                name: "dark"
+                widget: object
+                minimize_collapsed: true
+                fields:
+                  - label: background
+                    name: background
+                    widget: color
+                    enableAlpha: true
+                    allowInput: true
+                  - label: primaryColor
+                    name: primaryColor
+                    widget: color
+                    enableAlpha: true
+                    allowInput: true
+                  - label: backgroundImage
+                    name: backgroundImage
+                    widget: color
+                    enableAlpha: true
+                    allowInput: true
+
+                  - label: textColor
+                    name: textColor
+                    enableAlpha: true
+                    allowInput: true
+                    widget: color
+                  - label: secondaryColor
+                    name: secondaryColor
+                    enableAlpha: true
+                    allowInput: true
+                    widget: color

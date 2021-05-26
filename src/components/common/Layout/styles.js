@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import colors from "theme/colors.json";
+import themeVar from "theme";
 
 export const Global = createGlobalStyle`
   html {
@@ -606,8 +606,8 @@ export const Global = createGlobalStyle`
       font-family: 'Raleway', Helvetica, sans-serif;
       color: ${({ theme }) =>
         theme === "light" ? "hsla(0, 0%, 0%, 0.8)" : "#fff"};
-      background-color: ${({ theme }) => colors[theme].background};
-      background-image:${({ theme }) => colors[theme].backgroundImage};
+      background-color: ${({ theme }) => themeVar[theme].background};
+      background-image:${({ theme }) => themeVar[theme].backgroundImage};
       transition: .3s all;
       font-weight: normal;
       word-wrap: break-word;
@@ -618,20 +618,20 @@ export const Global = createGlobalStyle`
       font-feature-settings: 'kern', 'liga', 'clig', 'calt';
     }
    body ::selection {
-    color: ${({ theme }) => colors[theme].background};
-    background: ${({ theme }) => colors[theme].primaryColor};
+    color: ${({ theme }) => themeVar[theme].background};
+    background: ${({ theme }) => themeVar[theme].primaryColor};
     };
 
     a,p,h1,h2,h3,h4,h5,h6,pre {
       text-decoration: none;
-      color:${({ theme }) => colors[theme].textColor};
+      color:${({ theme }) => themeVar[theme].textColor};
       transition:.3s;
     }
 
    
     a:hover{
       /* text-decoration:underline; */
-      color:${({ theme }) => colors[theme].primaryColor};
+      color:${({ theme }) => themeVar[theme].primaryColor};
       transition:.4s all;
     }
 

@@ -1,16 +1,18 @@
 {
-  "light": {
-    "background": "#eee",
-    "primaryColor": "#2D4F6C",
-    "backgroundImage": "linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%)",
-    "textColor": "black",
-    "secondaryColor": "white"
-  },
-  "dark": {
-    "background": "#222729",
-    "primaryColor": "#0d9279",
-    "backgroundImage": "linear-gradient(315deg, #2A3035 0%, #222729 50%)",
-    "textColor": "#cccccc",
-    "secondaryColor": "#2A3035"
+  "theme": {
+    "light": {
+      "background": "#eeeeee",
+      "primaryColor": "#2D4F6C",
+      "backgroundImage": "linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%)",
+      "textColor": "black",
+      "secondaryColor": "white"
+    },
+    "dark": {
+      "background": "#222729",
+      "primaryColor": "#0d9279",
+      "backgroundImage": "linear-gradient(315deg, #2A3035 0%, #222729 50%)",
+      "textColor": "#cccccc",
+      "secondaryColor": "#2A3035"
+    }
   }
 }

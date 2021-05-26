@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import colors from "theme/colors.json";
+import themeVar from "theme";
 
 export const Wrapper = styled.div`
   a {
-    color: ${({ theme }) => colors[theme].textColor};
+    color: ${({ theme }) => themeVar[theme].textColor};
     text-decoration: none;
 
     @media (max-width: 960px) {

@@ -13,7 +13,7 @@ shortDescription1:
       <!--StartFragment-->
 
 
-      I have been a Developer for a while now. It's feels great to CODE and HAVE FUN at the same time
+      I have been a Developer for a while now. It feels great to CODE and HAVE FUN at the same time
 
 
       <!--EndFragment-->
@@ -69,5 +69,7 @@ bannerOne:
 <!--StartFragment-->
 
 ## **A "cinephilic", "hodophilic", music-loving, and an enthusiastic idiot who happens to be a Computer Engineer.**
+
+
 
 <!--EndFragment-->
