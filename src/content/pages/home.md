@@ -2,7 +2,7 @@
 template: home
 slug: /
 title: Riju
-tagline: Ag
+tagline: a agricultural student
 featuredImage: assets/icons8-instagram-64.png
 cta:
   ctaText: Know more
@@ -15,7 +15,7 @@ shortDescription1:
       **It''s me**e
 
       <!--EndFragment-->
-    leftSideTitle: Creating With Passion While Having FUN
+    leftSideTitle: All that we see or seem..is but a dream within a dream
   rightSide:
     ctaShortDesc1Title: Read blogs
     ctaShortDesc1Link: /blogs
