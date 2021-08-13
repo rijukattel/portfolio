@@ -1,9 +1,14 @@
 import { createGlobalStyle } from "styled-components";
-import themeVar from "theme";
+import config from "data/config";
 
 export const Global = createGlobalStyle`
+   ::selection {
+     background-color: ${config["themeColor"]};
+     color: white;
+    }
+
   html {
-    font-family: 'Roboto', Helvetica, sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 
@@ -62,6 +67,8 @@ export const Global = createGlobalStyle`
     h1 {
       font-size: 2em;
       margin: 0.67em 0;
+      font-family:'Style Script', cursive;
+
     }
     mark {
       background-color: #ff0;
@@ -225,6 +232,7 @@ export const Global = createGlobalStyle`
     }
     h2 {
       margin-left: 0;
+      font-family:'Style Script', cursive;
       margin-right: 0;
       margin-top: 0;
       padding-bottom: 0;
@@ -601,13 +609,12 @@ export const Global = createGlobalStyle`
       }
     }
     body {
-      margin: auto;
-      
-      font-family: 'Raleway', Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
       color: ${({ theme }) =>
         theme === "light" ? "hsla(0, 0%, 0%, 0.8)" : "#fff"};
-      background-color: ${({ theme }) => themeVar[theme].background};
-      background-image:${({ theme }) => themeVar[theme].backgroundImage};
+      background-color: ${({ theme }) =>
+        theme === "light" ? "#fff" : "#212121"};
       transition: .3s all;
       font-weight: normal;
       word-wrap: break-word;
@@ -617,22 +624,9 @@ export const Global = createGlobalStyle`
       -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
       font-feature-settings: 'kern', 'liga', 'clig', 'calt';
     }
-   body ::selection {
-    color: ${({ theme }) => themeVar[theme].background};
-    background: ${({ theme }) => themeVar[theme].primaryColor};
-    };
 
-    a,p,h1,h2,h3,h4,h5,h6,pre {
+    a {
       text-decoration: none;
-      color:${({ theme }) => themeVar[theme].textColor};
-      transition:.3s;
-    }
-
-   
-    a:hover{
-      /* text-decoration:underline; */
-      color:${({ theme }) => themeVar[theme].primaryColor};
-      transition:.4s all;
     }
 
     input, select, textarea, button {

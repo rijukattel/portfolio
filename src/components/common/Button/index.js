@@ -1,15 +1,35 @@
-import { ThemeContext } from "providers/ThemeProvider";
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import { ButtonStyle } from "./style";
+import config from "data/config";
+import styled from "styled-components";
 
-export const Button = ({ ...props }) => {
-  const { theme } = useContext(ThemeContext);
+export const Button = styled.button`
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 0.7rem 2.5rem;
+  border: ${config.themeColor};
 
-  return <ButtonStyle theme={theme} {...props} />;
-};
+  -webkit-appearance: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #fff;
+  background: ${config.themeColor};
+  text-transform: uppercase;
 
-Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  type: PropTypes.string.isRequired,
-};
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    background: gray;
+  }
+
+  ${({ secondary }) =>
+    secondary &&
+    `
+    border:  ${config.themeColor}
+		background: #001F3F;
+	`}
+`;
