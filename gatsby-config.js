@@ -1,74 +1,61 @@
-const config = require("./src/data/config");
+require(`dotenv`).config()
 
-require("dotenv").config({
-  path: `.env`,
-});
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
 module.exports = {
   siteMetadata: {
-    title: config.defaultTitle,
-    description: config.defaultDescription,
-    author: config.author,
+    // You can overwrite values here that are used for the SEO component
+    // You can also add new values here to query them like usual
+    // See all options: https://github.com/LekoArts/gatsby-themes/blob/main/themes/gatsby-theme-cara/gatsby-config.js
+    siteTitle: `Raghav`,
+    siteTitleAlt: `Raghav Kattel`,
+    siteHeadline: `Raghav Kattel`,
+    siteUrl: `https://raghavkattel.com`,
+    siteDescription: `A personal portfolio for Raghav`,
+    siteLanguage: `en`,
+    siteImage: `/banner.jpg`,
+    author: `@argahv`,
   },
   plugins: [
-    "gatsby-plugin-react-helmet",
-    "gatsby-plugin-styled-components",
     {
-      resolve: `gatsby-plugin-canonical-urls`,
-      options: {
-        siteUrl: config.url,
-      },
+      resolve: `@lekoarts/gatsby-theme-cara`,
+      // See the theme's README for all available options
+      options: {},
     },
     {
-      resolve: "gatsby-source-graphql",
+      resolve: `gatsby-plugin-manifest`,
       options: {
-        typeName: "GitHub",
-        fieldName: "github",
-        url: "https://api.github.com/graphql",
-        headers: {
-          Authorization: `bearer ${process.env.PORTFOLIO_GITHUB_TOKEN}`,
-        },
-        fetchOptions: {},
-      },
-    },
-    {
-      resolve: "gatsby-plugin-nprogress",
-      options: {
-        color: config.themeColor,
-        showSpinner: false,
-      },
-    },
-    {
-      resolve: "gatsby-plugin-google-analytics",
-      options: {
-        trackingId: config.googleAnalyticsID,
-        head: true,
-      },
-    },
-    {
-      resolve: "gatsby-plugin-manifest",
-      options: {
-        name: config.defaultTitle,
-        short_name: "argahv",
-        start_url: "/",
-        background_color: config.backgroundColor,
-        theme_color: config.themeColor,
-        display: "minimal-ui",
-        icon: "./static/favicon/favicon-512.png",
-      },
-    },
-    "gatsby-plugin-offline",
-    {
-      resolve: `gatsby-plugin-google-fonts`,
-      options: {
-        fonts: [
-          `limelight`,
-          `source sans pro\:300,400,400i,700`, // you can also specify font weights and styles
-          `style script\:300,400,400i,700,600`,
-          `josefin sans\:300,400,600,700`,
+        name: `Raghav`,
+        short_name: `argahv`,
+        description: `A personal portfolio for Raghav`,
+        start_url: `/`,
+        background_color: `#141821`,
+        // This will impact how browsers show your PWA/website
+        // https://css-tricks.com/meta-theme-color-and-trickery/
+        // theme_color: `#f6ad55`,
+        display: `standalone`,
+        icons: [
+          {
+            src: `/android-chrome-192x192.png`,
+            sizes: `192x192`,
+            type: `image/png`,
+          },
+          {
+            src: `/android-chrome-512x512.png`,
+            sizes: `512x512`,
+            type: `image/png`,
+          },
         ],
-        display: "swap",
       },
     },
-  ],
-};
+    `gatsby-plugin-gatsby-cloud`,
+    shouldAnalyseBundle && {
+      resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
+      options: {
+        analyzerMode: `static`,
+        reportFilename: `_bundle.html`,
+        openAnalyzer: false,
+      },
+    },
+  ].filter(Boolean),
+}

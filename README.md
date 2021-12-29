@@ -1,98 +1,114 @@
-# Portfolio for developers
+<p align="center">
+  <a href="https://cara.lekoarts.de">
+    <img alt="LekoArts" src="https://img.lekoarts.de/gatsby/gatsby-site-illustration.png" />
+  </a>
+</p>
+<h1 align="center">
+  Gatsby Starter Portfolio: Cara
+</h1>
 
+<p align="center">
+  <a href="https://github.com/LekoArts/gatsby-starter-portfolio-cara/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-0BSD-blue.svg" alt="Gatsby Starter Portfolio: Cara is released under the 0BSD license." />
+  </a>
+  <a href="https://github.com/sponsors/LekoArts">
+    <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/LekoArts">
+  </a>
+  <a href="https://www.lekoarts.de?utm_source=cara&utm_medium=Starter">
+    <img alt="Website" src="https://img.shields.io/badge/-website-blue">
+  </a>
+  <a href="https://twitter.com/intent/follow?screen_name=lekoarts_de">
+    <img src="https://img.shields.io/twitter/follow/lekoarts_de.svg?label=Follow%20@lekoarts_de" alt="Follow @lekoarts_de" />
+  </a>
+</p>
 
+Playful and Colorful One-Page portfolio featuring Parallax effects and animations. Using the Gatsby Theme [`@lekoarts/gatsby-theme-cara`](https://github.com/LekoArts/gatsby-themes/tree/main/themes/gatsby-theme-cara).
 
+[**Demo Website**](https://cara.lekoarts.de)
 
+Also be sure to check out other [Free & Open Source Gatsby Themes](https://themes.lekoarts.de) and my [Personal Website](https://www.lekoarts.de?utm_source=cara&utm_medium=Starter).
 
-## Features
+## ✨ Features
 
-- Eslint/Prettier configured
-- Scores 100% on a11y / Performance / PWA / SEO
-- PWA (desktop & mobile)
-- Easy to customize
-- Nice project structure
-- Amazing illustrations by [Undraw.co](https://undraw.co)
-- Tablet & mobile friendly
-- Continuous deployment with [Vercel](https://vercel.com/?utm_source=smakosh)
-- Or with Netlify, check [Netlify branch](https://github.com/smakosh/gatsby-portfolio-dev/tree/netlify)
-- A contact form protected by Google Recaptcha
-- Can be deployed with one click
-- Functional components with ~~Recompose~~ React Hooks! ~~ready to migrate to React hooks!~~
-- Fetches your Github pinned projects with most stars (You could customize this if you wish)
-- One click deployment to Vercel
+- Theme UI-based theming
+- react-spring Parallax Effect
+- CSS Animations on Shapes
 
-## Design
+## 🚀 Getting Started
 
-Project on [Behance](https://www.behance.net/gallery/74172961/Free-Gatsby-portfolio-for-developers)
+[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/LekoArts/gatsby-starter-portfolio-cara)
 
-## Structure
+### 1. **Create a Gatsby site.**
 
-```bash
-.
-├── data
-│   └── config              # SEO related tags
-├── src
-│   └── assets              # Assets
-│   │   │── icons             # icons
-│   │   │── illustrations     # illustrations from (undraw.co)
-│   │   └── thumbnail         # cover of your website when it's shared to social media
-│   ├── components          # Components
-│   │   │── common            # Common components
-│   │   │── landing           # Components used on the landing page
-│   │   └── theme             # Header & Footer
-│   └── pages               # Pages
-└── static                  # favicon & Netlify redirects
+Use `git` to clone the site and navigate into it:
+
+```sh
+git clone https://github.com/LekoArts/gatsby-starter-portfolio-cara project-name
+cd project-name
 ```
 
-## Prerequisites
+### 2. **Install dependencies.**
 
-### Online
+If you use npm 7 or above use the `--legacy-peer-deps` flag. If you use npm 6 you can use `npm install`.
 
-1. Create an account at [Formium](https://formium.io/?utm_source=smakosh) and grab your form endpoint url
-2. Grab a Google recaptcha key from [Google Recaptcha](https://www.google.com/recaptcha/admin)
-> Make sure to select V2 checkbox
-4. Grab your Github token from [GitHub](https://github.com/settings/tokens/new?scopes=repo&description=portfolio-dev)
-5. Click [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev&env=PORTFOLIO_GITHUB_TOKEN,PORTFOLIO_FORMIUM_ENDPOINT,GATSBY_PORTFOLIO_RECAPTCHA_KEY&envDescription=All%20env%20variables%20are%20required%20to%20deploy%20the%20project&envLink=https%3A%2F%2Fgithub.com%2Fsmakosh%2Fgatsby-portfolio-dev%2Fblob%2Fmaster%2F.env.development.template&project-name=my-portfolio&repo-name=my-portfolio&demo-title=Portfolio%20demo&demo-description=A%20simple%20portfolio%20for%20developers&demo-url=https%3A%2F%2Fportfolio.smakosh.com&demo-image=https%3A%2F%2Fportfolio.smakosh.com%2Fstatic%2Fthumbnail-16a70559ab07712f83d3ce412dfbb5a6.png) and pass in your:
-
-- Formium form endpoint
-- Google recaptcha public key
-- Github token
-
-To Env variables section.
-
-> For the contact form to work, you will need to update the `url` in [here](https://github.com/smakosh/gatsby-portfolio-dev/blob/master/src/data/config.js#L5)
-
-### Locally
-
-1. Create an account at [Formium](https://formium.io/?utm_source=smakosh)
-2. Grab a Google recaptcha key from [Google Recaptcha](https://www.google.com/recaptcha/admin)
-3. Grab your Github token from GitHub
-4. Run `cp .env.development.template .env.development`
-5. Run `npm i && npm start`
-
-> You could run `vercel env pull` to get your env variables from Vercel.
-
-### Deploying locally to Vercel
-
-I highly recommend that you push to GitHub/GitLab and deploy your repository to Vercel instead or just hit the Deploy button.
-
-### Clean the cache
-
-This removes the `.cache/` & `public/` folders
-
-```bash
-yarn reset
+```sh
+npm install --legacy-peer-deps
 ```
 
-## Built with
+### 3. **Open the code and start customizing!**
 
-- Adobe XD
-- Gatsby
-- React & GraphQL
-- Formium
-- Google recaptcha
-- VSCode
-- And these useful of JavaScript libraries & Gatsby plugins [package.json](package.json)
+Start the site by running `npm run develop`.
 
+Your site is now running at `http://localhost:8000`!
 
+If you want to learn more about how you can use a Gatsby starter that is configured with a Gatsby theme, you can check out this [shorter](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/using-a-gatsby-theme/) or [longer](https://www.gatsbyjs.com/tutorial/using-a-theme/) tutorial. The tutorials don't exactly apply to this starter however the concepts are the same.
 
+## 📝 Using and modifying this starter
+
+**Important Note:** Please read the guide [Shadowing in Gatsby Themes](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/shadowing/) to understand how to customize the underlying theme!
+
+This starter creates a new Gatsby site that installs and configures the theme [`@lekoarts/gatsby-theme-cara`](https://github.com/LekoArts/gatsby-themes/tree/main/themes/gatsby-theme-cara).
+
+Have a look at the theme's README and files to see what options are available and how you can shadow the various components including Theme UI. Generally speaking you will want to place your files into `src/@lekoarts/gatsby-theme-cara/` to shadow/override files. The Theme UI config can be configured by shadowing its files in `src/gatsby-plugin-theme-ui/`.
+
+### Changing content
+
+The content of this project is defined in four `.mdx` files inside the theme's `sections` folder. You can override the files `intro.mdx`, `projects.mdx`, `about.mdx` and `contact.mdx`. This starter has overridden all files for you already.
+
+You have to use the `<ProjectCard />` component inside `projects.mdx` to display the cards. Example:
+
+```md
+## Projects
+
+<ProjectCard title="Freiheit" link="https://www.behance.net/gallery/58937147/Freiheit" bg="linear-gradient(to right, #D4145A 0%, #FBB03B 100%)">
+This project is my entry to Adobe's #ChallengeYourPerspective contest.
+</ProjectCard>
+```
+
+### Change your `static` folder
+
+The `static` folder contains the icons, social media images and `robots.txt`. Don't forget to change these files, too! You can use [Real Favicon Generator](https://realfavicongenerator.net/) to generate the image files inside `static`.
+
+## 🤔 Questions or problems?
+
+If you have general questions or need help with Gatsby, please go to one of the [support platforms](https://www.gatsbyjs.com/contributing/community/#where-to-get-support) mentioned in Gatsby's documentation. If you have a specific question about this project, you can head to the [GitHub Discussions](https://github.com/LekoArts/gatsby-themes/discussions) of the repository.
+
+## 🎓 Learning Gatsby
+
+Looking for more guidance? Full documentation for Gatsby lives [on Gatsby's website](https://www.gatsbyjs.com/).
+
+### Themes
+
+To learn more about Gatsby themes specifically, I recommend checking out the [theme docs](https://www.gatsbyjs.com/docs/themes/).
+
+### General
+
+- **For most developers, I recommend starting with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/docs/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+
+- **To dive straight into code samples, head [to Gatsby's documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the _How-to Guides_ and _Reference_ items in the primary navigation.
+
+## 🌟 Supporting me
+
+Thanks for using this project! I'm always interested in seeing what people do with my projects, so don't hesitate to tag me on [Twitter](https://twitter.com/lekoarts_de) and share the project with me.
+
+Please star this project, share it on Social Media or consider supporting me on [Patreon](https://www.patreon.com/lekoarts) or [GitHub Sponsor](https://github.com/sponsors/LekoArts)!
