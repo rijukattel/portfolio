@@ -1,0 +1,76 @@
+backend:
+  # name: test-repo
+  name: git-gateway
+  branch: master
+  commit_messages:
+    create: "Create {{collection}} “{{slug}}”"
+    update: "Update {{collection}} “{{slug}}”"
+    delete: "Delete {{collection}} “{{slug}}”"
+    uploadMedia: "[skip ci] Upload “{{path}}”"
+    deleteMedia: "[skip ci] Delete “{{path}}”"
+
+media_folder: static/img
+public_folder: /img
+local_backend: true
+# publish_mode: editorial_workflow
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "content/projects/"
+    create: true
+    slug: "index"
+    extension: "mdx"
+    format: "frontmatter"
+    media_folder: ""
+    public_folder: ""
+    path: "{{title}}/index"
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Short Title", name: "shortTitle", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - {
+          label: "Color",
+          name: "color",
+          widget: "color",
+          enableAlpha: true,
+          allowInput: true,
+        }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - Art
+          - Project
+
+      - { label: "Cover", name: "cover", widget: "image" }
+      - { label: "Desc", name: "body", widget: mdx }
+
+  - name: "pages"
+    label: "Pages"
+    folder: "content/pages/"
+    create: true
+    slug: "index"
+    extension: "mdx"
+    widget: mdx
+    format: "frontmatter"
+    media_folder: ""
+    public_folder: ""
+    path: "{{title}}/index"
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Cover", name: "cover", widget: "image" }
+      - {
+          label: "Color",
+          name: "color",
+          widget: "color",
+          enableAlpha: true,
+          allowInput: true,
+        }
+      - name: body
+        label: Body
+        widget: mdx

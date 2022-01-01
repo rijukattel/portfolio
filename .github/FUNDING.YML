@@ -1,5 +1,8 @@
-# repo:     https://github.com/smakosh/gatsby-portfolio-dev
-# filename: FUNDING.YML
+# These are supported funding model platforms
 
-github: smakosh
-patreon: smakosh 
+github: [LekoArts]
+patreon: lekoarts
+open_collective: # Replace with a single Open Collective username
+ko_fi: lekoarts
+tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
+custom: # Replace with a single custom sponsorship URL
