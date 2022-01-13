@@ -131,7 +131,7 @@ export const query = graphql`
       }
       featuredPostsTitle
     }
-    datoCmsOtherPage(locale: { eq: $locale }, reference: { eq: "guide" }) {
+    datoCmsOtherPage(locale: { eq: $locale }, reference: { eq: "about" }) {
       guidePageSlug: slug
     }
     allDatoCmsBlogPost(
