@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: 'https://headlessmultilingual.gatsbyjs.io',
+    siteUrl: 'https://raghavkattel.com.np',
   },
   plugins: [
     {
@@ -18,6 +18,25 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-plugin-image',
     'gatsby-plugin-react-helmet',
+    {
+      resolve: `gatsby-plugin-google-fonts-v2`,
+      options: {
+        fonts: [
+          {
+            family: 'Raleway',
+            weights: ['100', '400'],
+          },
+          {
+            family: 'Kurale',
+            weights: ['100', '400'],
+          },
+          {
+            family: 'Noto Sans',
+            weights: ['100', '400'],
+          },
+        ],
+      },
+    },
     {
       resolve: 'gatsby-source-datocms',
       options: {

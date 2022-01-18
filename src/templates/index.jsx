@@ -18,6 +18,7 @@ const HomePageTemplate = ({
     datoCmsHomepage: {
       seo: { seoTitle, seoDescription },
       hero: [heroEntry],
+      siderImage,
       features,
       featuredPostsTitle,
     },
@@ -28,7 +29,7 @@ const HomePageTemplate = ({
   pageContext,
 }) => {
   const { heroAlt, heroTitle, heroSubtitle } = heroEntry;
-
+  console.log(`siderImage`, { siderImage, postNodes });
   return (
     <PageWrapper
       pageData={pageContext}
@@ -40,6 +41,7 @@ const HomePageTemplate = ({
         alt={heroAlt}
         title={heroTitle}
         subtitle={heroSubtitle}
+        siderImage={siderImage[0]}
         button={
           <Navigator
             className="classicButton classicButtonOutline"
@@ -123,6 +125,11 @@ export const query = graphql`
         heroAlt
         heroTitle
         heroSubtitle
+      }
+      siderImage {
+        alt
+        title
+        url
       }
       features {
         id: originalId

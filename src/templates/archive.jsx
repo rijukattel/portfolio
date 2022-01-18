@@ -19,6 +19,7 @@ const BlogArchiveTemplate = ({
     datoCmsArchivePage: {
       hero: [{ heroTitle, heroSubtitle }],
       seo: { seoTitle, seoDescription },
+      siderImage,
     },
     allDatoCmsBlogPost: { blogPostNodes },
     datoCmsWebsiteSetting: { minsReadSuffix },
@@ -34,7 +35,11 @@ const BlogArchiveTemplate = ({
       seoTitle={seoTitle}
       seoDescription={seoDescription}
     >
-      <Hero title={heroTitle} subtitle={heroSubtitle} />
+      <Hero
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        siderImage={siderImage[0]}
+      />
       <SectionWrapper isBlog>
         <SectionContainerGridThreeCols>
           {blogPostNodes.map(
@@ -109,9 +114,14 @@ export const query = graphql`
         seoTitle: title
         seoDescription: description
       }
+
       hero {
         heroTitle
         heroSubtitle
+      }
+      siderImage {
+        alt
+        url
       }
     }
     allDatoCmsBlogPost(

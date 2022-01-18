@@ -1,11 +1,11 @@
 {
   "primaryColor": "#5a2d83",
-  "primaryDark": "#165bbb",
+  "primaryDark": "#0c2443",
   "primaryLight": "#ebf6ff",
-  "headingsColor": "#4d4d4d",
-  "baseTextColor": "#6e7581",
-  "baseTextColorDark": "#4d4d4d",
+  "headingsColor": "#373737",
+  "baseTextColor": "#1c2127",
+  "baseTextColorDark": "#5e5e5e",
   "disabledColor": "#6e7581",
-  "dividerColor": "#e2e2e2",
+  "dividerColor": "#ffffff",
   "markColor": "#fdffb4"
 }

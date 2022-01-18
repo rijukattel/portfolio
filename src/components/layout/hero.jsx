@@ -29,11 +29,33 @@ const HeroTextBox = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   row-gap: var(--gapRegular);
-  width: 600px;
   justify-items: ${({ centered }) => centered && 'center'};
-
+  margin-top: 7rem;
+  margin-bottom: 7rem;
+  grid-area: textbox;
+  width: 40%;
+  float: left;
   @media screen and (max-width: 767px) {
     width: 100%;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  /* padding: 10px; */
+  width: 60%;
+  float: right;
+  img {
+    width: 550px;
+    float: right;
+  }
+  @media screen and (max-width: 767px) {
+    width: 100%;
+
+    img {
+      width: 90%;
+
+      text-align: center;
+    }
   }
 `;
 
@@ -46,15 +68,21 @@ const Hero = ({
   button,
   sectionChildren,
   hasDivider,
+  siderImage,
 }) => (
   <HeroWrapper fullView={fullView}>
     <HeroContainer centered={centered}>
-      <HeroTextBox centered={centered}>
-        {alt && <HeroAlt>{alt}</HeroAlt>}
-        <HeroTitle centered={centered}>{title}</HeroTitle>
-        <HeroSubtitle centered={centered}>{subtitle}</HeroSubtitle>
-        {button}
-      </HeroTextBox>
+      <div>
+        <HeroTextBox className="textbox" centered={centered}>
+          {alt && <HeroAlt>{alt}</HeroAlt>}
+          <HeroTitle centered={centered}>{title}</HeroTitle>
+          <HeroSubtitle centered={centered}>{subtitle}</HeroSubtitle>
+          {button}
+        </HeroTextBox>
+        <ImageWrapper className="img">
+          <img src={siderImage.url} alt={siderImage.alt} />
+        </ImageWrapper>
+      </div>
       {sectionChildren}
     </HeroContainer>
     {hasDivider && <Divider bottom />}

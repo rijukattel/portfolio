@@ -14,7 +14,10 @@ const {
 } = colors;
 
 const GlobalStyles = createGlobalStyle`
-
+    ::selection {
+    color: ${primaryLight};
+    background: ${primaryColor};
+    }
     :root {
         
         /* Colors */
@@ -43,7 +46,8 @@ const GlobalStyles = createGlobalStyle`
         --gapXL: 60px; // 3.75rem
 
         /* Typography */
-        --defaultStack: -apple-system, BlinkMacSystemFont, "Helvetica", "Helvetica Neue", "Arial", sans-serif;
+        --defaultStack: -apple-system, Noto Sans; 
+        /* --defaultStack: -apple-system, BlinkMacSystemFont, "Helvetica", "Helvetica Neue", "Arial", sans-serif; */
 
         --headingXXL: 3.25rem; // 52px
         --headingXL: 2.625rem; // 42px
@@ -82,6 +86,11 @@ const GlobalStyles = createGlobalStyle`
         color: var(--baseTextColor);
         margin: 0;
         padding: 0;
+    }
+
+    h1,h2,h3{
+        font-family: Raleway;
+
     }
 
     h1, h2, h3, p {

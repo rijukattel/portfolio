@@ -27,10 +27,12 @@ const OtherPageTemplate = ({
         image: { seoImageUrl },
       },
       structuredBody,
+      siderImage,
     },
   },
   pageContext,
 }) => {
+  console.log(`siderImage`, siderImage);
   return (
     <PageWrapper
       pageData={pageContext}
@@ -66,6 +68,7 @@ const OtherPageTemplate = ({
                     alt={heroAlt}
                     title={heroTitle}
                     subtitle={heroSubtitle}
+                    siderImage={siderImage[0]}
                   />
                 );
               case 'section image left':
@@ -199,6 +202,11 @@ export const query = graphql`
         image {
           seoImageUrl: url
         }
+      }
+      siderImage {
+        alt
+        title
+        url
       }
       structuredBody {
         value
