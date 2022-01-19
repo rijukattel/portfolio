@@ -25,7 +25,7 @@ const MobileMenuNav = styled.nav`
   background: white;
   display: none;
   padding: var(--gapSmall) 0;
-  transition: 0.2s opacity ease-in-out;
+  transition: 0.4s opacity ease-in-out;
   z-index: 1;
 
   ${({ isOpen }) =>

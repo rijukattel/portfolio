@@ -37,25 +37,27 @@ const HeroTextBox = styled.div`
   float: left;
   @media screen and (max-width: 767px) {
     width: 100%;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
   }
 `;
 
 const ImageWrapper = styled.div`
   /* padding: 10px; */
-  width: 60%;
+  width: 50%;
   float: right;
   img {
-    width: 550px;
-    float: right;
+    width: 100%;
+    height: auto;
   }
   @media screen and (max-width: 767px) {
     width: 100%;
 
-    img {
+    /* img {
       width: 90%;
-
+      height: auto;
       text-align: center;
-    }
+    } */
   }
 `;
 
@@ -79,8 +81,10 @@ const Hero = ({
           <HeroSubtitle centered={centered}>{subtitle}</HeroSubtitle>
           {button}
         </HeroTextBox>
-        <ImageWrapper className="img">
-          <img src={siderImage.url} alt={siderImage.alt} />
+        <ImageWrapper>
+          <div className="img-wrapper">
+            <img src={siderImage.url} alt={siderImage.alt} />
+          </div>
         </ImageWrapper>
       </div>
       {sectionChildren}
