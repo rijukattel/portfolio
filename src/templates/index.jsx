@@ -29,7 +29,6 @@ const HomePageTemplate = ({
   pageContext,
 }) => {
   const { heroAlt, heroTitle, heroSubtitle } = heroEntry;
-  console.log(`siderImage`, { siderImage, postNodes });
   return (
     <PageWrapper
       pageData={pageContext}
