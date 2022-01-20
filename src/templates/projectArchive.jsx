@@ -47,10 +47,10 @@ const ProjectArchiveTemplate = ({
             ({
               id,
               meta: { firstPublishedAt },
-              minutesOfReading,
               cardImage,
               title,
               subtitle,
+              minutesOfReading,
               author,
               slug,
             }) => (
@@ -58,7 +58,7 @@ const ProjectArchiveTemplate = ({
                 projectDone
                 key={id}
                 date={firstPublishedAt}
-                // time={`${minutesOfReading} ${minsReadSuffix}`}
+                time={`${minutesOfReading} ${minsReadSuffix}`}
                 cardImg={
                   cardImage &&
                   CardImgArtDir(
@@ -140,6 +140,8 @@ export const projectArchiveQuery = graphql`
         meta {
           firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
         }
+        minutesOfReading
+
         cardImage {
           gatsbyImageData(
             width: 280
@@ -153,6 +155,13 @@ export const projectArchiveQuery = graphql`
             imgixParams: { ar: "1", fit: "crop" }
           )
           alt
+        }
+        author {
+          name
+          picture {
+            gatsbyImageData(height: 30, width: 30)
+            alt
+          }
         }
 
         subtitle

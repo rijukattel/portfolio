@@ -46,7 +46,7 @@ const GlobalStyles = createGlobalStyle`
         --gapXL: 60px; // 3.75rem
 
         /* Typography */
-        --defaultStack: -apple-system, Noto Sans; 
+        --defaultStack: -apple-system,'Noto Sans'; 
         /* --defaultStack: -apple-system, BlinkMacSystemFont, "Helvetica", "Helvetica Neue", "Arial", sans-serif; */
 
         --headingXXL: 3.25rem; // 52px

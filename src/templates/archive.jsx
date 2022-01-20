@@ -17,7 +17,7 @@ import {
 const BlogArchiveTemplate = ({
   data: {
     datoCmsArchivePage: {
-      hero: [{ heroTitle, heroSubtitle }],
+      hero: [{ heroTitle, heroSubtitle, heroAlt }],
       seo: { seoTitle, seoDescription },
       siderImage,
     },
@@ -38,6 +38,7 @@ const BlogArchiveTemplate = ({
       <Hero
         title={heroTitle}
         subtitle={heroSubtitle}
+        alt={heroAlt}
         siderImage={siderImage[0]}
       />
       <SectionWrapper isBlog>
@@ -119,6 +120,7 @@ export const query = graphql`
       hero {
         heroTitle
         heroSubtitle
+        heroAlt
       }
       siderImage {
         alt

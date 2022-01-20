@@ -20,6 +20,10 @@ const SingleProjectTemplate = ({
     datoCmsProjectsDone: {
       id,
       structuredBody,
+      linkToTheCode,
+      previewUrl,
+      linkToTheCodeText,
+      livePreviewText,
       seo: {
         seoTitle,
         seoDescription,
@@ -27,10 +31,10 @@ const SingleProjectTemplate = ({
       },
       title,
       subtitle,
-      //   author: {
-      //     authorName,
-      //     picture: { authorPictureData, authorPictureAlt },
-      //   },
+      author: {
+        authorName,
+        picture: { authorPictureData, authorPictureAlt },
+      },
       coverImage: { coverImageData, coverImageAlt },
       meta: { firstPublishedAt },
     },
@@ -57,12 +61,16 @@ const SingleProjectTemplate = ({
         <ArticleHeader
           title={title}
           subtitle={subtitle}
-          //   authorName={authorName}
+          authorName={authorName}
           coverImg={coverImageData}
           coverImgAlt={coverImageAlt}
-          //   authorImg={authorPictureData}
-          //   authorImgAlt={authorPictureAlt}
+          authorImg={authorPictureData}
+          authorImgAlt={authorPictureAlt}
           date={firstPublishedAt}
+          codeUrl={linkToTheCode}
+          previewUrl={previewUrl}
+          codeUrlButtonText={linkToTheCodeText}
+          previewUrlButtonText={livePreviewText}
           projects
         />
         <ArticleBody>
@@ -153,6 +161,7 @@ const SingleProjectTemplate = ({
           )}
         </ArticleBody>
         <PrevNextNav
+          projectDone
           skipNextValue={skipNext}
           prevHeading={prevHeading}
           prevSlug={prevPostSlug}
@@ -160,7 +169,6 @@ const SingleProjectTemplate = ({
           nextHeading={nextHeading}
           nextSlug={nextPostSlug}
           nextPostTitle={nextPostTitle}
-          projectDone
         />
       </SectionWrapper>
     </PageWrapper>
@@ -208,6 +216,10 @@ export const projectQuery = graphql`
       originalId
       locale
       title
+      linkToTheCode
+      linkToTheCodeText
+      livePreviewText
+      previewUrl
       seo {
         seoTitle: title
         seoDescription: description
@@ -219,6 +231,13 @@ export const projectQuery = graphql`
       coverImage {
         coverImageData: gatsbyImageData
         coverImageAlt: alt
+      }
+      author {
+        authorName: name
+        picture {
+          authorPictureData: gatsbyImageData(height: 60, width: 60)
+          authorPictureAlt: alt
+        }
       }
       meta {
         firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")

@@ -156,6 +156,7 @@ const BlogPostTemplate = ({
           nextHeading={nextHeading}
           nextSlug={nextPostSlug}
           nextPostTitle={nextPostTitle}
+          article
         />
       </SectionWrapper>
     </PageWrapper>

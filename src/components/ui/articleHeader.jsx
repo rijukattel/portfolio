@@ -8,6 +8,7 @@ import { ArticleTitle, ArticleSubtitle } from '../layout/headingStyles';
 import BackButtonIcon from '../vectors/backButton';
 import Navigator from '../langHelpers/navigator';
 import * as Social from '../vectors/socialIcons';
+import OuterLinkButton from '../outerLinkButton';
 
 // Scoped styles
 
@@ -168,6 +169,10 @@ const ArticleHeader = ({
   coverImg,
   authorImgAlt,
   coverImgAlt,
+  codeUrl,
+  codeUrlButtonText,
+  previewUrlButtonText,
+  previewUrl,
   ...props
 }) => {
   const { siteUrl } = useSiteUrl();
@@ -187,6 +192,12 @@ const ArticleHeader = ({
         </AuthorDateContainer>
         <ArticleTitle>{title}</ArticleTitle>
         <ArticleSubtitle>{subtitle}</ArticleSubtitle>
+        <div style={{ display: 'flex' }}>
+          <OuterLinkButton to={codeUrl}>{codeUrlButtonText}</OuterLinkButton>
+          <OuterLinkButton primary to={previewUrl}>
+            {previewUrlButtonText}
+          </OuterLinkButton>
+        </div>
       </Header>
       <ImgFullWrapper>
         <ImgWrapper>

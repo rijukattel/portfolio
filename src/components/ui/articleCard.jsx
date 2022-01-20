@@ -192,7 +192,7 @@ const ArticleCard = ({
             <Time as="span">{time}</Time>
           </DateTimeContainer>
           <PostTitle>{title}</PostTitle>
-          <Excerpt>{excerpt}</Excerpt>
+          <Excerpt>{excerpt.substring(0, 80)}...</Excerpt>
           <AuthorCtaContainer>
             <AuthorContainer>
               <AuthorImg image={authorImg || ''} alt={authorAltImg || ''} />

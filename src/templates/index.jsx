@@ -21,9 +21,11 @@ const HomePageTemplate = ({
       siderImage,
       features,
       featuredPostsTitle,
+      featuredProjectsTitle,
     },
     datoCmsOtherPage: { guidePageSlug },
     allDatoCmsBlogPost: { postNodes },
+    allDatoCmsProjectsDone: { postNodes: projectNodes },
     datoCmsWebsiteSetting: { seeTheGuideButton, seeAllButton, minsReadSuffix },
   },
   pageContext,
@@ -84,6 +86,54 @@ const HomePageTemplate = ({
               slug,
             }) => (
               <ArticleCard
+                article
+                key={id}
+                date={firstPublishedAt}
+                time={`${minutesOfReading} ${minsReadSuffix}`}
+                cardImg={
+                  cardImage &&
+                  CardImgArtDir(
+                    cardImage.gatsbyImageData,
+                    cardImage.squaredImage,
+                    cardImage.alt
+                  )
+                }
+                title={title}
+                excerpt={subtitle}
+                authorImg={authorImageData}
+                authorAltImg={authorImageAlt}
+                authorName={authorName}
+                slug={slug}
+              />
+            )
+          )}
+        </SectionContainerGridThreeCols>
+      </SectionWrapper>
+
+      <SectionWrapper>
+        <SectionTitleContainer hasButton>
+          <SectionTitle>{featuredProjectsTitle}</SectionTitle>
+          <Navigator className="classicButton classicButtonOutline" projects>
+            {seeAllButton}
+          </Navigator>
+        </SectionTitleContainer>
+        <SectionContainerGridThreeCols>
+          {projectNodes.map(
+            ({
+              id,
+              meta: { firstPublishedAt },
+              minutesOfReading,
+              cardImage,
+              title,
+              subtitle,
+              author: {
+                authorName,
+                picture: { authorImageData, authorImageAlt },
+              },
+              slug,
+            }) => (
+              <ArticleCard
+                projectDone
                 key={id}
                 date={firstPublishedAt}
                 time={`${minutesOfReading} ${minsReadSuffix}`}
@@ -136,6 +186,7 @@ export const query = graphql`
         description
       }
       featuredPostsTitle
+      featuredProjectsTitle
     }
     datoCmsOtherPage(locale: { eq: $locale }, reference: { eq: "about" }) {
       guidePageSlug: slug
@@ -151,6 +202,45 @@ export const query = graphql`
           firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
         }
         minutesOfReading
+        cardImage {
+          gatsbyImageData(
+            width: 280
+            height: 100
+            placeholder: NONE
+            forceBlurhash: false
+          )
+          squaredImage: gatsbyImageData(
+            width: 100
+            height: 100
+            imgixParams: { ar: "1", fit: "crop" }
+          )
+          alt
+        }
+        author {
+          authorName: name
+          picture {
+            authorImageData: gatsbyImageData(height: 30, width: 30)
+            authorImageAlt: alt
+          }
+        }
+        subtitle
+        title
+        slug
+        reference
+      }
+    }
+    allDatoCmsProjectsDone(
+      sort: { order: ASC, fields: meta___firstPublishedAt }
+      filter: { locale: { eq: $locale }, featuredInHomepage: { eq: true } }
+      limit: 6
+    ) {
+      postNodes: nodes {
+        id: originalId
+        meta {
+          firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
+        }
+        minutesOfReading
+
         cardImage {
           gatsbyImageData(
             width: 280

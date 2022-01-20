@@ -35,6 +35,18 @@ module.exports = {
             family: 'Noto Sans',
             weights: ['100', '400'],
           },
+          {
+            family: 'Open Sans',
+            weights: ['100', '400'],
+          },
+          {
+            family: 'Poppins',
+            weights: ['100', '400'],
+          },
+          {
+            family: 'Anton',
+            weights: ['100', '400'],
+          },
         ],
       },
     },
