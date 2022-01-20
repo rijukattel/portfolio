@@ -1,6 +1,8 @@
+const siteUrl = 'https://raghavkattel.com.np';
+
 module.exports = {
   siteMetadata: {
-    siteUrl: 'https://raghavkattel.com.np',
+    siteUrl,
   },
   plugins: [
     {
@@ -12,7 +14,8 @@ module.exports = {
       __key: 'pages',
     },
     'gatsby-plugin-gatsby-cloud',
-    'gatsby-plugin-sitemap',
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-robots-txt`,
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     `gatsby-plugin-netlify`,

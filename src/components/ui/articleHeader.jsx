@@ -158,6 +158,32 @@ const Icon = styled.a`
   }
 `;
 
+const ProjectOnlyWrapper = styled.div`
+  /* width: 50%; */
+`;
+
+const ProgramPlatform = styled.div`
+  /* border: 1px solid var(--primaryColor); */
+  padding: 0.4em 1em;
+  font-size: var(--baseM);
+  font-weight: 700;
+  border-radius: 10px;
+  span {
+    font-size: x-large;
+    color: var(--primaryColor);
+  }
+`;
+
+const LibrariesTags = styled.div`
+  padding: 1px 3px;
+  margin: 3px;
+  justify-content: center;
+  font-weight: 100;
+  border-radius: 4px;
+  background-color: #7730e8;
+  color: white;
+`;
+
 // Main Component
 
 const ArticleHeader = ({
@@ -173,11 +199,30 @@ const ArticleHeader = ({
   codeUrlButtonText,
   previewUrlButtonText,
   previewUrl,
+  platform,
+  programmingLanguage,
+  librariesUsed,
   ...props
 }) => {
   const { siteUrl } = useSiteUrl();
 
   const { pathname } = useLocation();
+
+  const projectOnlyContent = props.projects && (
+    <ProjectOnlyWrapper>
+      <ProgramPlatform>
+        <p>
+          Created with <span>{programmingLanguage.toUpperCase()}</span> for{' '}
+          <span>{platform.toUpperCase()}</span>
+        </p>
+      </ProgramPlatform>
+      <div style={{ display: 'flex', textAlign: 'center', width: '100%' }}>
+        {JSON.parse(librariesUsed)?.map((lib) => (
+          <LibrariesTags>{lib} </LibrariesTags>
+        ))}
+      </div>
+    </ProjectOnlyWrapper>
+  );
 
   return (
     <>
@@ -198,6 +243,7 @@ const ArticleHeader = ({
             {previewUrlButtonText}
           </OuterLinkButton>
         </div>
+        {projectOnlyContent}
       </Header>
       <ImgFullWrapper>
         <ImgWrapper>

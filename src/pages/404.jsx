@@ -45,8 +45,6 @@ const NotFoundPage = () => {
     datoCmsSite: { locales },
   } = data;
 
-  console.log('data', data);
-
   const appLangCodes = [...locales];
   const storedLocale = getStoredLocale();
 

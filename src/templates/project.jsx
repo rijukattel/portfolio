@@ -24,6 +24,9 @@ const SingleProjectTemplate = ({
       previewUrl,
       linkToTheCodeText,
       livePreviewText,
+      platform,
+      programmingLanguage,
+      librariesUsed,
       seo: {
         seoTitle,
         seoDescription,
@@ -50,6 +53,8 @@ const SingleProjectTemplate = ({
 }) => {
   const { skipNext } = pageContext;
 
+  console.log('first', { platform, programmingLanguage, librariesUsed });
+
   return (
     <PageWrapper
       pageData={pageContext}
@@ -71,6 +76,9 @@ const SingleProjectTemplate = ({
           previewUrl={previewUrl}
           codeUrlButtonText={linkToTheCodeText}
           previewUrlButtonText={livePreviewText}
+          platform={platform}
+          programmingLanguage={programmingLanguage}
+          librariesUsed={librariesUsed}
           projects
         />
         <ArticleBody>
@@ -220,6 +228,9 @@ export const projectQuery = graphql`
       linkToTheCodeText
       livePreviewText
       previewUrl
+      platform
+      programmingLanguage
+      librariesUsed
       seo {
         seoTitle: title
         seoDescription: description

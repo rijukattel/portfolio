@@ -32,7 +32,6 @@ const OtherPageTemplate = ({
   },
   pageContext,
 }) => {
-  console.log(`siderImage`, siderImage);
   return (
     <PageWrapper
       pageData={pageContext}
