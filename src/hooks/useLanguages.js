@@ -13,6 +13,7 @@ const useLanguages = () => {
         }
         datoCmsWebsiteSetting {
           blogPath
+          projectPath
         }
       }
     `
@@ -27,12 +28,13 @@ const useLanguages = () => {
       ],
     },
 
-    datoCmsWebsiteSetting: { blogPath },
+    datoCmsWebsiteSetting: { blogPath, projectPath },
   } = data;
 
   return {
     defaultLanguage,
     blogPath,
+    projectPath,
   };
 };
 

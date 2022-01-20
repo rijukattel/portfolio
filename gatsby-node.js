@@ -84,7 +84,12 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const {
     data: {
-      datoCmsWebsiteSetting: { blogPath, postsPerPage },
+      datoCmsWebsiteSetting: {
+        blogPath,
+        postsPerPage,
+        projectsPerPage,
+        projectPath,
+      },
       allDatoCmsSite: { allDatoCmsSiteEdges },
     },
   } = await graphql(`
@@ -92,6 +97,8 @@ exports.createPages = async ({ graphql, actions }) => {
       datoCmsWebsiteSetting {
         blogPath
         postsPerPage
+        projectsPerPage
+        projectPath
       }
       allDatoCmsSite {
         allDatoCmsSiteEdges: edges {
@@ -216,6 +223,126 @@ exports.createPages = async ({ graphql, actions }) => {
              */
 
             skipPrevious: pageCounter === 1 ? 1 : pageCounter - 2,
+          },
+        });
+      });
+  });
+
+  // Projects Archive and page
+  const {
+    data: {
+      allDatoCmsProjectsDone: { allProjectsDoneEdges },
+    },
+  } = await graphql(`
+    query {
+      allDatoCmsProjectsDone(
+        sort: { fields: [locale, meta___firstPublishedAt] }
+      ) {
+        allProjectsDoneEdges: edges {
+          node {
+            id: originalId
+            locale
+            slug
+            reference
+          }
+        }
+      }
+    }
+  `);
+
+  const allSingleProjectPerLocale =
+    allProjectsDoneEdges.length / allLanguages.length;
+  const projectPagesNumber = Math.ceil(
+    allSingleProjectPerLocale / projectsPerPage
+  );
+
+  const ProjectArchiveTemplate = path.resolve(
+    'src/templates/projectArchive.jsx'
+  );
+
+  allLanguages.forEach(({ node: { locale } }) => {
+    Array.from({ length: projectPagesNumber }).forEach((_, index) => {
+      createPage({
+        path:
+          // If generating the first default language archive page
+          locale === defaultLanguage && index === 0
+            ? `/${projectPath}`
+            : // If not generating the first default language archive page
+            locale === defaultLanguage && index > 0
+            ? `/${projectPath}/${index + 1}`
+            : // If generating the first non-default language archive page
+            locale !== defaultLanguage && index === 0
+            ? `/${locale}/${projectPath}`
+            : // If not generation the first non-default language archive page
+            locale !== defaultLanguage && index > 0
+            ? `/${locale}/${projectPath}/${index + 1}`
+            : '/',
+        component: ProjectArchiveTemplate,
+        context: {
+          locale: locale,
+          limit: projectsPerPage,
+          skip: index * projectsPerPage,
+          projectPagesNumber,
+          projectArchivePageNumber: index + 1,
+          pageType:
+            index + 1 === 1
+              ? 'isProjectArchiveRoot'
+              : 'isProjectPaginatedArchive',
+        },
+      });
+    });
+  });
+
+  // Project Generation
+
+  const SingleProjectTemplate = path.resolve('src/templates/project.jsx');
+
+  allLanguages.forEach(({ node: { locale: nodeLocale } }) => {
+    let pageCounterProject = 0;
+
+    /**
+     * Iterate trought all available locales, and increase
+     * the counter when an article is generated,
+     * since the query results are sorted with with the same criteria for any locale
+     * we can export a skipNext variable which we will use to skip all the previous posts.
+     */
+
+    allProjectsDoneEdges
+      .filter(({ node: { locale } }) => locale === nodeLocale)
+      .forEach(({ node: { locale, slug, reference, id } }) => {
+        pageCounterProject += 1;
+        createPage({
+          path:
+            locale === defaultLanguage
+              ? `${projectPath}/${slug}`
+              : locale !== defaultLanguage
+              ? `${locale}/${projectPath}/${slug}`
+              : '/',
+          component: SingleProjectTemplate,
+          context: {
+            id,
+            locale,
+            slug,
+            reference,
+            articlesPerLocale: allSingleProjectPerLocale,
+            pageType: 'isProject',
+
+            /**
+             * If generating the last article, assign the value "0" since
+             * there won't be next posts to display
+             */
+
+            skipNext:
+              pageCounterProject === allSingleProjectPerLocale
+                ? 0
+                : pageCounterProject,
+
+            /**
+             * If generating the first article, assign the value 1 or the GraphQL
+             * query will fail having a skip variable < 0 and a limit variable > 0.
+             */
+
+            skipPrevious: pageCounterProject === 1 ? 1 : pageCounterProject - 2,
           },
         });
       });

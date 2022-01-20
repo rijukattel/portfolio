@@ -3,7 +3,8 @@ import React, { createContext, useState } from 'react';
 export const LangContext = createContext({});
 
 const LangProvider = ({ children, pageData }) => {
-  const { pageType, locale, slug, archivePageNumber } = pageData;
+  const { pageType, locale, slug, archivePageNumber, projectPageNumber } =
+    pageData;
   const [currentLanguage] = useState(locale);
 
   const store = {
@@ -11,6 +12,7 @@ const LangProvider = ({ children, pageData }) => {
     pageType,
     slug,
     archivePageNumber,
+    projectPageNumber,
   };
 
   return <LangContext.Provider value={store}>{children}</LangContext.Provider>;

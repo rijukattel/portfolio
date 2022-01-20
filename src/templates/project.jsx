@@ -15,9 +15,9 @@ import PrevNextNav from '../components/ui/articlePrevNext';
 import { SectionWrapper } from '../components/layout/sectionStyles';
 import Navigator from '../components/langHelpers/navigator';
 
-const BlogPostTemplate = ({
+const SingleProjectTemplate = ({
   data: {
-    datoCmsBlogPost: {
+    datoCmsProjectsDone: {
       id,
       structuredBody,
       seo: {
@@ -27,10 +27,10 @@ const BlogPostTemplate = ({
       },
       title,
       subtitle,
-      author: {
-        authorName,
-        picture: { authorPictureData, authorPictureAlt },
-      },
+      //   author: {
+      //     authorName,
+      //     picture: { authorPictureData, authorPictureAlt },
+      //   },
       coverImage: { coverImageData, coverImageAlt },
       meta: { firstPublishedAt },
     },
@@ -53,17 +53,17 @@ const BlogPostTemplate = ({
       seoDescription={seoDescription}
       seoImage={seoImageUrl}
     >
-      <SectionWrapper as="article" isBlog article>
+      <SectionWrapper as="project" isProject>
         <ArticleHeader
           title={title}
           subtitle={subtitle}
-          authorName={authorName}
+          //   authorName={authorName}
           coverImg={coverImageData}
           coverImgAlt={coverImageAlt}
-          authorImg={authorPictureData}
-          authorImgAlt={authorPictureAlt}
+          //   authorImg={authorPictureData}
+          //   authorImgAlt={authorPictureAlt}
           date={firstPublishedAt}
-          archive
+          projects
         />
         <ArticleBody>
           {structuredBody?.value && (
@@ -112,7 +112,11 @@ const BlogPostTemplate = ({
                     );
                   case 'project_done':
                     return (
-                      <Navigator {...transformedMeta} projectDone>
+                      <Navigator
+                        to={recordSlug}
+                        {...transformedMeta}
+                        projectDone
+                      >
                         {children}
                       </Navigator>
                     );
@@ -156,24 +160,25 @@ const BlogPostTemplate = ({
           nextHeading={nextHeading}
           nextSlug={nextPostSlug}
           nextPostTitle={nextPostTitle}
+          projectDone
         />
       </SectionWrapper>
     </PageWrapper>
   );
 };
 
-export default BlogPostTemplate;
+export default SingleProjectTemplate;
 
 // Main query
 
-export const query = graphql`
-  query BlogPostTemplateQuery(
+export const projectQuery = graphql`
+  query SingleProjectTemplateQuery(
     $id: String!
     $locale: String!
     $skipNext: Int!
     $skipPrevious: Int!
   ) {
-    next: allDatoCmsBlogPost(
+    next: allDatoCmsProjectsDone(
       filter: { locale: { eq: $locale } }
       sort: { fields: meta___firstPublishedAt }
       limit: 1
@@ -184,7 +189,7 @@ export const query = graphql`
         nextPostTitle: title
       }
     }
-    previous: allDatoCmsBlogPost(
+    previous: allDatoCmsProjectsDone(
       filter: { locale: { eq: $locale } }
       sort: { fields: meta___firstPublishedAt }
       skip: $skipPrevious
@@ -199,7 +204,7 @@ export const query = graphql`
       prevHeading: previous
       nextHeading: next
     }
-    datoCmsBlogPost(originalId: { eq: $id }, locale: { eq: $locale }) {
+    datoCmsProjectsDone(originalId: { eq: $id }, locale: { eq: $locale }) {
       originalId
       locale
       title
@@ -218,13 +223,7 @@ export const query = graphql`
       meta {
         firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
       }
-      author {
-        authorName: name
-        picture {
-          authorPictureData: gatsbyImageData(height: 60, width: 60)
-          authorPictureAlt: alt
-        }
-      }
+
       structuredBody {
         blocks {
           typeName
@@ -235,7 +234,7 @@ export const query = graphql`
           }
         }
         links {
-          ... on DatoCmsBlogPost {
+          ... on DatoCmsProjectsDone {
             typeName
             slug
             id: originalId

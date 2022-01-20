@@ -23,10 +23,15 @@ const NotFoundPage = () => {
       }
       allDatoCmsNotFoundPage {
         nodes {
+          siderImage {
+            alt
+            url
+          }
           seo {
             seoTitle: title
             seoDescription: description
           }
+
           title
           subtitle
           backToHomeText
@@ -39,6 +44,9 @@ const NotFoundPage = () => {
   const {
     datoCmsSite: { locales },
   } = data;
+
+  console.log('data', data);
+
   const appLangCodes = [...locales];
   const storedLocale = getStoredLocale();
 
@@ -55,6 +63,7 @@ const NotFoundPage = () => {
       title,
       subtitle,
       backToHomeText,
+      siderImage,
     } = defaultLangPropsNode;
 
     const defaultLangProps = {
@@ -68,6 +77,7 @@ const NotFoundPage = () => {
         title,
         subtitle,
       },
+      siderImage,
       navigator: {
         children: backToHomeText,
         to: '/',
@@ -155,6 +165,7 @@ const NotFoundPage = () => {
       <PageWrapper {...pageWrapper} notFoundPage noHeader noFooter>
         <Hero
           {...hero}
+          siderImage={siderImage[0]}
           fullView
           centered
           button={

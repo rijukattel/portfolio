@@ -177,27 +177,31 @@ const ArticleCard = ({
   authorImg,
   authorAltImg,
   authorName,
-}) => (
-  <article>
-    <CardLink article to={slug}>
-      {cardImg}
-      <ContentWrapper>
-        <DateTimeContainer>
-          <Date>{date}</Date>
-          <Dot />
-          <Time as="span">{time}</Time>
-        </DateTimeContainer>
-        <PostTitle>{title}</PostTitle>
-        <Excerpt>{excerpt}</Excerpt>
-        <AuthorCtaContainer>
-          <AuthorContainer>
-            <AuthorImg image={authorImg || ''} alt={authorAltImg || ''} />
-            <Date as="address">{authorName}</Date>
-          </AuthorContainer>
-        </AuthorCtaContainer>
-      </ContentWrapper>
-    </CardLink>
-  </article>
-);
+  ...props
+}) => {
+  console.log('props', props);
 
+  return (
+    <article>
+      <CardLink {...props} to={slug}>
+        {cardImg}
+        <ContentWrapper>
+          <DateTimeContainer>
+            <Date>{date}</Date>
+            <Dot />
+            <Time as="span">{time}</Time>
+          </DateTimeContainer>
+          <PostTitle>{title}</PostTitle>
+          <Excerpt>{excerpt}</Excerpt>
+          <AuthorCtaContainer>
+            <AuthorContainer>
+              <AuthorImg image={authorImg || ''} alt={authorAltImg || ''} />
+              <Date as="address">{authorName}</Date>
+            </AuthorContainer>
+          </AuthorCtaContainer>
+        </ContentWrapper>
+      </CardLink>
+    </article>
+  );
+};
 export default ArticleCard;

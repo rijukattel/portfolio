@@ -168,6 +168,7 @@ const ArticleHeader = ({
   coverImg,
   authorImgAlt,
   coverImgAlt,
+  ...props
 }) => {
   const { siteUrl } = useSiteUrl();
 
@@ -176,7 +177,7 @@ const ArticleHeader = ({
   return (
     <>
       <Header>
-        <BackButtonWrapper archive>
+        <BackButtonWrapper {...props}>
           <BackButtonIcon />
         </BackButtonWrapper>
         <AuthorDateContainer>

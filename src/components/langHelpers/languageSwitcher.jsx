@@ -73,12 +73,13 @@ const LanguageSwitcher = () => {
     }
   `);
 
-  const { defaultLanguage, blogPath } = useLanguages();
+  const { defaultLanguage, blogPath, projectPath } = useLanguages();
   const {
     currentLanguage,
     pageType,
     slug: pageSlug,
     archivePageNumber,
+    projectPageNumber,
   } = useContext(LangContext);
 
   const {
@@ -93,6 +94,9 @@ const LanguageSwitcher = () => {
   const isArchiveRoot = pageType === 'isArchiveRoot';
   const isPaginatedArchive = pageType === 'isPaginatedArchive';
   const isPost = pageType === 'isPost';
+  const isProject = pageType === 'isProject';
+  const isProjectArchiveRoot = pageType === 'isProjectArchiveRoot';
+  const isProjectPaginatedArchive = pageType === 'isProjectPaginatedArchive';
 
   return (
     <LangNav>
@@ -149,8 +153,46 @@ const LanguageSwitcher = () => {
             </li>
           ))}
         </LangNavList>
+      ) : isProjectArchiveRoot ? (
+        <LangNavList>
+          {siteNodes.map(({ locale }) => (
+            <li key={locale}>
+              <LanguageSwitcherLink
+                className={locale === currentLanguage && 'activeClassLangNav'}
+                as={locale === currentLanguage && 'span'}
+                to={
+                  locale === defaultLanguage
+                    ? `/${projectPath}`
+                    : `/${locale}/${projectPath}`
+                }
+                onClick={() => storeLocale(locale)}
+              >
+                {getLangCode(locale)}
+              </LanguageSwitcherLink>
+            </li>
+          ))}
+        </LangNavList>
+      ) : isProjectPaginatedArchive ? (
+        <LangNavList>
+          {siteNodes.map(({ locale }) => (
+            <li key={locale}>
+              <LanguageSwitcherLink
+                className={locale === currentLanguage && 'activeClassLangNav'}
+                as={locale === currentLanguage && 'span'}
+                to={
+                  locale === defaultLanguage
+                    ? `/${projectPath}/${projectPageNumber}`
+                    : `/${locale}/${projectPath}/${projectPageNumber}`
+                }
+                onClick={() => storeLocale(locale)}
+              >
+                {getLangCode(locale)}
+              </LanguageSwitcherLink>
+            </li>
+          ))}
+        </LangNavList>
       ) : (
-        (isPost || isPage) && (
+        (isPost || isPage || isProject) && (
           <LangNavList>
             {siteNodes.map(({ locale }) =>
               /**
@@ -223,6 +265,10 @@ const LanguageSwitcher = () => {
                                   ? locale === defaultLanguage
                                     ? `/${matchSlug}`
                                     : `/${locale}/${matchSlug}`
+                                  : isProject
+                                  ? locale === defaultLanguage
+                                    ? `/${projectPath}/${matchSlug}`
+                                    : `/${locale}/${projectPath}/${matchSlug}`
                                   : '/'
                               }
                               onClick={() => storeLocale(locale)}

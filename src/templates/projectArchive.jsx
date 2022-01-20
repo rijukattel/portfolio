@@ -14,20 +14,20 @@ import {
   ArchiveListLink,
 } from '../components/ui/archivePagination';
 
-const BlogArchiveTemplate = ({
+const ProjectArchiveTemplate = ({
   data: {
-    datoCmsArchivePage: {
-      hero: [{ heroTitle, heroSubtitle }],
+    datoCmsProjectArchive: {
+      hero: [{ heroTitle, heroSubtitle, heroAlt }],
       seo: { seoTitle, seoDescription },
       siderImage,
     },
-    allDatoCmsBlogPost: { blogPostNodes },
+    allDatoCmsProjectsDone: { projectsDoneNodes },
     datoCmsWebsiteSetting: { minsReadSuffix },
   },
   pageContext,
 }) => {
-  const { defaultLanguage, blogPath } = useLanguages();
-  const { pagesNumber, archivePageNumber, locale } = pageContext;
+  const { defaultLanguage, projectPath } = useLanguages();
+  const { projectPagesNumber, projectArchivePageNumber, locale } = pageContext;
 
   return (
     <PageWrapper
@@ -36,13 +36,14 @@ const BlogArchiveTemplate = ({
       seoDescription={seoDescription}
     >
       <Hero
+        alt={heroAlt}
         title={heroTitle}
         subtitle={heroSubtitle}
         siderImage={siderImage[0]}
       />
-      <SectionWrapper isBlog>
+      <SectionWrapper isProjectDone>
         <SectionContainerGridThreeCols>
-          {blogPostNodes.map(
+          {projectsDoneNodes.map(
             ({
               id,
               meta: { firstPublishedAt },
@@ -54,10 +55,10 @@ const BlogArchiveTemplate = ({
               slug,
             }) => (
               <ArticleCard
-                article
+                projectDone
                 key={id}
                 date={firstPublishedAt}
-                time={`${minutesOfReading} ${minsReadSuffix}`}
+                // time={`${minutesOfReading} ${minsReadSuffix}`}
                 cardImg={
                   cardImage &&
                   CardImgArtDir(
@@ -78,17 +79,19 @@ const BlogArchiveTemplate = ({
         </SectionContainerGridThreeCols>
         <ArchiveNav>
           <ArchiveList>
-            {Array.from({ length: pagesNumber }, (_, index) => (
+            {Array.from({ length: projectPagesNumber }, (_, index) => (
               <li key={`page_number${index + 1}`}>
                 <ArchiveListLink
-                  as={index === archivePageNumber - 1 ? 'span' : ''}
+                  as={index === projectArchivePageNumber - 1 ? 'span' : ''}
                   to={
                     locale === defaultLanguage &&
-                    index !== archivePageNumber - 1
-                      ? `/${blogPath}/${index === 0 ? '' : index + 1}`
+                    index !== projectArchivePageNumber - 1
+                      ? `/${projectPath}/${index === 0 ? '' : index + 1}`
                       : locale !== defaultLanguage &&
-                        index !== archivePageNumber - 1
-                      ? `/${locale}/${blogPath}/${index === 0 ? '' : index + 1}`
+                        index !== projectArchivePageNumber - 1
+                      ? `/${locale}/${projectPath}/${
+                          index === 0 ? '' : index + 1
+                        }`
                       : '/'
                   }
                 >
@@ -103,13 +106,13 @@ const BlogArchiveTemplate = ({
   );
 };
 
-export default BlogArchiveTemplate;
+export default ProjectArchiveTemplate;
 
 // Main query
 
-export const query = graphql`
-  query BlogArchiveQuery($locale: String!, $skip: Int!, $limit: Int!) {
-    datoCmsArchivePage(locale: { eq: $locale }) {
+export const projectArchiveQuery = graphql`
+  query ProjectArchiveQuery($locale: String!, $skip: Int!, $limit: Int!) {
+    datoCmsProjectArchive(locale: { eq: $locale }) {
       locale
       seo {
         seoTitle: title
@@ -119,24 +122,24 @@ export const query = graphql`
       hero {
         heroTitle
         heroSubtitle
+        heroAlt
       }
       siderImage {
         alt
         url
       }
     }
-    allDatoCmsBlogPost(
+    allDatoCmsProjectsDone(
       sort: { order: ASC, fields: meta___firstPublishedAt }
       filter: { locale: { eq: $locale } }
       limit: $limit
       skip: $skip
     ) {
-      blogPostNodes: nodes {
+      projectsDoneNodes: nodes {
         id: originalId
         meta {
           firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
         }
-        minutesOfReading
         cardImage {
           gatsbyImageData(
             width: 280
@@ -151,13 +154,7 @@ export const query = graphql`
           )
           alt
         }
-        author {
-          name
-          picture {
-            gatsbyImageData(height: 30, width: 30)
-            alt
-          }
-        }
+
         subtitle
         title
         slug

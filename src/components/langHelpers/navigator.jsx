@@ -5,6 +5,8 @@ import useLanguages from '../../hooks/useLanguages';
 
 const Navigator = ({
   article,
+  projects,
+  projectDone,
   page,
   archive,
   home,
@@ -15,7 +17,7 @@ const Navigator = ({
   notFoundPage,
 }) => {
   const { currentLanguage } = useContext(LangContext);
-  const { defaultLanguage, blogPath } = useLanguages();
+  const { defaultLanguage, blogPath, projectPath } = useLanguages();
   const isCurrentDefaultLanguage = currentLanguage === defaultLanguage;
 
   return (
@@ -39,6 +41,15 @@ const Navigator = ({
           ? isCurrentDefaultLanguage
             ? '/'
             : `/${currentLanguage}`
+          : // route for projects
+          projectDone
+          ? isCurrentDefaultLanguage
+            ? `/${projectPath}/${to}`
+            : `/${currentLanguage}/${projectPath}/${to}`
+          : projects
+          ? isCurrentDefaultLanguage
+            ? `/${projectPath}`
+            : `/${currentLanguage}/${projectPath}`
           : notFoundPage || '/'
       }
     >
