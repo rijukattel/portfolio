@@ -160,12 +160,14 @@ const Icon = styled.a`
 
 const ProjectOnlyWrapper = styled.div`
   /* width: 50%; */
+  text-align: center;
 `;
 
 const ProgramPlatform = styled.div`
   /* border: 1px solid var(--primaryColor); */
   padding: 0.4em 1em;
   font-size: var(--baseM);
+  text-transform: capitalize;
   font-weight: 700;
   border-radius: 10px;
   span {
@@ -174,14 +176,47 @@ const ProgramPlatform = styled.div`
   }
 `;
 
-const LibrariesTags = styled.div`
-  padding: 1px 3px;
-  margin: 3px;
-  justify-content: center;
-  font-weight: 100;
-  border-radius: 4px;
-  background-color: #7730e8;
-  color: white;
+const BlogWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+`;
+
+const Tags = styled.div`
+  box-sizing: border-box;
+  margin: 0 8px 0 0;
+  color: #000000d9;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  display: inline-block;
+  height: auto;
+  padding: 0 7px;
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+  background: #fafafa;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  opacity: 1;
+  transition: all 0.3s;
+  color: var(--primaryColor);
+  background: #f0f5ff;
+  border-color: #adc6ff;
+  text-transform: capitalize;
+`;
+
+const BlogCategoryWrapper = styled.div`
+  color: var(--primaryColor);
+  text-transform: capitalize;
+  h3,
+  p,
+  h1,
+  h2,
+  h4 {
+    font-weight: 600;
+  }
 `;
 
 // Main Component
@@ -202,6 +237,8 @@ const ArticleHeader = ({
   platform,
   programmingLanguage,
   librariesUsed,
+  tags,
+  category,
   ...props
 }) => {
   const { siteUrl } = useSiteUrl();
@@ -210,18 +247,22 @@ const ArticleHeader = ({
 
   const projectOnlyContent = props.projects && (
     <ProjectOnlyWrapper>
-      <ProgramPlatform>
-        <p>
-          Created with <span>{programmingLanguage.toUpperCase()}</span> for{' '}
-          <span>{platform.toUpperCase()}</span>
-        </p>
-      </ProgramPlatform>
-      <div style={{ display: 'flex', textAlign: 'center', width: '100%' }}>
+      <div>
         {JSON.parse(librariesUsed)?.map((lib) => (
-          <LibrariesTags>{lib} </LibrariesTags>
+          <Tags>{lib} </Tags>
         ))}
       </div>
     </ProjectOnlyWrapper>
+  );
+
+  const blogOnlyContent = props.archive && (
+    <BlogWrapper>
+      <div>
+        {JSON?.parse(tags)?.map((tag) => (
+          <Tags>{tag} </Tags>
+        ))}
+      </div>
+    </BlogWrapper>
   );
 
   return (
@@ -235,6 +276,24 @@ const ArticleHeader = ({
           <Dot />
           <Author as="time">{date}</Author>
         </AuthorDateContainer>
+        <BlogCategoryWrapper>
+          <h2>{category}</h2>
+          {programmingLanguage && (
+            <AuthorDateContainer style={{ fontFamily: 'Source Code Pro' }}>
+              <div>
+                <p>
+                  {'<'}
+                  {programmingLanguage}
+                  {'/>'}
+                </p>
+              </div>
+              <Dot />
+              <div>
+                <p>{platform}</p>
+              </div>
+            </AuthorDateContainer>
+          )}
+        </BlogCategoryWrapper>
         <ArticleTitle>{title}</ArticleTitle>
         <ArticleSubtitle>{subtitle}</ArticleSubtitle>
         <div style={{ display: 'flex' }}>
@@ -244,6 +303,7 @@ const ArticleHeader = ({
           </OuterLinkButton>
         </div>
         {projectOnlyContent}
+        {blogOnlyContent}
       </Header>
       <ImgFullWrapper>
         <ImgWrapper>

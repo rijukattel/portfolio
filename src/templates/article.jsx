@@ -20,6 +20,8 @@ const BlogPostTemplate = ({
     datoCmsBlogPost: {
       id,
       structuredBody,
+      category,
+      tags,
       seo: {
         seoTitle,
         seoDescription,
@@ -63,6 +65,8 @@ const BlogPostTemplate = ({
           authorImg={authorPictureData}
           authorImgAlt={authorPictureAlt}
           date={firstPublishedAt}
+          category={category}
+          tags={tags}
           archive
         />
         <ArticleBody>
@@ -204,6 +208,8 @@ export const query = graphql`
       originalId
       locale
       title
+      category
+      tags
       seo {
         seoTitle: title
         seoDescription: description

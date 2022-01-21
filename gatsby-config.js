@@ -40,7 +40,7 @@ module.exports = {
           },
           {
             family: 'Open Sans',
-            weights: ['100', '400'],
+            weights: ['100', '400', '700'],
           },
           {
             family: 'Poppins',
@@ -49,6 +49,10 @@ module.exports = {
           {
             family: 'Anton',
             weights: ['100', '400'],
+          },
+          {
+            family: 'Source Code Pro',
+            weights: ['100', '400', '700'],
           },
         ],
       },

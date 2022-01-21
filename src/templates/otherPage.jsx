@@ -1,4 +1,4 @@
-import React, { createRef, useRef, useState } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
 import { StructuredText } from 'react-datocms';
 import Navigator from '../components/langHelpers/navigator';
@@ -17,7 +17,6 @@ import {
   HeadingSmall,
 } from '../components/layout/headingStyles';
 import { Paragraph } from '../components/layout/paragraphStyles';
-import axios from 'axios';
 
 const OtherPageTemplate = ({
   data: {
