@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, useRef, useState } from 'react';
 import { graphql } from 'gatsby';
 import { StructuredText } from 'react-datocms';
 import Navigator from '../components/langHelpers/navigator';
@@ -17,6 +17,7 @@ import {
   HeadingSmall,
 } from '../components/layout/headingStyles';
 import { Paragraph } from '../components/layout/paragraphStyles';
+import axios from 'axios';
 
 const OtherPageTemplate = ({
   data: {
@@ -28,10 +29,82 @@ const OtherPageTemplate = ({
       },
       structuredBody,
       siderImage,
+      codeSnippet,
     },
   },
   pageContext,
+  ...props
 }) => {
+  const [formData, setFormData] = useState({});
+  console.log('codeSnippet', { codeSnippet, pageContext, props });
+
+  const handleChange = (e) => {
+    const { value, name } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  console.log('formData', formData);
+
+  const contactPageForm = () => {
+    function encode(data) {
+      return Object.keys(data)
+        .map(
+          (key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])
+        )
+        .join('&');
+    }
+    const axiosOptions = {
+      url: props.location.pathname,
+      method: 'post',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: encode(formData),
+    };
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      axios(axiosOptions)
+        .then((res) => console.log('first', res))
+        .catch((error) => alert(error));
+    };
+
+    if (pageContext.slug === 'contact') {
+      return (
+        <SectionWrapper>
+          <form
+            name="contact"
+            method="POST"
+            netlify-honeypot="bot-field"
+            netlify
+            data-netlify="true"
+          >
+            <p class="hidden">
+              <label>
+                Don’t fill this out if you’re human: <input name="bot-field" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Email: <input type="text" name="email" />
+              </label>
+            </p>
+            <p>
+              <label>
+                Message: <textarea name="message"></textarea>
+              </label>
+            </p>
+            <p>
+              <button className="classicButton classicPrimary" type="submit">
+                Send
+              </button>
+            </p>
+          </form>
+        </SectionWrapper>
+      );
+    }
+    return '';
+  };
+
   return (
     <PageWrapper
       pageData={pageContext}
@@ -58,6 +131,7 @@ const OtherPageTemplate = ({
               secondFeatureDescription,
               thirdFeatureTitle,
               thirdFeatureDescription,
+              ...props
             },
           }) => {
             switch (typeName) {
@@ -187,6 +261,15 @@ const OtherPageTemplate = ({
           }}
         />
       )}
+      {contactPageForm()}
+
+      <SectionWrapper>
+        <SectionContainerFlexTwoCols>
+          <ColumnFlexTwoCols hasImg>
+            <div dangerouslySetInnerHTML={{ __html: codeSnippet }} />
+          </ColumnFlexTwoCols>
+        </SectionContainerFlexTwoCols>
+      </SectionWrapper>
     </PageWrapper>
   );
 };
@@ -207,6 +290,7 @@ export const query = graphql`
         title
         url
       }
+      codeSnippet
       structuredBody {
         value
         blocks {

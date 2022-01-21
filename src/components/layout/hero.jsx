@@ -78,7 +78,9 @@ const Hero = ({
         <HeroTextBox className="textbox" centered={centered}>
           {alt && <HeroAlt>{alt}</HeroAlt>}
           <HeroTitle centered={centered}>{title}</HeroTitle>
-          <HeroSubtitle centered={centered}>{subtitle}</HeroSubtitle>
+          <HeroSubtitle centered={centered}>
+            <div dangerouslySetInnerHTML={{ __html: subtitle }} />
+          </HeroSubtitle>
           {button}
         </HeroTextBox>
         <ImageWrapper>
