@@ -1,4 +1,4 @@
-![Headless Multilingual Starter for Gatsby with DatoCMS](https://i.ibb.co/0XSy2gf/splashscreen-2.png)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/074702eb-2a9b-4ea3-a83f-4115845c4fce/deploy-status)](https://app.netlify.com/sites/raghavkattel/deploys)
 
 # Headless Multilingual Starter for Gatsby 4 with DatoCMS
 
