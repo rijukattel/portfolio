@@ -134,7 +134,7 @@ gatsby new headless-gatsby-multilang https://github.com/smastrom/headless-gatsby
 2. Log in to your DatoCMS account and
    \
    \
-   [![Clone DatoCMS project](https://dashboard.datocms.com/clone/button.svg)](https://dashboard.datocms.com/clone?projectId=53683&name=Headless+Gatsby+Multilingual+Starter)
+   [![Clone DatoCMS project](https://dashboard.datocms.com/clone/button.svg)](https://dashboard.datocms.com/clone?projectId=61266&name=portfolio)
 
 3. Access the project in your DatoCMS admin panel and retrieve your public API token. Replace it in your gatsby-config.js file:
 
