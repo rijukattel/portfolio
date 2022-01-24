@@ -128,7 +128,7 @@ Moreover, knowledge of Gatsby's `createPages API` and `pageContext` object is re
 1. Install the starter with [Gatsby CLI](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md):
 
 ```console
-gatsby new headless-gatsby-multilang https://github.com/smastrom/headless-gatsby-multilang.git
+gatsby new portfolio-blog https://github.com/https://github.com/argahv/portfolio.git
 ```
 
 2. Log in to your DatoCMS account and
