@@ -192,11 +192,7 @@ const OtherPageTemplate = ({
       )}
 
       <SectionWrapper>
-        <SectionContainerFlexTwoCols>
-          <ColumnFlexTwoCols hasImg>
-            <div dangerouslySetInnerHTML={{ __html: codeSnippet }} />
-          </ColumnFlexTwoCols>
-        </SectionContainerFlexTwoCols>
+        <div dangerouslySetInnerHTML={{ __html: codeSnippet }} />
       </SectionWrapper>
     </PageWrapper>
   );

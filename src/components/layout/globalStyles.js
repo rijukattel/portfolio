@@ -191,6 +191,9 @@ input {
 	appearance: none;
 	border-radius: 0;
 }
+blockquote p {
+  display: inline;
+}
 
 .input {
 	display: flex;
@@ -257,9 +260,6 @@ input {
 		text-decoration: none;
 	}
 }
-
-
-
 
     `;
 

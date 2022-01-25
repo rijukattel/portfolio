@@ -163,19 +163,6 @@ const ProjectOnlyWrapper = styled.div`
   text-align: center;
 `;
 
-const ProgramPlatform = styled.div`
-  /* border: 1px solid var(--primaryColor); */
-  padding: 0.4em 1em;
-  font-size: var(--baseM);
-  text-transform: capitalize;
-  font-weight: 700;
-  border-radius: 10px;
-  span {
-    font-size: x-large;
-    color: var(--primaryColor);
-  }
-`;
-
 const BlogWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -216,6 +203,7 @@ const BlogCategoryWrapper = styled.div`
   h2,
   h4 {
     font-weight: 600;
+    font-family: 'Source Code Pro';
   }
 `;
 
@@ -249,7 +237,7 @@ const ArticleHeader = ({
     <ProjectOnlyWrapper>
       <div>
         {JSON.parse(librariesUsed)?.map((lib) => (
-          <Tags>{lib} </Tags>
+          <Tags key={lib}>{lib} </Tags>
         ))}
       </div>
     </ProjectOnlyWrapper>
@@ -259,7 +247,7 @@ const ArticleHeader = ({
     <BlogWrapper>
       <div>
         {JSON?.parse(tags)?.map((tag) => (
-          <Tags>{tag} </Tags>
+          <Tags key={tag}>{tag} </Tags>
         ))}
       </div>
     </BlogWrapper>
@@ -279,7 +267,7 @@ const ArticleHeader = ({
         <BlogCategoryWrapper>
           <h2>{category}</h2>
           {programmingLanguage && (
-            <AuthorDateContainer style={{ fontFamily: 'Source Code Pro' }}>
+            <AuthorDateContainer>
               <div>
                 <p>
                   {'<'}
