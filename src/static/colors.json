@@ -2,9 +2,9 @@
   "primaryColor": "#5a2d83",
   "primaryDark": "#0c2443",
   "primaryLight": "#ebf6ff",
-  "headingsColor": "#373737",
-  "baseTextColor": "#1c2127",
-  "baseTextColorDark": "#5e5e5e",
+  "headingsColor": "#282828",
+  "baseTextColor": "#32383d",
+  "baseTextColorDark": "#323030",
   "disabledColor": "#6e7581",
   "dividerColor": "#ffffff",
   "markColor": "#fdffb4"

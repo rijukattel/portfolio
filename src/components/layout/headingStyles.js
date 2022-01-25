@@ -27,6 +27,7 @@ export const HeroSubtitle = styled.p`
   color: var(--baseTextColor);
   text-align: ${({ centered }) => (centered ? 'center' : 'left')};
   line-height: var(--paragraphHeight);
+  font-weight: 100;
 `;
 
 // Articles
@@ -35,6 +36,7 @@ export const ArticleTitle = styled(HeroTitle)`
   &&& {
     font-size: var(--headingXL);
     text-align: center;
+    font-family: Righteous;
     @media screen and (max-width: 860px) {
       text-align: left;
     }

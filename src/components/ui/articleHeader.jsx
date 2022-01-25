@@ -202,7 +202,7 @@ const BlogCategoryWrapper = styled.div`
   h1,
   h2,
   h4 {
-    font-weight: 600;
+    font-weight: 400;
     font-family: 'Source Code Pro';
   }
 `;

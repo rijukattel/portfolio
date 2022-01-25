@@ -28,7 +28,7 @@ module.exports = {
         fonts: [
           {
             family: 'Raleway',
-            weights: ['100', '400'],
+            weights: ['100', '400', '700'],
           },
           {
             family: 'Kurale',
@@ -52,6 +52,10 @@ module.exports = {
           },
           {
             family: 'Source Code Pro',
+            weights: ['100', '400', '700'],
+          },
+          {
+            family: 'Righteous',
             weights: ['100', '400', '700'],
           },
         ],
