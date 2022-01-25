@@ -122,7 +122,7 @@ exports.createPages = async ({ graphql, actions }) => {
     },
   } = await graphql(`
     query {
-      allDatoCmsBlogPost(sort: { fields: [locale, meta___updatedAt] }) {
+      allDatoCmsBlogPost(sort: { fields: [locale, meta___firstPublishedAt] }) {
         allBlogPostsEdges: edges {
           node {
             id: originalId
@@ -235,7 +235,9 @@ exports.createPages = async ({ graphql, actions }) => {
     },
   } = await graphql(`
     query {
-      allDatoCmsProjectsDone(sort: { fields: [locale, meta___updatedAt] }) {
+      allDatoCmsProjectsDone(
+        sort: { fields: [locale, meta___firstPublishedAt] }
+      ) {
         allProjectsDoneEdges: edges {
           node {
             id: originalId

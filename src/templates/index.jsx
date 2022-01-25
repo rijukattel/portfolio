@@ -192,7 +192,7 @@ export const query = graphql`
       guidePageSlug: slug
     }
     allDatoCmsBlogPost(
-      sort: { order: ASC, fields: meta___firstPublishedAt }
+      sort: { order: DESC, fields: meta___firstPublishedAt }
       filter: { locale: { eq: $locale }, featuredInHomepage: { eq: true } }
       limit: 6
     ) {
@@ -230,7 +230,7 @@ export const query = graphql`
       }
     }
     allDatoCmsProjectsDone(
-      sort: { order: ASC, fields: meta___firstPublishedAt }
+      sort: { order: DESC, fields: meta___firstPublishedAt }
       filter: { locale: { eq: $locale }, featuredInHomepage: { eq: true } }
       limit: 6
     ) {

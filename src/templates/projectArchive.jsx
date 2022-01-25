@@ -130,7 +130,7 @@ export const projectArchiveQuery = graphql`
       }
     }
     allDatoCmsProjectsDone(
-      sort: { order: ASC, fields: meta___firstPublishedAt }
+      sort: { order: DESC, fields: meta___firstPublishedAt }
       filter: { locale: { eq: $locale } }
       limit: $limit
       skip: $skip
