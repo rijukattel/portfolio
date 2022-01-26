@@ -60,7 +60,6 @@ const OtherPageTemplate = ({
               secondFeatureDescription,
               thirdFeatureTitle,
               thirdFeatureDescription,
-              ...props
             },
           }) => {
             switch (typeName) {

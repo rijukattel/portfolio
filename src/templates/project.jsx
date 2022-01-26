@@ -53,7 +53,12 @@ const SingleProjectTemplate = ({
 }) => {
   const { skipNext } = pageContext;
 
-  console.log('first', { platform, programmingLanguage, librariesUsed });
+  console.log('first', {
+    platform,
+    programmingLanguage,
+    librariesUsed,
+    structuredBody,
+  });
 
   return (
     <PageWrapper
@@ -87,14 +92,19 @@ const SingleProjectTemplate = ({
               key={id}
               data={structuredBody}
               customRules={[
-                renderRule(isCode, ({ node: { language, code }, key }) => (
-                  <div style={{ position: 'relative' }} key={key}>
-                    <LanguageContainer>{language}</LanguageContainer>
-                    <SyntaxHighlighter language={language} style={atomDark}>
-                      {code}
-                    </SyntaxHighlighter>
-                  </div>
-                )),
+                renderRule(
+                  isCode,
+                  ({ node: { language, code, ...props }, key }) => {
+                    return (
+                      <div style={{ position: 'relative' }} key={key}>
+                        <LanguageContainer>{language}</LanguageContainer>
+                        <SyntaxHighlighter language={language} style={atomDark}>
+                          {code}
+                        </SyntaxHighlighter>
+                      </div>
+                    );
+                  }
+                ),
               ]}
               renderLinkToRecord={({
                 record: { typeName, slug: recordSlug },

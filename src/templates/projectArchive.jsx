@@ -53,12 +53,14 @@ const ProjectArchiveTemplate = ({
               minutesOfReading,
               author,
               slug,
+              platform,
+              programmingLanguage,
             }) => (
               <ArticleCard
                 projectDone
                 key={id}
-                date={firstPublishedAt}
-                time={`${minutesOfReading} ${minsReadSuffix}`}
+                category={programmingLanguage}
+                time={platform}
                 cardImg={
                   cardImage &&
                   CardImgArtDir(
@@ -141,7 +143,8 @@ export const projectArchiveQuery = graphql`
           firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
         }
         minutesOfReading
-
+        platform
+        programmingLanguage
         cardImage {
           gatsbyImageData(
             width: 280

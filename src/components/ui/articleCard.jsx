@@ -91,8 +91,9 @@ const PostTitle = styled(HeadingSmall)`
 const Date = styled.time`
   color: var(--baseTextColor);
   font-size: var(--baseS);
-  text-transform: capitalize;
 
+  font-weight: ${({ normalColor }) => (normalColor ? 400 : 600)};
+  text-transform: capitalize;
   @media screen and (max-width: 768px) {
     font-size: var(--baseSMobile);
   }
@@ -111,8 +112,15 @@ export const Dot = styled.span`
 `;
 
 const Time = styled(Date)`
+  /* color: var(--baseTextColorDark); */
   &&& {
-    text-transform: lowercase;
+    ${({ containerProps }) =>
+      containerProps.projectDone
+        ? {
+            textTransform: 'capitalize',
+            // fontWeight: 600,
+          }
+        : { textTransform: 'lowerCase', fontWeight: 200 }}
   }
 
   @media screen and (min-width: 621px) and (max-width: 680px) {
@@ -124,53 +132,74 @@ const Excerpt = styled.p`
   color: var(--baseTextColor);
   font-size: var(--baseM);
   line-height: 1.3;
-`;
-
-const AuthorCtaContainer = styled.footer`
-  display: flex;
-  grid-template-columns: auto auto;
-  column-gap: var(--gapRegular);
-  align-items: center;
-  justify-content: space-between;
-
-  @media screen and (max-width: 950px) {
-    grid-row: 1;
-
-    & a {
-      display: none;
-    }
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+  position: relative;
+  height: 2.6em; /* exactly three lines */
+  &&:after {
+    content: '';
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 25%;
+    height: 1.2em;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 1) 50%
+    );
   }
 `;
 
-const AuthorContainer = styled.div`
-  --imgWidthHeight: 25px;
-  display: grid;
-  grid-template-columns: var(--imgWidthHeight) auto;
-  column-gap: var(--gapSmall);
-  align-items: center;
+// const AuthorCtaContainer = styled.footer`
+//   display: flex;
+//   grid-template-columns: auto auto;
+//   column-gap: var(--gapRegular);
+//   align-items: center;
+//   justify-content: space-between;
+//   color: var(--baseTextColorDark) !important;
+//   @media screen and (max-width: 950px) {
+//     grid-row: 1;
 
-  @media screen and (max-width: 950px) {
-    --imgWidthHeight: 20px;
-    column-gap: calc(var(--gapSmall) - 0.33em);
-    grid-template-columns: var(--imgWidthHeight) auto;
-  }
-`;
+//     & a {
+//       display: none;
+//     }
+//   }
+// `;
 
-const AuthorImg = styled(GatsbyImage)`
-  width: var(--imgWidthHeight);
-  height: var(--imgWidthHeight);
+// const AuthorContainer = styled.div`
+//   --imgWidthHeight: 25px;
+//   display: grid;
+//   grid-template-columns: var(--imgWidthHeight) auto;
+//   column-gap: var(--gapSmall);
+//   align-items: center;
 
-  & img {
-    border-radius: var(--imgWidthHeight);
-  }
-`;
+//   @media screen and (max-width: 950px) {
+//     --imgWidthHeight: 20px;
+//     column-gap: calc(var(--gapSmall) - 0.33em);
+//     grid-template-columns: var(--imgWidthHeight) auto;
+//   }
+// `;
+
+// const AuthorImg = styled(GatsbyImage)`
+//   width: var(--imgWidthHeight);
+//   height: var(--imgWidthHeight);
+
+//   & img {
+//     border-radius: var(--imgWidthHeight);
+//   }
+// `;
 
 // Main Component
 
 const ArticleCard = ({
   slug,
   cardImg,
-  date,
+  category,
   time,
   title,
   excerpt,
@@ -179,26 +208,28 @@ const ArticleCard = ({
   authorName,
   ...props
 }) => {
-  console.log('props', props);
-
   return (
     <article>
       <CardLink {...props} to={slug}>
         {cardImg}
         <ContentWrapper>
           <DateTimeContainer>
-            <Date>{date}</Date>
+            <Date>{category}</Date>
             <Dot />
-            <Time as="span">{time}</Time>
+            <Time containerProps={props} as="span">
+              {time}
+            </Time>
           </DateTimeContainer>
           <PostTitle>{title}</PostTitle>
-          <Excerpt>{excerpt.substring(0, 80)}...</Excerpt>
-          <AuthorCtaContainer>
+          <Excerpt>{excerpt}</Excerpt>
+          {/* <AuthorCtaContainer>
             <AuthorContainer>
               <AuthorImg image={authorImg || ''} alt={authorAltImg || ''} />
-              <Date as="address">{authorName}</Date>
+              <Date normalColor as="address">
+                {authorName}
+              </Date>
             </AuthorContainer>
-          </AuthorCtaContainer>
+          </AuthorCtaContainer> */}
         </ContentWrapper>
       </CardLink>
     </article>

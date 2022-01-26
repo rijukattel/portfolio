@@ -51,13 +51,14 @@ const BlogArchiveTemplate = ({
               cardImage,
               title,
               subtitle,
-              author,
+              // author,
+              category,
               slug,
             }) => (
               <ArticleCard
                 article
                 key={id}
-                date={firstPublishedAt}
+                category={category}
                 time={`${minutesOfReading} ${minsReadSuffix}`}
                 cardImg={
                   cardImage &&
@@ -69,9 +70,9 @@ const BlogArchiveTemplate = ({
                 }
                 title={title}
                 excerpt={subtitle}
-                authorImg={author?.picture.gatsbyImageData}
-                authorAltImg={author?.picture.alt}
-                authorName={author?.name}
+                // authorImg={author?.picture.gatsbyImageData}
+                // authorAltImg={author?.picture.alt}
+                // authorName={author?.name}
                 slug={slug}
               />
             )
@@ -139,6 +140,7 @@ export const query = graphql`
           firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
         }
         minutesOfReading
+        category
         cardImage {
           gatsbyImageData(
             width: 280
@@ -153,13 +155,7 @@ export const query = graphql`
           )
           alt
         }
-        author {
-          name
-          picture {
-            gatsbyImageData(height: 30, width: 30)
-            alt
-          }
-        }
+
         subtitle
         title
         slug

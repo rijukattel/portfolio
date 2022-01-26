@@ -79,6 +79,7 @@ const HomePageTemplate = ({
               cardImage,
               title,
               subtitle,
+              category,
               author: {
                 authorName,
                 picture: { authorImageData, authorImageAlt },
@@ -88,7 +89,7 @@ const HomePageTemplate = ({
               <ArticleCard
                 article
                 key={id}
-                date={firstPublishedAt}
+                category={category}
                 time={`${minutesOfReading} ${minsReadSuffix}`}
                 cardImg={
                   cardImage &&
@@ -131,12 +132,14 @@ const HomePageTemplate = ({
                 picture: { authorImageData, authorImageAlt },
               },
               slug,
+              platform,
+              programmingLanguage,
             }) => (
               <ArticleCard
                 projectDone
                 key={id}
-                date={firstPublishedAt}
-                time={`${minutesOfReading} ${minsReadSuffix}`}
+                category={programmingLanguage}
+                time={platform}
                 cardImg={
                   cardImage &&
                   CardImgArtDir(
@@ -225,6 +228,7 @@ export const query = graphql`
         }
         subtitle
         title
+        category
         slug
         reference
       }
@@ -239,8 +243,6 @@ export const query = graphql`
         meta {
           firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
         }
-        minutesOfReading
-
         cardImage {
           gatsbyImageData(
             width: 280
@@ -262,6 +264,8 @@ export const query = graphql`
             authorImageAlt: alt
           }
         }
+        platform
+        programmingLanguage
         subtitle
         title
         slug
