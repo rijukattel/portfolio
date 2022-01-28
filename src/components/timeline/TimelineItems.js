@@ -12,22 +12,27 @@ const TimelineItems = ({
   iconStyle,
   contentStyle,
 }) => {
-  console.log('first', {
-    title,
-    description,
-    experienceType,
-    content,
-    date,
-    icon,
-    iconStyle,
-    contentStyle,
-  });
+  let parsedStyle = { ...JSON.parse(contentStyle) };
   return (
     <VerticalTimelineElement
       className={`vertical-timeline-element--${experienceType}`}
-      contentStyle={JSON.parse(contentStyle)}
-      contentArrowStyle={{ borderRight: 'var(--primaryColor)' }}
-      date={date}
+      contentStyle={{
+        ...parsedStyle,
+      }}
+      contentArrowStyle={{
+        borderRight: '7px solid var(--primaryColor)',
+      }}
+      date={
+        <span
+          style={{
+            color: 'var(--headingsColor)',
+            fontWeight: 700,
+            fontSize: 'large',
+          }}
+        >
+          {date}
+        </span>
+      }
       iconStyle={JSON.parse(iconStyle)}
       icon={<FontAwesomeIcon icon={JSON.parse(icon)} />}
     >

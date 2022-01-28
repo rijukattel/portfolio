@@ -10,7 +10,7 @@ const Timeline = ({ timeline, timelineTitle }) => {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: ${({ fullView }) => fullView && '100vh'};
+    /* height: ${({ fullView }) => fullView && '100vh'}; */
     padding: var(--globalPaddingTb) var(--globalPaddingLr);
     flex-direction: column;
     position: relative;
