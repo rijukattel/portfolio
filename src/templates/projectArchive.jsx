@@ -46,11 +46,9 @@ const ProjectArchiveTemplate = ({
           {projectsDoneNodes.map(
             ({
               id,
-              meta: { firstPublishedAt },
               cardImage,
               title,
               subtitle,
-              minutesOfReading,
               author,
               slug,
               platform,

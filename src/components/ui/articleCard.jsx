@@ -155,47 +155,6 @@ const Excerpt = styled.p`
   }
 `;
 
-// const AuthorCtaContainer = styled.footer`
-//   display: flex;
-//   grid-template-columns: auto auto;
-//   column-gap: var(--gapRegular);
-//   align-items: center;
-//   justify-content: space-between;
-//   color: var(--baseTextColorDark) !important;
-//   @media screen and (max-width: 950px) {
-//     grid-row: 1;
-
-//     & a {
-//       display: none;
-//     }
-//   }
-// `;
-
-// const AuthorContainer = styled.div`
-//   --imgWidthHeight: 25px;
-//   display: grid;
-//   grid-template-columns: var(--imgWidthHeight) auto;
-//   column-gap: var(--gapSmall);
-//   align-items: center;
-
-//   @media screen and (max-width: 950px) {
-//     --imgWidthHeight: 20px;
-//     column-gap: calc(var(--gapSmall) - 0.33em);
-//     grid-template-columns: var(--imgWidthHeight) auto;
-//   }
-// `;
-
-// const AuthorImg = styled(GatsbyImage)`
-//   width: var(--imgWidthHeight);
-//   height: var(--imgWidthHeight);
-
-//   & img {
-//     border-radius: var(--imgWidthHeight);
-//   }
-// `;
-
-// Main Component
-
 const ArticleCard = ({
   slug,
   cardImg,
@@ -222,14 +181,6 @@ const ArticleCard = ({
           </DateTimeContainer>
           <PostTitle>{title}</PostTitle>
           <Excerpt>{excerpt}</Excerpt>
-          {/* <AuthorCtaContainer>
-            <AuthorContainer>
-              <AuthorImg image={authorImg || ''} alt={authorAltImg || ''} />
-              <Date normalColor as="address">
-                {authorName}
-              </Date>
-            </AuthorContainer>
-          </AuthorCtaContainer> */}
         </ContentWrapper>
       </CardLink>
     </article>

@@ -17,6 +17,7 @@ import {
   HeadingSmall,
 } from '../components/layout/headingStyles';
 import { Paragraph } from '../components/layout/paragraphStyles';
+import Timeline from '../components/timeline/Timeline';
 
 const OtherPageTemplate = ({
   data: {
@@ -32,8 +33,8 @@ const OtherPageTemplate = ({
     },
   },
   pageContext,
-  ...props
 }) => {
+  console.log('str', structuredBody);
   return (
     <PageWrapper
       pageData={pageContext}
@@ -60,8 +61,11 @@ const OtherPageTemplate = ({
               secondFeatureDescription,
               thirdFeatureTitle,
               thirdFeatureDescription,
+              timeline,
+              timelineTitle,
             },
           }) => {
+            console.log('typeName', typeName);
             switch (typeName) {
               case 'hero':
                 return (
@@ -183,6 +187,10 @@ const OtherPageTemplate = ({
                     </SectionContainerGridThreeCols>
                   </SectionWrapper>
                 );
+              case 'timeline':
+                return (
+                  <Timeline timeline={timeline} timelineTitle={timelineTitle} />
+                );
               default:
                 return null;
             }
@@ -281,6 +289,22 @@ export const query = graphql`
             secondFeatureDescription
             thirdFeatureTitle
             thirdFeatureDescription
+          }
+
+          ... on DatoCmsTimeline {
+            id: originalId
+            typeName
+            timelineTitle
+            timeline {
+              experienceType
+              description
+              date
+              content
+              icon
+              title
+              contentStyle
+              iconStyle
+            }
           }
         }
       }
