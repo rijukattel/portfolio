@@ -172,7 +172,6 @@ const BlogWrapper = styled.div`
 const Tags = styled.div`
   box-sizing: border-box;
   margin: 0 8px 0 0;
-  color: #000000d9;
   font-size: 14px;
   font-variant: tabular-nums;
   line-height: 1.5715;

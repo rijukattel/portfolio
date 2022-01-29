@@ -319,6 +319,7 @@ export const query = graphql`
                 gallerySrcData: gatsbyImageData
                 srcUrl: url
                 srcAlt: alt
+                smartTags
               }
               caption
               description

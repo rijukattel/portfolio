@@ -33,7 +33,7 @@ const BlogPostTemplate = ({
         authorName,
         picture: { authorPictureData, authorPictureAlt },
       },
-      coverImage: { coverImageData, coverImageAlt },
+      coverImage: { coverImageData, coverImageAlt, colors },
       meta: { firstPublishedAt },
     },
     previous: {
@@ -57,6 +57,7 @@ const BlogPostTemplate = ({
     >
       <SectionWrapper as="article" isBlog article>
         <ArticleHeader
+          colors={colors}
           title={title}
           subtitle={subtitle}
           authorName={authorName}
@@ -221,6 +222,9 @@ export const query = graphql`
       coverImage {
         coverImageData: gatsbyImageData
         coverImageAlt: alt
+        colors {
+          hex
+        }
       }
       meta {
         firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")

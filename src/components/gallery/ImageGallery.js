@@ -28,7 +28,7 @@ const ImageGallery = ({ items }) => {
 
     @media screen and (max-width: 860px) {
       width: calc(100% + calc(var(--globalPaddingLr) * 2));
-      height: 300px;
+      /* height: 300px; */
       margin: calc(var(--authorImgSize) / 2 * -1) 0 0
         calc(var(--globalPaddingLr) * -1);
       border-radius: 0;
@@ -110,7 +110,7 @@ const ImageGallery = ({ items }) => {
           <SwiperSlide>
             <ImageContainer>
               <TagsContainer>
-                {JSON?.parse(item.galleryTags)?.map((tag) => (
+                {item.src.smartTags?.map((tag) => (
                   <Tags key={tag}>{tag} </Tags>
                 ))}
               </TagsContainer>

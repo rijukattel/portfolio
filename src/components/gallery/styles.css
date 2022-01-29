@@ -13,6 +13,9 @@
   border-radius: calc(var(--defaultRadius) * 2);
 
   height: auto;
+  @media screen and (max-width: 860px) {
+    width: 90%;
+  }
 }
 
 /* .swiper-slide img {
