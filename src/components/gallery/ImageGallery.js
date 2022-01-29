@@ -24,6 +24,7 @@ const ImageGallery = ({ items }) => {
 
     & img {
       border-radius: calc(var(--defaultRadius) * 2);
+      /* height: 300px; */
     }
 
     @media screen and (max-width: 860px) {
@@ -40,7 +41,7 @@ const ImageGallery = ({ items }) => {
 
   const ImageContainer = styled.div`
     border-radius: calc(var(--defaultRadius) * 2);
-    background: none;
+    background: #f8f8f8;
   `;
 
   const Caption = styled.div`
@@ -54,6 +55,7 @@ const ImageGallery = ({ items }) => {
     }
     .description {
       font-family: Source Code Pro;
+      width: 95%;
     }
   `;
 
