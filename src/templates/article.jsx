@@ -57,7 +57,7 @@ const BlogPostTemplate = ({
     >
       <SectionWrapper as="article" isBlog article>
         <ArticleHeader
-          colors={colors}
+          colors={colors[0].hex}
           title={title}
           subtitle={subtitle}
           authorName={authorName}

@@ -76,9 +76,9 @@ const ImageGallery = ({ items }) => {
     border-radius: 2px;
     opacity: 1;
     transition: all 0.3s;
-    color: var(--primaryColor);
+    color: ${({ color }) => color};
+    border-color: ${({ color }) => color};
     background: #f0f5ff;
-    border-color: #adc6ff;
     text-transform: capitalize;
   `;
 
@@ -111,7 +111,9 @@ const ImageGallery = ({ items }) => {
             <ImageContainer>
               <TagsContainer>
                 {item.src.smartTags?.map((tag) => (
-                  <Tags key={tag}>{tag} </Tags>
+                  <Tags color={item.src.colors[0].hex} key={tag}>
+                    {tag}{' '}
+                  </Tags>
                 ))}
               </TagsContainer>
               <Image image={item.src.gallerySrcData} alt={item.src.srcAlt} />

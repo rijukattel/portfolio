@@ -187,10 +187,12 @@ const Tags = styled.div`
   border-radius: 2px;
   opacity: 1;
   transition: all 0.3s;
-  color: var(--primaryColor);
+  /* color: var(--primaryColor); */
   background: #f0f5ff;
-  border-color: #adc6ff;
+  /* border-color: #adc6ff; */
   text-transform: capitalize;
+  color: ${({ color }) => color};
+  border-color: ${({ color }) => color};
 `;
 
 const BlogCategoryWrapper = styled.div`
@@ -226,6 +228,7 @@ const ArticleHeader = ({
   librariesUsed,
   tags,
   category,
+  colors,
   ...props
 }) => {
   const { siteUrl } = useSiteUrl();
@@ -246,7 +249,9 @@ const ArticleHeader = ({
     <BlogWrapper>
       <div>
         {JSON?.parse(tags)?.map((tag) => (
-          <Tags key={tag}>{tag} </Tags>
+          <Tags color={colors} key={tag}>
+            {tag}{' '}
+          </Tags>
         ))}
       </div>
     </BlogWrapper>

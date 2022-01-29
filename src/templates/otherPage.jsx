@@ -35,7 +35,6 @@ const OtherPageTemplate = ({
   },
   pageContext,
 }) => {
-  console.log('str', structuredBody);
   return (
     <PageWrapper
       pageData={pageContext}
@@ -320,6 +319,9 @@ export const query = graphql`
                 srcUrl: url
                 srcAlt: alt
                 smartTags
+                colors {
+                  hex
+                }
               }
               caption
               description
