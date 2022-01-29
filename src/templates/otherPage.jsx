@@ -18,6 +18,7 @@ import {
 } from '../components/layout/headingStyles';
 import { Paragraph } from '../components/layout/paragraphStyles';
 import Timeline from '../components/timeline/Timeline';
+import ImageGallery from '../components/gallery/ImageGallery';
 
 const OtherPageTemplate = ({
   data: {
@@ -63,9 +64,9 @@ const OtherPageTemplate = ({
               thirdFeatureDescription,
               timeline,
               timelineTitle,
+              items: galleryItems,
             },
           }) => {
-            console.log('typeName', typeName);
             switch (typeName) {
               case 'hero':
                 return (
@@ -191,6 +192,8 @@ const OtherPageTemplate = ({
                 return (
                   <Timeline timeline={timeline} timelineTitle={timelineTitle} />
                 );
+              case 'gallery':
+                return <ImageGallery items={galleryItems} />;
               default:
                 return null;
             }
@@ -304,6 +307,21 @@ export const query = graphql`
               title
               contentStyle
               iconStyle
+            }
+          }
+          ... on DatoCmsGallery {
+            id: originalId
+            typeName
+            items {
+              galleryTags: tags
+
+              src {
+                gallerySrcData: gatsbyImageData
+                srcUrl: url
+                srcAlt: alt
+              }
+              caption
+              description
             }
           }
         }

@@ -58,6 +58,10 @@ module.exports = {
             family: 'Righteous',
             weights: ['100', '400', '700'],
           },
+          {
+            family: 'Comforter',
+            weights: ['100', '400', '700'],
+          },
         ],
       },
     },
