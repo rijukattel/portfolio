@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { GatsbyImage } from 'gatsby-plugin-image';
-import SwiperCore, { EffectCoverflow, Pagination } from 'swiper';
+import SwiperCore, { EffectCoverflow, Pagination, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
@@ -13,7 +13,7 @@ import './styles.css';
 // import Swiper core and required modules
 
 // install Swiper modules
-SwiperCore.use([EffectCoverflow, Pagination]);
+SwiperCore.use([EffectCoverflow, Pagination, Scrollbar]);
 
 const ImageGallery = ({ items }) => {
   const Image = styled(GatsbyImage)`
@@ -24,7 +24,6 @@ const ImageGallery = ({ items }) => {
 
     & img {
       border-radius: calc(var(--defaultRadius) * 2);
-      /* height: 300px; */
     }
 
     @media screen and (max-width: 860px) {
@@ -94,10 +93,26 @@ const ImageGallery = ({ items }) => {
   return (
     <div>
       <Swiper
+        navigation
+        scrollbar={{ draggable: true }}
         effect={'coverflow'}
         grabCursor={true}
         centeredSlides={true}
         slidesPerView={'auto'}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+        }}
         coverflowEffect={{
           rotate: 50,
           stretch: 0,
@@ -109,7 +124,7 @@ const ImageGallery = ({ items }) => {
         className="mySwiper"
       >
         {items?.map((item) => (
-          <SwiperSlide>
+          <SwiperSlide key={item.caption}>
             <ImageContainer>
               <TagsContainer>
                 {item.src.smartTags?.map((tag) => (

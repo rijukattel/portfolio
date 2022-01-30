@@ -312,8 +312,6 @@ export const query = graphql`
             id: originalId
             typeName
             items {
-              galleryTags: tags
-
               src {
                 gallerySrcData: gatsbyImageData
                 srcUrl: url

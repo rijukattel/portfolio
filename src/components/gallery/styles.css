@@ -11,6 +11,7 @@
   background-size: cover;
   width: 30%;
   border-radius: calc(var(--defaultRadius) * 2);
+  background-color: #f8f8f8;
 
   height: auto;
   @media screen and (max-width: 860px) {
