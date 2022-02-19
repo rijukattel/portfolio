@@ -47,7 +47,6 @@ const BlogPostTemplate = ({
   pageContext,
 }) => {
   const { skipNext } = pageContext;
-
   return (
     <PageWrapper
       pageData={pageContext}
@@ -57,7 +56,6 @@ const BlogPostTemplate = ({
     >
       <SectionWrapper as="article" isBlog article>
         <ArticleHeader
-          colors={colors[0].hex}
           title={title}
           subtitle={subtitle}
           authorName={authorName}
@@ -132,20 +130,17 @@ const BlogPostTemplate = ({
                     return null;
                 }
               }}
-              renderBlock={({
-                record: {
-                  typeName,
-                  image: {
-                    gatsbyImageData: recordImageData,
-                    alt: recordImageAlt,
-                  },
-                },
-              }) => {
+              renderBlock={({ record: { typeName, image, editor } }) => {
                 switch (typeName) {
                   case 'image':
                     return (
-                      <BodyImg image={recordImageData} alt={recordImageAlt} />
+                      <BodyImg
+                        image={image?.gatsbyImageData}
+                        alt={image?.alt}
+                      />
                     );
+                  case 'html_editor':
+                    return <div dangerouslySetInnerHTML={{ __html: editor }} />;
                   default:
                     return null;
                 }
@@ -222,9 +217,6 @@ export const query = graphql`
       coverImage {
         coverImageData: gatsbyImageData
         coverImageAlt: alt
-        colors {
-          hex
-        }
       }
       meta {
         firstPublishedAt(locale: $locale, formatString: "DD MMM YYYY")
@@ -238,11 +230,18 @@ export const query = graphql`
       }
       structuredBody {
         blocks {
-          typeName
-          id: originalId
-          image {
-            gatsbyImageData
-            alt
+          ... on DatoCmsArticleBodyImage {
+            id: originalId
+            typeName
+            image {
+              gatsbyImageData
+              alt
+            }
+          }
+          ... on DatoCmsRichText {
+            id: originalId
+            typeName
+            editor
           }
         }
         links {

@@ -191,8 +191,8 @@ const Tags = styled.div`
   background: #f0f5ff;
   /* border-color: #adc6ff; */
   text-transform: capitalize;
-  color: ${({ color }) => color};
-  border-color: ${({ color }) => color};
+  color: var(--primaryColor);
+  border-color: var(--primaryColor);
 `;
 
 const BlogCategoryWrapper = styled.div`

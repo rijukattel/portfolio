@@ -197,7 +197,7 @@ export const query = graphql`
     allDatoCmsBlogPost(
       sort: { order: DESC, fields: meta___firstPublishedAt }
       filter: { locale: { eq: $locale }, featuredInHomepage: { eq: true } }
-      limit: 6
+      limit: 3
     ) {
       postNodes: nodes {
         id: originalId
@@ -236,7 +236,7 @@ export const query = graphql`
     allDatoCmsProjectsDone(
       sort: { order: DESC, fields: meta___firstPublishedAt }
       filter: { locale: { eq: $locale }, featuredInHomepage: { eq: true } }
-      limit: 6
+      limit: 3
     ) {
       postNodes: nodes {
         id: originalId

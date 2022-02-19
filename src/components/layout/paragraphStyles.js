@@ -141,6 +141,14 @@ export const ArticleBody = styled.div`
     }
   }
 
+  & h1 {
+    /* color: red; */
+    font-size: var(--headingL);
+    @media screen and (max-width: 768px) {
+      font-size: var(--headingM);
+    }
+  }
+
   & h2,
   h3 {
     line-height: var(--headingsHeight);

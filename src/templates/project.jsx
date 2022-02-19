@@ -53,13 +53,6 @@ const SingleProjectTemplate = ({
 }) => {
   const { skipNext } = pageContext;
 
-  console.log('first', {
-    platform,
-    programmingLanguage,
-    librariesUsed,
-    structuredBody,
-  });
-
   return (
     <PageWrapper
       pageData={pageContext}
