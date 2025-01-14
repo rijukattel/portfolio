@@ -1,0 +1,41 @@
+{
+  "userLocation": "Chitwan, Nepal",
+  "userPhone": "9865430408",
+  "userAvatar": "assets/icons8-react-160.png",
+  "dateFormat": "MMM Do, YY",
+  "disqusShortname": "sdasdas",
+  "copyright": "2021",
+  "userTwitter": "rijukattel",
+  "siteUrl": "https://rijukattel.com.np",
+  "googleAnalyticsID": "sdassaf",
+  "siteRss": "/rss.xml",
+  "siteTitleShort": "Riju",
+  "socialLinks": [
+    {
+      "id": 15,
+      "name": "Instagram",
+      "link": "https://instagram.com/reeju01",
+      "icon": "assets/icons8-instagram-64.png"
+    },
+    {
+      "id": 3,
+      "name": "Twitter",
+      "link": "https://twitter.com/rijukattel",
+      "icon": "assets/icons8-twitter-64.png"
+    }
+  ],
+  "siteRssTitle": "RijuKattel RSS feed",
+  "dateFromFormat": "YYYY-MM-DD",
+  "userPhoneCode": "+977",
+  "userEmail": "rijukattel02@gmail.com",
+  "userDescription": "",
+  "siteTitle": "Riju Kattel",
+  "siteLogo": "assets/icons8-react-160.png",
+  "siteDescription": "Read Blogs and Get to know me",
+  "backgroundColor": "#e0e0e0",
+  "userName": "rijukattel",
+  "pathPrefix": "/",
+  "postsPerPage": 8,
+  "siteFBAppID": "1825356251115265",
+  "themeColor": "#c62828"
+}
