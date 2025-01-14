@@ -1,11 +1,11 @@
 {
-  "primaryColor": "#5a2d83",
-  "primaryDark": "#380060",
-  "primaryLight": "#ebf6ff",
-  "headingsColor": "#282828",
-  "baseTextColor": "#32383d",
-  "baseTextColorDark": "#323030",
-  "disabledColor": "#6e7581",
-  "dividerColor": "#ffffff",
-  "markColor": "#fdffb4"
+  "primaryColor": "#2c9d75",
+  "primaryDark": "#1d6b49",
+  "primaryLight": "#a1e3c4",
+  "headingsColor": "#b76e79",
+  "baseTextColor": "#333333",
+  "baseTextColorDark": "#1e1d4a",
+  "disabledColor": "#a79ec1",
+  "dividerColor": "#d4c9ff",
+  "markColor": "#9a4dff"
 }

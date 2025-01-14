@@ -1,5 +1,9 @@
 const siteUrl = 'https://raghavkattel.com.np';
 
+require('dotenv').config({
+  path: `.env`,
+});
+
 module.exports = {
   siteMetadata: {
     siteUrl,
@@ -68,7 +72,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-datocms',
       options: {
-        apiToken: 'd6d5f69b3b1612cef18305d66e47db',
+        apiToken: process.env.DATO_CMS_API_TOKEN,
 
         /**
          * Example of how locale fallbacks should be set,
