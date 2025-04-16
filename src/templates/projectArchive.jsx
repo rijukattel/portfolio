@@ -8,6 +8,7 @@ import {
   SectionWrapper,
 } from '../components/layout/sectionStyles';
 import ArticleCard, { CardImgArtDir } from '../components/ui/articleCard';
+import ProjectFilters from '../components/ui/ProjectFilters';
 import {
   ArchiveNav,
   ArchiveList,
@@ -29,6 +30,67 @@ const ProjectArchiveTemplate = ({
   const { defaultLanguage, projectPath } = useLanguages();
   const { projectPagesNumber, projectArchivePageNumber, locale } = pageContext;
 
+  // --- Filtering, Sorting, and Badges Logic ---
+  const [filters, setFilters] = React.useState({
+    language: '',
+    platform: '',
+    year: '',
+  });
+  const [sortValue, setSortValue] = React.useState('newest');
+
+  // Compute unique filter options
+  const languages = Array.from(
+    new Set(projectsDoneNodes.map((p) => p.programmingLanguage).filter(Boolean))
+  );
+  const platforms = Array.from(
+    new Set(projectsDoneNodes.map((p) => p.platform).filter(Boolean))
+  );
+  const years = Array.from(
+    new Set(
+      projectsDoneNodes
+        .map((p) =>
+          p.meta?.firstPublishedAt
+            ? new Date(p.meta.firstPublishedAt).getFullYear()
+            : null
+        )
+        .filter(Boolean)
+    )
+  ).sort((a, b) => b - a);
+
+  // Filtering
+  let filtered = projectsDoneNodes.filter((p) => {
+    const matchLang =
+      !filters.language || p.programmingLanguage === filters.language;
+    const matchPlat = !filters.platform || p.platform === filters.platform;
+    const matchYear =
+      !filters.year ||
+      (p.meta?.firstPublishedAt &&
+        new Date(p.meta.firstPublishedAt).getFullYear().toString() ===
+          filters.year);
+    return matchLang && matchPlat && matchYear;
+  });
+  // Sorting
+  filtered = filtered.sort((a, b) => {
+    if (sortValue === 'newest') {
+      return (
+        new Date(b.meta?.firstPublishedAt) - new Date(a.meta?.firstPublishedAt)
+      );
+    } else if (sortValue === 'oldest') {
+      return (
+        new Date(a.meta?.firstPublishedAt) - new Date(b.meta?.firstPublishedAt)
+      );
+    } else if (sortValue === 'az') {
+      return a.title.localeCompare(b.title);
+    } else if (sortValue === 'za') {
+      return b.title.localeCompare(a.title);
+    }
+    return 0;
+  });
+  // Handlers
+  const handleFilterChange = (key, value) =>
+    setFilters((f) => ({ ...f, [key]: value }));
+  const handleSortChange = (value) => setSortValue(value);
+
   return (
     <PageWrapper
       pageData={pageContext}
@@ -42,8 +104,17 @@ const ProjectArchiveTemplate = ({
         siderImage={siderImage[0]}
       />
       <SectionWrapper isProjectDone>
+        <ProjectFilters
+          languages={languages}
+          platforms={platforms}
+          years={years.map(String)}
+          filters={filters}
+          sortValue={sortValue}
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+        />
         <SectionContainerGridThreeCols>
-          {projectsDoneNodes.map(
+          {filtered.map(
             ({
               id,
               cardImage,
@@ -53,6 +124,8 @@ const ProjectArchiveTemplate = ({
               slug,
               platform,
               programmingLanguage,
+              meta,
+              librariesUsed,
             }) => (
               <ArticleCard
                 projectDone
@@ -73,6 +146,17 @@ const ProjectArchiveTemplate = ({
                 authorAltImg={author?.picture.alt}
                 authorName={author?.name}
                 slug={slug}
+                // --- BADGES ---
+                badges={[
+                  ...(programmingLanguage ? [programmingLanguage] : []),
+                  ...(platform ? [platform] : []),
+                  ...(meta?.firstPublishedAt
+                    ? [new Date(meta.firstPublishedAt).getFullYear()]
+                    : []),
+                  ...(librariesUsed
+                    ? librariesUsed.split(',').map((lib) => lib.trim())
+                    : []),
+                ]}
               />
             )
           )}

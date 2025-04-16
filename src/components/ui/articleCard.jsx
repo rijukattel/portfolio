@@ -155,6 +155,34 @@ const Excerpt = styled.p`
   }
 `;
 
+const BadgesBar = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 0.3em;
+`;
+const Badge = styled.span`
+  background: #f0f4ff;
+  color: #234;
+  border-radius: 0.6em;
+  font-size: 0.85em;
+  padding: 0.18em 0.7em;
+  font-weight: 600;
+  border: 1px solid #dbeafe;
+`;
+const AuthorInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-top: 0.5em;
+`;
+const AuthorImg = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
 const ArticleCard = ({
   slug,
   cardImg,
@@ -165,6 +193,7 @@ const ArticleCard = ({
   authorImg,
   authorAltImg,
   authorName,
+  badges = [],
   ...props
 }) => {
   return (
@@ -172,6 +201,13 @@ const ArticleCard = ({
       <CardLink {...props} to={slug}>
         {cardImg}
         <ContentWrapper>
+          {badges && badges.length > 0 && (
+            <BadgesBar>
+              {badges.map((badge, i) => (
+                <Badge key={i}>{badge}</Badge>
+              ))}
+            </BadgesBar>
+          )}
           <DateTimeContainer>
             <Date>{category}</Date>
             <Dot />
@@ -181,6 +217,14 @@ const ArticleCard = ({
           </DateTimeContainer>
           <PostTitle>{title}</PostTitle>
           <Excerpt>{excerpt}</Excerpt>
+          {(authorImg || authorName) && (
+            <AuthorInfo>
+              {authorImg && (
+                <AuthorImg src={authorImg.images?.fallback?.src || authorImg.src || authorImg} alt={authorAltImg || authorName || 'Author'} />
+              )}
+              {authorName && <span>{authorName}</span>}
+            </AuthorInfo>
+          )}
         </ContentWrapper>
       </CardLink>
     </article>

@@ -7,7 +7,7 @@ const HeroWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: ${({ fullView }) => fullView && '100%'};
   height: ${({ fullView }) => fullView && '100vh'};
   padding: var(--globalPaddingTb) var(--globalPaddingLr);
   flex-direction: column;
@@ -19,6 +19,7 @@ const HeroContainer = styled.div`
   display: grid;
   row-gap: var(--gapXL);
   justify-content: ${({ centered }) => centered && 'center'};
+  align-items: ${({ centered }) => centered && 'center'};
 
   @media screen and (max-width: 1170px) {
     width: 100%;
@@ -72,7 +73,7 @@ const Hero = ({
   hasDivider,
   siderImage,
 }) => (
-  <HeroWrapper fullView={fullView}>
+  <HeroWrapper fullView={!!siderImage || fullView}>
     <HeroContainer centered={centered}>
       <div>
         <HeroTextBox className="textbox" centered={centered}>
@@ -83,11 +84,13 @@ const Hero = ({
           </HeroSubtitle>
           {button}
         </HeroTextBox>
-        <ImageWrapper>
-          <div className="img-wrapper">
-            <img src={siderImage.url} alt={siderImage.alt} />
-          </div>
-        </ImageWrapper>
+        {siderImage && (
+          <ImageWrapper>
+            <div className="img-wrapper">
+              <img src={siderImage.url} alt={siderImage.alt} />
+            </div>
+          </ImageWrapper>
+        )}
       </div>
       {sectionChildren}
     </HeroContainer>

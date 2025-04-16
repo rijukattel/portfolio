@@ -8,6 +8,7 @@ import {
   SectionWrapper,
 } from '../components/layout/sectionStyles';
 import ArticleCard, { CardImgArtDir } from '../components/ui/articleCard';
+import BlogFilters from '../components/ui/BlogFilters';
 import {
   ArchiveNav,
   ArchiveList,
@@ -29,6 +30,37 @@ const BlogArchiveTemplate = ({
   const { defaultLanguage, blogPath } = useLanguages();
   const { pagesNumber, archivePageNumber, locale } = pageContext;
 
+  // --- Filtering and Sorting Logic for Blogs ---
+  const [filters, setFilters] = React.useState({ category: '', year: '' });
+  const [sortValue, setSortValue] = React.useState('newest');
+
+  // Compute unique categories and years
+  const categories = Array.from(new Set(blogPostNodes.map(p => p.category).filter(Boolean)));
+  const years = Array.from(new Set(blogPostNodes.map(p => (p.meta?.firstPublishedAt ? new Date(p.meta.firstPublishedAt).getFullYear() : null)).filter(Boolean))).sort((a, b) => b - a);
+
+  // Filtering
+  let filtered = blogPostNodes.filter(p => {
+    const matchCat = !filters.category || p.category === filters.category;
+    const matchYear = !filters.year || (p.meta?.firstPublishedAt && new Date(p.meta.firstPublishedAt).getFullYear().toString() === filters.year);
+    return matchCat && matchYear;
+  });
+  // Sorting
+  filtered = filtered.sort((a, b) => {
+    if (sortValue === 'newest') {
+      return new Date(b.meta?.firstPublishedAt) - new Date(a.meta?.firstPublishedAt);
+    } else if (sortValue === 'oldest') {
+      return new Date(a.meta?.firstPublishedAt) - new Date(b.meta?.firstPublishedAt);
+    } else if (sortValue === 'az') {
+      return a.title.localeCompare(b.title);
+    } else if (sortValue === 'za') {
+      return b.title.localeCompare(a.title);
+    }
+    return 0;
+  });
+  // Handlers
+  const handleFilterChange = (key, value) => setFilters(f => ({ ...f, [key]: value }));
+  const handleSortChange = value => setSortValue(value);
+
   return (
     <PageWrapper
       pageData={pageContext}
@@ -42,8 +74,16 @@ const BlogArchiveTemplate = ({
         siderImage={siderImage[0]}
       />
       <SectionWrapper isBlog>
+        <BlogFilters
+          categories={categories}
+          years={years.map(String)}
+          filters={filters}
+          sortValue={sortValue}
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+        />
         <SectionContainerGridThreeCols>
-          {blogPostNodes.map(
+          {filtered.map(
             ({
               id,
               meta: { firstPublishedAt },

@@ -114,7 +114,11 @@ const HomePageTemplate = ({
       <SectionWrapper>
         <SectionTitleContainer hasButton>
           <SectionTitle>{featuredProjectsTitle}</SectionTitle>
-          <Navigator className="classicButton classicButtonOutline" projects>
+          <Navigator
+            className="classicButton classicButtonOutline"
+            projects
+            ariaLabel="See all projects"
+          >
             {seeAllButton}
           </Navigator>
         </SectionTitleContainer>
@@ -162,10 +166,19 @@ const HomePageTemplate = ({
 
       {/* GitHub Activity Feed */}
       <SectionWrapper>
-        <SectionTitleContainer>
+        <SectionTitleContainer hasButton>
           <SectionTitle>Latest GitHub Repositories</SectionTitle>
+
+          <a
+            className="classicButton classicButtonOutline"
+            href="https://github.com/argahv"
+            target="_blank"
+            rel="noreferrer"
+          >
+            See all
+          </a>
         </SectionTitleContainer>
-        <GitHubFeed repoCount={9} />
+        <GitHubFeed repoCount={3} />
       </SectionWrapper>
     </PageWrapper>
   );

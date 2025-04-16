@@ -16,10 +16,7 @@ export const HeroTitle = styled.h1`
   color: var(--headingsColor);
   text-align: ${({ centered }) => (centered ? 'center' : 'left')};
   line-height: var(--headingsHeight);
-
-  @media screen and (max-width: 768px) {
-    font-size: var(--headingXL);
-  }
+  font-weight: 700;
   font-family: 'Poppins', sans-serif;
 `;
 
@@ -62,7 +59,7 @@ export const ArticleSubtitle = styled(HeroSubtitle)`
 export const SectionTitle = styled(HeroTitle)`
   &&& {
     font-size: var(--headingL);
-
+    font-weight: 700;
     @media screen and (max-width: 768px) {
       font-size: calc(var(--headingL) * 0.8);
     }
