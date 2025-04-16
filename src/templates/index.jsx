@@ -12,6 +12,7 @@ import {
 import { HeadingSmall, SectionTitle } from '../components/layout/headingStyles';
 import { Paragraph } from '../components/layout/paragraphStyles';
 import ArticleCard, { CardImgArtDir } from '../components/ui/articleCard';
+import GitHubFeed from '../components/GitHubFeed';
 
 const HomePageTemplate = ({
   data: {
@@ -110,7 +111,6 @@ const HomePageTemplate = ({
           )}
         </SectionContainerGridThreeCols>
       </SectionWrapper>
-
       <SectionWrapper>
         <SectionTitleContainer hasButton>
           <SectionTitle>{featuredProjectsTitle}</SectionTitle>
@@ -158,6 +158,14 @@ const HomePageTemplate = ({
             )
           )}
         </SectionContainerGridThreeCols>
+      </SectionWrapper>
+
+      {/* GitHub Activity Feed */}
+      <SectionWrapper>
+        <SectionTitleContainer>
+          <SectionTitle>Latest GitHub Repositories</SectionTitle>
+        </SectionTitleContainer>
+        <GitHubFeed repoCount={9} />
       </SectionWrapper>
     </PageWrapper>
   );

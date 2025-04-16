@@ -20,6 +20,7 @@ export const HeroTitle = styled.h1`
   @media screen and (max-width: 768px) {
     font-size: var(--headingXL);
   }
+  font-family: 'Poppins', sans-serif;
 `;
 
 export const HeroSubtitle = styled.p`
@@ -27,7 +28,8 @@ export const HeroSubtitle = styled.p`
   color: var(--baseTextColor);
   text-align: ${({ centered }) => (centered ? 'center' : 'left')};
   line-height: var(--paragraphHeight);
-  font-weight: 100;
+  font-weight: 400;
+  font-family: 'Poppins', sans-serif;
 `;
 
 // Articles
