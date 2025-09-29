@@ -231,6 +231,7 @@ const ArticleHeader = ({
   colors,
   ...props
 }) => {
+  console.log('first', props);
   const { siteUrl } = useSiteUrl();
 
   const { pathname } = useLocation();
@@ -263,11 +264,7 @@ const ArticleHeader = ({
         <BackButtonWrapper {...props}>
           <BackButtonIcon />
         </BackButtonWrapper>
-        <AuthorDateContainer>
-          <Author>{authorName}</Author>
-          <Dot />
-          <Author as="time">{date}</Author>
-        </AuthorDateContainer>
+
         <BlogCategoryWrapper>
           <h2>{category}</h2>
           {programmingLanguage && (
