@@ -14,6 +14,7 @@ Since 16 Oct 2026 all editorial content, the site settings, the navigation and e
 - The site is a static export.
 - Every build reads DatoCMS once with the read-only token, through `src/lib/datocms/` (`content.ts` for content, `site.ts` for Site settings, `labels.ts` for Interface text).
 - A publish in DatoCMS triggers a rebuild; see `docs/DEPLOY.md`.
+- Every build starts by clearing Next's fetch cache (`prebuild` in `package.json`). Otherwise Next reuses DatoCMS responses saved by an earlier build, and a publish wouldn't show up.
 
 **Editing conventions:**
 
