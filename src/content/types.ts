@@ -56,12 +56,16 @@ export type ResearchEntry = {
   role?: string;
   summary: string;
   question?: string;
+  /** Background paragraphs, from a source document only. */
+  context?: string[];
   sample?: string;
   methods?: string[];
   findings: Finding[];
   chart?: ChartData;
   limitations?: string[];
   implications?: string[];
+  /** Works cited by the source, as cited there (author, year). */
+  references?: string[];
   /** Plain-language status; never "published" without a publication record. */
   status: string;
   sources: SourceRef[];

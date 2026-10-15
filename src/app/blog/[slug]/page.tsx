@@ -7,6 +7,7 @@ import { DatoImage } from '@/components/media/DatoImage';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ActionLink } from '@/components/ui/ActionLink';
 import { categoryLabel, journalCopy } from '@/content/journal';
+import { researchForJournalPost, researchTypeLabels } from '@/content/research';
 import { profile } from '@/content/profile';
 import { getAllPosts, getNeighbours, getPost } from '@/lib/datocms/journal';
 import { getSiteConfig } from '@/lib/datocms/site';
@@ -51,6 +52,7 @@ export default async function PostPage({ params }: PageProps<'/blog/[slug]'>) {
   if (!post) notFound();
 
   const subtitle = post.subtitle?.trim();
+  const research = researchForJournalPost(post.slug);
 
   return (
     <article className={styles.article}>
@@ -82,6 +84,22 @@ export default async function PostPage({ params }: PageProps<'/blog/[slug]'>) {
 
       <div className={`container ${styles.content}`}>
         <PostBody body={post.structuredBody} />
+        {research ? (
+          <aside className={styles.research} aria-labelledby="part-of-research">
+            <p id="part-of-research" className="caption">
+              {journalCopy.researchLabel}
+            </p>
+            <Link
+              href={`/research/${research.slug}` as Route}
+              className={styles.researchLink}
+            >
+              <span className={styles.researchType}>
+                {researchTypeLabels[research.type]}
+              </span>
+              <span className={styles.researchTitle}>{research.title}</span>
+            </Link>
+          </aside>
+        ) : null}
       </div>
 
       <footer className={`container ${styles.footer}`}>

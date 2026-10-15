@@ -11,6 +11,7 @@ export const journalCopy = {
   newerLabel: 'Newer',
   olderLabel: 'Older',
   feedTitle: 'Riju Kattel — Journal',
+  researchLabel: 'Part of the research',
 };
 
 /** Display labels for the DatoCMS `category` values. */

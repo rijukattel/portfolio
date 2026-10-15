@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { research } from '@/content/research';
 import { getAllPosts } from '@/lib/datocms/journal';
 import { getSiteConfig } from '@/lib/datocms/site';
 
@@ -20,6 +21,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticPaths.map((path) => ({ url: `${site.url}${path}` })),
+    ...research.map((entry) => ({
+      url: `${site.url}/research/${entry.slug}/`,
+    })),
     { url: `${site.url}/blog/`, lastModified: latestPost },
     ...posts.map((post) => ({
       url: `${site.url}/blog/${post.slug}/`,

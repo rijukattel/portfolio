@@ -41,6 +41,7 @@ export const homeCopy = {
     intro:
       'Five threads run through the studies, training and fieldwork. Choose one to see the work behind it.',
     legend: 'Research themes',
+    allWorkLabel: 'All work on this theme',
   },
   field: {
     title: 'Research that begins with farmers.',
@@ -124,12 +125,12 @@ export const themes: Theme[] = [
       {
         label: 'Farmers’ perceptions of climate change, Gauradaha',
         detail: 'Independent study · 2025',
-        href: '/research',
+        href: '/research/climate-perceptions-gauradaha' as Route,
       },
       {
         label: 'Responses to unseasonal rainfall, Ratnanagar',
         detail: 'Study · 2025',
-        href: '/research',
+        href: '/research/unseasonal-rainfall-ratnanagar' as Route,
       },
       {
         label: 'Climate change sessions in 12 schools',
@@ -158,8 +159,8 @@ export const themes: Theme[] = [
     links: [
       {
         label: 'A mustard-oil barrier against ants in beehives',
-        detail: 'Field trial · Journal',
-        href: '/blog/ant-infestation-in-beehives' as Route,
+        detail: 'Field trial',
+        href: '/research/mustard-oil-hive-barrier' as Route,
       },
       {
         label: 'Guava fruit flies and a lost harvest',
@@ -210,17 +211,17 @@ export const themes: Theme[] = [
       {
         label: 'Diversity in aromatic rice genotypes',
         detail: 'B.Sc. thesis',
-        href: '/research',
+        href: '/research/aromatic-rice-diversity' as Route,
       },
       {
         label: 'Staggered transplanting and GA3 in hybrid rice seed production',
         detail: 'Collaboration',
-        href: '/research',
+        href: '/research/hybrid-rice-ga3' as Route,
       },
       {
         label: 'Economics of wheat under different weed management',
         detail: 'Semester project · 2022–23',
-        href: '/research',
+        href: '/research/wheat-weed-management-economics' as Route,
       },
     ],
   },
@@ -234,7 +235,7 @@ export const themes: Theme[] = [
       {
         label: 'Consumer preferences for jujube (Baer)',
         detail: 'Survey · 2025',
-        href: '/research',
+        href: '/research/jujube-consumer-preferences' as Route,
       },
       {
         label: 'GeoKrishi platform adoption with 100 farmers',

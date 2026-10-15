@@ -1,0 +1,68 @@
+.fieldset {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.group {
+  display: contents;
+}
+
+/* Visually hidden but focusable; the label is the visible control. */
+.radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  font-size: var(--step-small);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-micro) var(--ease-out),
+    color var(--dur-micro) var(--ease-out),
+    border-color var(--dur-micro) var(--ease-out);
+}
+
+.chip span {
+  font-size: var(--step-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--sage-ink);
+}
+
+.chip:hover {
+  border-color: var(--forest);
+}
+
+.radio:checked + .chip {
+  border-color: var(--forest);
+  background: var(--forest);
+  color: var(--ivory);
+}
+
+.radio:checked + .chip span {
+  color: color-mix(in srgb, var(--ivory) 75%, var(--forest));
+}
+
+.radio:focus-visible + .chip {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}

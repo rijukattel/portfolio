@@ -1,0 +1,241 @@
+.header {
+  display: grid;
+  gap: var(--space-4);
+  padding-block: var(--space-6) var(--space-8);
+  border-bottom: 1px solid var(--rule);
+}
+
+.back {
+  justify-self: start;
+  display: inline-flex;
+  gap: 0.5em;
+  margin-bottom: var(--space-3);
+  padding-block: 0.5rem;
+  font-size: var(--step-small);
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+
+.back:hover {
+  color: var(--ink);
+}
+
+.kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+.kicker > * + *::before {
+  content: '·';
+  margin-right: var(--space-2);
+}
+
+.kicker > :first-child {
+  color: var(--ink);
+}
+
+.title {
+  max-width: 24ch;
+}
+
+.summary {
+  max-width: 48ch;
+}
+
+.notice {
+  max-width: 60ch;
+  margin-top: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border-left: 2px solid var(--earth);
+  background: var(--paper);
+  font-size: var(--step-small);
+}
+
+/* Body: a reading column with numbered sections. */
+.body {
+  display: grid;
+  padding-bottom: var(--section-gap);
+}
+
+@media (min-width: 64em) {
+  .body {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+  }
+
+  .body > * {
+    grid-column: 2 / span 8;
+  }
+}
+
+.section {
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-8);
+  max-width: var(--measure);
+}
+
+.sectionTitle {
+  font-size: var(--step-h3);
+}
+
+.sectionNumber {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--sage-ink);
+  vertical-align: 0.35em;
+}
+
+.question {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--step-lede);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: 1.2em;
+}
+
+.list li::marker {
+  color: var(--sage);
+}
+
+.findings {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.findings li {
+  position: relative;
+  padding-left: var(--space-5);
+}
+
+.findings li::before {
+  content: '';
+  position: absolute;
+  top: 0.75em;
+  left: 0;
+  width: 0.875rem;
+  height: 2px;
+  background: var(--earth);
+}
+
+.chart {
+  margin-top: var(--space-3);
+}
+
+.subheading {
+  margin-top: var(--space-3);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+/* Research record */
+.record {
+  margin: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.record > div {
+  display: grid;
+  gap: var(--space-1) var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 40em) {
+  .record > div {
+    grid-template-columns: 10rem minmax(0, 1fr);
+  }
+}
+
+.record dt {
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+.record dd {
+  margin: 0;
+}
+
+.inlineList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+}
+
+/* Footer: the Journal post and related work. */
+.footer {
+  display: grid;
+  gap: var(--space-8) var(--gutter);
+  padding-block: var(--space-8) var(--section-gap);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 64em) {
+  .footer {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .journal {
+    grid-column: 2 / span 4;
+  }
+
+  .related {
+    grid-column: 8 / span 5;
+  }
+}
+
+.journal,
+.related {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.relatedLink {
+  display: grid;
+  gap: 0.15rem;
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.relatedType {
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+.relatedTitle {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.relatedLink:hover .relatedTitle {
+  text-decoration: underline;
+  text-decoration-color: var(--earth);
+}

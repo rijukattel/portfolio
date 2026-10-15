@@ -1,5 +1,6 @@
 import { PageIntro } from '@/components/layout/PageIntro';
 import { PostCard } from '@/components/journal/PostCard';
+import { ChipFilter } from '@/components/ui/ChipFilter';
 import { categoryLabel, journalCopy } from '@/content/journal';
 import { getAllPosts } from '@/lib/datocms/journal';
 import { pageMetadata } from '@/lib/seo';
@@ -53,35 +54,21 @@ export default async function JournalPage() {
         aria-label="Posts"
       >
         {categories.length > 1 ? (
-          <fieldset className={styles.filter}>
-            <legend className="caption">{journalCopy.filterLegend}</legend>
-            <div className={styles.options}>
-              <input
-                type="radio"
-                name="journal-filter"
-                id="filter-all"
-                className={`${styles.radio} ${styles.radioAll}`}
-                defaultChecked
-              />
-              <label htmlFor="filter-all" className={styles.option}>
-                {journalCopy.allLabel} <span>{posts.length}</span>
-              </label>
-              {categories.map(([key, count]) => (
-                <span key={key} className={styles.optionGroup}>
-                  <input
-                    type="radio"
-                    name="journal-filter"
-                    id={`filter-${key}`}
-                    className={styles.radio}
-                  />
-                  <label htmlFor={`filter-${key}`} className={styles.option}>
-                    {categoryLabel(key)} <span>{count}</span>
-                  </label>
-                </span>
-              ))}
-            </div>
+          <>
+            <ChipFilter
+              legend={journalCopy.filterLegend}
+              name="journal-filter"
+              idPrefix="filter"
+              allLabel={journalCopy.allLabel}
+              allCount={posts.length}
+              options={categories.map(([key, count]) => ({
+                value: key,
+                label: categoryLabel(key) ?? key,
+                count,
+              }))}
+            />
             <style>{filterRules}</style>
-          </fieldset>
+          </>
         ) : null}
 
         <ol role="list" className={styles.list}>

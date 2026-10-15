@@ -143,3 +143,38 @@
   text-decoration-color: var(--earth);
   text-decoration-thickness: 1px;
 }
+
+.research {
+  display: grid;
+  gap: var(--space-2);
+  max-width: var(--measure);
+  margin-top: var(--space-7);
+  padding: var(--space-5);
+  border-left: 2px solid var(--earth);
+  background: var(--paper);
+}
+
+.researchLink {
+  display: grid;
+  gap: 0.15rem;
+  text-decoration: none;
+}
+
+.researchType {
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+.researchTitle {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--step-h3);
+  line-height: 1.25;
+}
+
+.researchLink:hover .researchTitle {
+  text-decoration: underline;
+  text-decoration-color: var(--earth);
+}

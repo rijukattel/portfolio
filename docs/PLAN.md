@@ -425,13 +425,17 @@ The Journal appears as a quiet strip (3 featured posts from DatoCMS) between Cha
 
 ## 11. Phases (each ends with a passing build and a review)
 
-**Status:** Phase 0 done (`248bbc0`); Phase 1 done (`a43544b`); Phase 2 done (`f5f01bf`); Phase 3 done on `redesign/next`.
+**Status:** Phase 0 done (`248bbc0`); Phase 1 done (`a43544b`); Phase 2 done (`f5f01bf`); Phase 3 done (`cf5a907`); Phase 4 done on `redesign/next`.
 
-- **Next:** Phase 4.
-- **Carry into Phase 4:**
-  - Link the Jujube and beehive Journal posts to their research pages, and the reverse.
-  - Repoint the homepage "More on the research" and theme links from `/research/` to `/research/<slug>/` once those pages exist.
-  - Make the archive read `?theme=` for the Chapter 02 links.
+- **Next:** Phase 5 (Fieldwork, About, CV, Contact and Thank-you, Gallery, 404).
+- **Phase 4 notes:**
+  - The archive has 11 records: 6 studies and 5 CV semester projects.
+    - Full case studies exist only for jujube and the beehive trial, the two with source documents (their Journal posts).
+    - The rest are brief records with a notice explaining why.
+  - Research pages carry `BreadcrumbList` JSON-LD only. `ScholarlyArticle` waits for a verified publication record.
+  - The title morph (`ViewTransition`, `share="morph"`) is wired on archive cards, homepage Evidence titles and case-study headings.
+    - React starts the transition on client navigation, but browsers skip it on hidden pages, so the morph itself still needs checking in a visible window (Phase 6 QA).
+    - Back navigation works and doesn't animate.
 - **Done in Phase 3:** Chapter 05 now sits on paper with slow-drawing contours, so it no longer merges with the dark footer.
 
 0. **Setup**

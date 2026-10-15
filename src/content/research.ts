@@ -109,6 +109,14 @@ export const research: ResearchEntry[] = [
     question:
       'How do young consumers view Baer as imported exotic fruits become more available?',
     sample: '35 respondents aged 21–25, online questionnaire',
+    context: [
+      'Baer (Indian jujube) is an indigenous fruit with cultural and nutritional value in Nepal; six species have been reported from the country (Bhattarai & Pathak, 2015).',
+      'The survey set out to see how young consumers view the fruit as imported exotic fruits become easier to buy.',
+    ],
+    methods: [
+      'Online questionnaire, 5 January 2025',
+      'Questions on how often respondents eat Baer, what they like and dislike about it, interest in processed products (jams, juices, candies), awareness of its nutritional benefits, and perceived market trends',
+    ],
     findings: [
       {
         statement:
@@ -118,6 +126,10 @@ export const research: ResearchEntry[] = [
       {
         statement:
           'Only 30% were aware of its nutritional benefits, and 60% preferred exotic fruits.',
+        verification: 'verified',
+      },
+      {
+        statement: '80% believe demand for Baer has declined over the years.',
         verification: 'verified',
       },
     ],
@@ -141,6 +153,13 @@ export const research: ResearchEntry[] = [
     limitations: [
       'A small online sample of young adults; it does not represent all consumers.',
     ],
+    implications: [
+      'Nutritional education: tell consumers about Baer’s vitamin C, antioxidants and local production, since only 30% are aware of its benefits.',
+      'Product innovation: juices, dried snacks, jams and wellness products for the 40% interested in processed Baer.',
+      'Modern marketing: social media and cultural storytelling to reach young consumers.',
+      'Quality standards: grading and better post-harvest handling for consistent fruit.',
+    ],
+    references: ['Bhattarai & Pathak (2015)'],
     status: 'Independent survey',
     sources: [
       { label: 'CV', kind: 'cv' },
@@ -178,10 +197,16 @@ export const research: ResearchEntry[] = [
       'Can vegetable oil serve as a non-toxic physical barrier against ants?',
     sample:
       '20 Apis mellifera hives, 5 of them infested (3 moderately, 2 heavily)',
+    context: [
+      'Ants are among the most common predators of honey bee colonies; they attack hives in mass, taking adult bees, brood and honey (Sanford, 1987; Sarwar, 2016).',
+      'Beekeepers often respond with “ant chalk” containing deltamethrin and cypermethrin, synthetic pyrethroids that are toxic to non-target insects, including bees.',
+      'In a local apiary, 5 of 20 hives were infested, and the beekeeper reported recurring ant problems despite using ant chalk.',
+    ],
     methods: [
+      'Newton-type hives on metal-rod stands',
       'Ants removed by hand from infested hives before treatment',
       'Bowls of mustard oil placed under each leg of the hive stands',
-      'Daily observation for seven days',
+      'Daily observation for seven days: ants present or absent on the stands and inside the hives, and how many',
     ],
     findings: [
       {
@@ -201,11 +226,88 @@ export const research: ResearchEntry[] = [
       'It does not address flying ants.',
       'Rain and wind can change the oil level.',
     ],
+    implications: [
+      'Suited to small-scale and resource-limited beekeepers: mustard oil is cheap, easy to find and familiar in Nepal, and needs no special equipment.',
+      'Avoids exposing bees and hive products to pyrethroid ant chalk.',
+    ],
+    references: [
+      'Sanford (1987)',
+      'Sarwar (2016)',
+      'Hebbar, Hebbar & Patwardhan (2015)',
+    ],
     status: 'Field trial, reported in the Journal',
     sources: [
       { label: 'Journal: Ant Infestation in Beehives', kind: 'journal' },
     ],
     journalSlug: 'ant-infestation-in-beehives',
+  },
+  {
+    slug: 'wheat-weed-management-economics',
+    title:
+      'Economics of Wheat Cultivation Under Different Weed Management Practices',
+    type: 'semester-project',
+    depth: 'brief',
+    themes: ['crop-diversity'],
+    period: 'Nov 2022 – Mar 2023',
+    location: 'Dang, Nepal',
+    summary:
+      'The costs and returns of growing wheat under different weed management practices.',
+    findings: [],
+    status: 'Semester project',
+    sources: [{ label: 'CV', kind: 'cv' }],
+  },
+  {
+    slug: 'african-marigold-cultivation',
+    title: 'Cultivation of African Marigold',
+    type: 'semester-project',
+    depth: 'brief',
+    themes: ['crop-diversity'],
+    period: 'Jul – Sep 2023',
+    summary: 'Growing African marigold over a season, July to September 2023.',
+    findings: [],
+    status: 'Semester project',
+    sources: [{ label: 'CV', kind: 'cv' }],
+  },
+  {
+    slug: 'greenhouse-lettuce',
+    title: 'High-Yield and Quality Production of Lettuce in a Greenhouse',
+    type: 'semester-project',
+    depth: 'brief',
+    themes: ['crop-diversity'],
+    period: 'Apr 2023',
+    summary:
+      'Producing high-yield, good-quality lettuce under greenhouse conditions.',
+    findings: [],
+    status: 'Semester project',
+    sources: [{ label: 'CV', kind: 'cv' }],
+  },
+  {
+    slug: 'oyster-mushroom-cultivation',
+    title: 'Cultivation Practices of Oyster Mushroom',
+    type: 'semester-project',
+    depth: 'brief',
+    themes: ['crop-diversity'],
+    period: 'Feb – May 2024',
+    location: 'IAAS, Prithu Technical College farm',
+    summary:
+      'Oyster mushroom cultivation practices on the IAAS Prithu Technical College farm.',
+    findings: [],
+    status: 'Semester project',
+    sources: [{ label: 'CV', kind: 'cv' }],
+  },
+  {
+    slug: 'participatory-rural-appraisal-gabar',
+    title: 'Participatory Rural Appraisal in Gabar Rural Municipality',
+    type: 'semester-project',
+    depth: 'brief',
+    themes: ['farmers-markets'],
+    period: 'January 2024',
+    location: 'Gabar Rural Municipality, Banke, Nepal',
+    summary:
+      'A participatory rural appraisal (PRA) in Gabar Rural Municipality, Banke.',
+    findings: [],
+    status: 'Semester project',
+    sources: [{ label: 'CV', kind: 'cv' }],
   },
 ];
 
@@ -219,4 +321,58 @@ export const researchTypeLabels: Record<ResearchEntry['type'], string> = {
   collaboration: 'Collaboration',
   'field-trial': 'Field trial',
   'semester-project': 'Semester project',
+};
+
+export function getResearch(slug: string) {
+  return research.find((entry) => entry.slug === slug) ?? null;
+}
+
+/** The research record a Journal post reports on, if any. */
+export function researchForJournalPost(postSlug: string) {
+  return research.find((entry) => entry.journalSlug === postSlug) ?? null;
+}
+
+/** Other work sharing a theme, closest overlap first. */
+export function relatedResearch(entry: ResearchEntry, limit = 3) {
+  return research
+    .filter((other) => other.slug !== entry.slug)
+    .map((other) => ({
+      other,
+      shared: other.themes.filter((theme) => entry.themes.includes(theme))
+        .length,
+    }))
+    .filter(({ shared }) => shared > 0)
+    .sort((a, b) => b.shared - a.shared)
+    .slice(0, limit)
+    .map(({ other }) => other);
+}
+
+/** Code-owned copy for the research archive and case-study pages. */
+export const researchCopy = {
+  label: 'Research',
+  title: 'Research',
+  lede: 'Studies, field trials and academic projects on climate adaptation, crop diversity, pesticides and pollinators, and how farmers respond to change.',
+  description:
+    "Research by Riju Kattel: a B.Sc. thesis on aromatic rice, surveys of farmers' climate perceptions and jujube consumers, a beehive field trial, and semester projects in Nepal.",
+  listLabel: 'Research archive',
+  themeLegend: 'Theme',
+  allThemesLabel: 'All themes',
+  typeLegend: 'Type',
+  allTypesLabel: 'All types',
+  empty: 'No work matches both filters. Choose another theme or type.',
+  backLabel: 'Research',
+  briefNotice:
+    'A brief record based on Riju’s CV. Methods and full results will be added when the study documents are available.',
+  sections: {
+    question: 'The question',
+    context: 'The context',
+    method: 'The method',
+    findings: 'The findings',
+    implications: 'The implications',
+    record: 'Research record',
+  },
+  limitationsLabel: 'Limitations',
+  referencesLabel: 'Cited in the source',
+  journalLabel: 'Read the Journal post',
+  relatedLabel: 'Related work',
 };

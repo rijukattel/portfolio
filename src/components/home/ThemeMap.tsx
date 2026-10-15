@@ -1,8 +1,10 @@
+import type { Route } from 'next';
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Contours } from '@/components/media/Contours';
 import { homeCopy, themes } from '@/content/home';
+import { research } from '@/content/research';
 import styles from './ThemeMap.module.css';
 
 const copy = homeCopy.questions;
@@ -92,6 +94,14 @@ export function ThemeMap() {
                   </li>
                 ))}
               </ul>
+              {research.some((entry) => entry.themes.includes(theme.id)) ? (
+                <Link
+                  href={`/research?theme=${theme.id}` as Route}
+                  className={styles.allWork}
+                >
+                  {copy.allWorkLabel} <span aria-hidden="true">→</span>
+                </Link>
+              ) : null}
             </div>
           ))}
         </div>

@@ -179,3 +179,18 @@
   letter-spacing: 0.02em;
   color: var(--sage-ink);
 }
+
+.allWork {
+  display: inline-flex;
+  gap: 0.5em;
+  margin-top: var(--space-4);
+  padding-block: 0.625rem;
+  font-size: var(--step-small);
+  font-weight: 600;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.3em;
+}
+
+.allWork:hover {
+  text-decoration-color: var(--earth);
+}

@@ -1,3 +1,5 @@
+import type { Route } from 'next';
+import { ViewTransition } from 'react';
 import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Reveal } from '@/components/motion/Reveal';
 import { BarChart } from '@/components/research/BarChart';
@@ -51,7 +53,13 @@ export function EvidenceChapter() {
                       <span key={part}>{part}</span>
                     ))}
                 </p>
-                <h3 className={styles.title}>{study.title}</h3>
+                <ViewTransition
+                  name={`research-${study.slug}`}
+                  share="morph"
+                  default="none"
+                >
+                  <h3 className={styles.title}>{study.title}</h3>
+                </ViewTransition>
                 {study.question ? (
                   <p className={styles.question}>{study.question}</p>
                 ) : (
@@ -79,7 +87,10 @@ export function EvidenceChapter() {
                     </ul>
                   </div>
                 ) : null}
-                <ActionLink href="/research" variant="quiet">
+                <ActionLink
+                  href={`/research/${study.slug}` as Route}
+                  variant="quiet"
+                >
                   {copy.linkLabel}
                 </ActionLink>
               </Reveal>
