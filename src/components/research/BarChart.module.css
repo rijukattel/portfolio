@@ -1,0 +1,116 @@
+.figure {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  /* Earth bars fall below 3:1 on paper, so charts sit on ivory (PLAN §6.2). */
+  background: var(--ivory);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.title {
+  padding-bottom: var(--space-4);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.number {
+  margin-right: 0.35em;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+.table tr {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-1);
+  padding-block: var(--space-2);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 40em) {
+  .table tr {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-4);
+    align-items: center;
+  }
+}
+
+.label {
+  font-size: var(--step-small);
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.track {
+  flex: 1;
+  height: 0.75rem;
+  background: color-mix(in srgb, var(--forest) 8%, transparent);
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  background: var(--forest);
+  transform: scaleX(var(--value));
+  transform-origin: left center;
+}
+
+.highlight .bar {
+  background: var(--earth);
+}
+
+.value {
+  min-width: 3.25rem;
+  font-size: var(--step-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.flag {
+  font-size: var(--step-caption);
+  font-weight: 600;
+  color: var(--earth-ink);
+}
+
+.highlight .label {
+  font-weight: 700;
+}
+
+.caption {
+  font-size: var(--step-caption);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* Bars grow from the baseline as the figure enters view; everything else is
+   already in place. */
+@media (prefers-reduced-motion: no-preference) {
+  :global([data-motion='ok']) .figure .bar {
+    transition: transform 900ms var(--ease-out);
+    transition-delay: calc(200ms + var(--i) * 90ms);
+  }
+
+  :global([data-motion='ok']) .figure:not([data-revealed]) .bar {
+    transform: scaleX(0);
+  }
+}

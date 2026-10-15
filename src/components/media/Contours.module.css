@@ -1,0 +1,44 @@
+.contours {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  color: var(--contour-color, var(--sage));
+  pointer-events: none;
+}
+
+.contours path {
+  stroke-width: 1;
+  stroke-opacity: var(--contour-opacity, 0.42);
+  vector-effect: non-scaling-stroke;
+}
+
+.contours .index {
+  stroke-width: 1.5;
+  stroke-opacity: calc(var(--contour-opacity, 0.42) + 0.25);
+}
+
+/* Drawn contours never fade or shift; only their strokes animate. */
+.contours[data-draw] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global([data-motion='ok']) .contours[data-draw] path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 2.2s var(--ease-in-out);
+    transition-delay: calc(var(--level) * 90ms);
+  }
+
+  :global([data-motion='ok']) .contours[data-draw][data-revealed] path {
+    stroke-dashoffset: 0;
+  }
+
+  :global([data-motion='ok']) .contours[data-pace='slow'] path {
+    transition-duration: 3.6s;
+    transition-delay: calc(var(--level) * 160ms);
+  }
+}

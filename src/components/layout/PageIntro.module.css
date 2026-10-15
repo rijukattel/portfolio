@@ -1,0 +1,30 @@
+.intro {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--space-8) var(--space-9);
+  border-bottom: 1px solid var(--rule);
+}
+
+.contours {
+  position: absolute;
+  inset: 0 0 auto auto;
+  z-index: -1;
+  width: min(70%, 56rem);
+  height: 100%;
+  --contour-opacity: 0.35;
+  mask-image: linear-gradient(to left, #000 30%, transparent);
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.title {
+  max-width: 18ch;
+}
+
+.lede {
+  margin-top: var(--space-2);
+}

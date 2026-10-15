@@ -1,0 +1,83 @@
+/*
+ * Design tokens — "Grounded in Research" (docs/PLAN.md §6–7).
+ * Contrast ratios are on Ivory / Paper; see the plan before changing a colour.
+ */
+:root {
+  /* Palette */
+  --forest: #233c2d; /* text, nav, strong surfaces · 11.1 : 1 */
+  --sage: #657a50; /* rules, icons, large labels only · 4.4 : 1 */
+  --sage-ink: #4e5f3e; /* small captions, meta · 6.4 : 1 */
+  --paper: #e9e3d5; /* research panels, figure grounds */
+  --ivory: #f8f6f0; /* primary canvas */
+  --earth: #bd794b; /* emphasis, chart highlight — never text · 3.2 : 1 */
+  --earth-ink: #8f5530; /* emphasis text · 5.5 : 1 */
+  --ink-soft: #526558; /* secondary body text · 5.8 : 1 */
+
+  /* Roles */
+  --canvas: var(--ivory);
+  --panel: var(--paper);
+  --ink: var(--forest);
+  --rule: color-mix(in srgb, var(--forest) 16%, transparent);
+  --rule-strong: color-mix(in srgb, var(--forest) 38%, transparent);
+  --focus: var(--forest);
+
+  /* Type — fluid between 360 px and 1440 px viewports */
+  --step-display: clamp(2.75rem, 1.833rem + 4.074vw, 5.5rem); /* 44 → 88 */
+  --step-h1: clamp(2.25rem, 1.667rem + 2.593vw, 4rem); /* 36 → 64 */
+  --step-h2: clamp(1.75rem, 1.417rem + 1.481vw, 2.75rem); /* 28 → 44 */
+  --step-h3: clamp(1.3125rem, 1.167rem + 0.6481vw, 1.75rem); /* 21 → 28 */
+  --step-lede: clamp(1.1875rem, 1.104rem + 0.3704vw, 1.4375rem); /* 19 → 23 */
+  --step-body: clamp(1.0625rem, 1.021rem + 0.1852vw, 1.1875rem); /* 17 → 19 */
+  --step-small: 0.9375rem; /* 15 */
+  --step-caption: 0.8125rem; /* 13 */
+
+  --leading-display: 1.06;
+  --leading-heading: 1.15;
+  --leading-body: 1.6;
+  --tracking-caption: 0.08em;
+  --measure: 66ch;
+
+  /* Space — 8 px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --section-gap: clamp(4rem, 2rem + 8.889vw, 10rem); /* 64 → 160 */
+
+  /* Grid — 4 / 6 / 12 columns */
+  --grid-max: 82.5rem; /* 1320 */
+  --margin: clamp(1rem, 0rem + 4.444vw, 4rem); /* 16 → 64 */
+  --gutter: clamp(1rem, 0.8333rem + 0.7407vw, 1.5rem); /* 16 → 24 */
+  --cols: 4;
+
+  /* Chrome */
+  --header-h: 4.5rem;
+  --header-h-compact: 3.5rem;
+  --radius: 2px;
+
+  /* Motion (PLAN §7.1) */
+  --dur-micro: 180ms;
+  --dur-reveal: 520ms;
+  --dur-scene: 850ms;
+  --stagger: 70ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --reveal-distance: 14px;
+}
+
+@media (min-width: 40em) {
+  :root {
+    --cols: 6;
+  }
+}
+
+@media (min-width: 64em) {
+  :root {
+    --cols: 12;
+  }
+}

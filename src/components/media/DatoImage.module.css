@@ -1,0 +1,12 @@
+.picture {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background-color: var(--paper);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

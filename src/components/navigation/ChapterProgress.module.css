@@ -1,0 +1,111 @@
+.bar {
+  position: fixed;
+  top: var(--header-h);
+  inset-inline: 0;
+  z-index: 49;
+  height: 2px;
+  pointer-events: none;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  background: var(--earth);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: 0 50%;
+}
+
+@supports (animation-timeline: scroll()) {
+  .bar span {
+    animation: progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Numbered rail sits in the left page margin. Below 1600 px the margin is too
+   narrow to keep it clear of the text, so only the progress line shows. */
+.rail {
+  display: none;
+}
+
+@media (min-width: 100em) {
+  .rail {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: calc((100vw - var(--grid-max)) / 2 - 6rem);
+    z-index: 40;
+    transform: translateY(-50%);
+  }
+}
+
+.list {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  color: var(--sage-ink);
+}
+
+.tick {
+  width: 0.75rem;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left center;
+  transition: transform var(--dur-micro) var(--ease-out);
+}
+
+.item[aria-current='location'] {
+  color: var(--forest);
+}
+
+.item[aria-current='location'] .tick {
+  height: 2px;
+  background: var(--earth);
+  transform: scaleX(2);
+}
+
+/* Titles appear only on hover or focus, on a solid chip so they never sit
+   on top of body text unreadably. */
+.title {
+  position: absolute;
+  left: calc(100% + var(--space-4));
+  padding: 0.125rem 0.5rem;
+  background: var(--paper);
+  border-radius: var(--radius);
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: var(--forest);
+  opacity: 0;
+  transform: translateX(-0.25rem);
+  pointer-events: none;
+  transition:
+    opacity var(--dur-micro) var(--ease-out),
+    transform var(--dur-micro) var(--ease-out);
+}
+
+.item:hover .title,
+.item:focus-visible .title {
+  opacity: 1;
+  transform: none;
+}

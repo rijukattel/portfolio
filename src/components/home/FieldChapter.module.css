@@ -1,0 +1,163 @@
+.grid {
+  display: grid;
+  gap: var(--space-8) var(--gutter);
+}
+
+@media (min-width: 64em) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .head {
+    grid-column: 1 / span 6;
+  }
+
+  .notes {
+    grid-column: 1 / span 6;
+  }
+
+  .photos {
+    grid-column: 8 / span 5;
+    grid-row: 1 / span 3;
+    padding-top: var(--space-9);
+  }
+
+  .more {
+    grid-column: 1 / span 6;
+  }
+}
+
+.head {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* Timeline: a hairline with an earth node at each field note. */
+.notes {
+  border-left: 1px solid var(--rule-strong);
+}
+
+.note {
+  position: relative;
+  padding: 0 0 var(--space-7) var(--space-6);
+}
+
+.note:last-child {
+  padding-bottom: 0;
+}
+
+.note::before {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  left: -0.3125rem;
+  width: 0.5625rem;
+  height: 0.5625rem;
+  border-radius: 50%;
+  background: var(--earth);
+  box-shadow: 0 0 0 4px var(--paper);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+.meta > * + *::before {
+  content: '·';
+  margin-right: var(--space-2);
+}
+
+.role {
+  margin-top: var(--space-2);
+  font-size: var(--step-h3);
+}
+
+.organisation {
+  margin-top: 0.15rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.points {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-left: 1.1em;
+  font-size: var(--step-small);
+  line-height: 1.55;
+}
+
+.points li::marker {
+  color: var(--sage);
+}
+
+/* Photographs */
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5) var(--gutter);
+}
+
+@media (min-width: 64em) {
+  .photos {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    row-gap: var(--space-6);
+  }
+
+  .photo:nth-child(1) {
+    grid-column: 1 / span 4;
+  }
+
+  .photo:nth-child(2) {
+    grid-column: 2 / span 5;
+  }
+
+  .photo:nth-child(3) {
+    grid-column: 1 / span 4;
+  }
+}
+
+.photo:nth-child(1) .frame {
+  aspect-ratio: 4 / 5;
+}
+
+.photo:nth-child(2) .frame {
+  aspect-ratio: 4 / 3;
+}
+
+.photo:nth-child(3) .frame {
+  aspect-ratio: 1;
+}
+
+@media (max-width: 63.99em) {
+  .photo:nth-child(2) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Field-note annotation: a hairline leader into a short caption. */
+.annotation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--step-small);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.annotation::before {
+  content: '';
+  flex: 0 0 1.75rem;
+  height: 1px;
+  background: var(--rule-strong);
+}

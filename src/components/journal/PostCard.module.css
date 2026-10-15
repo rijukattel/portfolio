@@ -1,0 +1,98 @@
+/* The card is its own container, so the lead layout depends on the space
+   the card actually gets (it is narrow again when a filter is applied). */
+.card {
+  position: relative;
+  container-type: inline-size;
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.card:has(.link:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 6px;
+}
+
+.image {
+  aspect-ratio: 4 / 3;
+}
+
+.image img {
+  transition: transform var(--dur-scene) var(--ease-out);
+}
+
+.text {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: var(--step-h3);
+  line-height: 1.2;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.card:hover .link {
+  text-decoration: underline;
+  text-decoration-color: var(--earth);
+  text-decoration-thickness: 1px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover .image img {
+    transform: scale(1.025);
+  }
+}
+
+.excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font-size: var(--step-small);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+@container (min-width: 52rem) {
+  .lead .layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+    align-items: end;
+  }
+
+  .lead .image {
+    grid-column: 1 / span 7;
+  }
+
+  .lead .text {
+    grid-column: 9 / span 4;
+    gap: var(--space-4);
+  }
+
+  .lead .title {
+    font-size: var(--step-h2);
+    line-height: 1.12;
+  }
+
+  .lead .excerpt {
+    -webkit-line-clamp: 5;
+    font-size: var(--step-body);
+  }
+}

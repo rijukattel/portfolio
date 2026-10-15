@@ -1,0 +1,7 @@
+# Old Gatsby URLs → new routes (permanent).
+/blog/2                     /blog/          301
+/blog/2/                    /blog/          301
+/projects                   /research/      301
+/projects/*                 /research/      301
+/sitemap/sitemap-index.xml  /sitemap.xml    301
+/sitemap/*                  /sitemap.xml    301
