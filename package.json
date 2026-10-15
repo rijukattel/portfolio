@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "npx serve out",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"docs/**/*.md\""
+    "typecheck": "next typegen && tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"docs/**/*.md\"",
+    "contours": "node scripts/generate-contours.mjs"
   },
   "dependencies": {
     "@datocms/cda-client": "^0.3.2",
@@ -26,7 +27,7 @@
     "prettier": "^3.9.10",
     "typescript": "^5"
   },
-  "description": "Riju Kattel — agricultural research portfolio",
+  "description": "Riju Kattel \u2014 agricultural research portfolio",
   "engines": {
     "node": ">=20.9"
   }
