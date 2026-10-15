@@ -425,9 +425,20 @@ The Journal appears as a quiet strip (3 featured posts from DatoCMS) between Cha
 
 ## 11. Phases (each ends with a passing build and a review)
 
-**Status:** Phase 0 done (`248bbc0`); Phase 1 done (`a43544b`); Phase 2 done (`f5f01bf`); Phase 3 done (`cf5a907`); Phase 4 done on `redesign/next`.
+**Status:** Phases 0–4 committed (`248bbc0`, `a43544b`, `f5f01bf`, `cf5a907`, `2b9af60`); Phase 5 done on `redesign/next`.
 
-- **Next:** Phase 5 (Fieldwork, About, CV, Contact and Thank-you, Gallery, 404).
+- **Next:** Phase 6, QA and release.
+  - Lighthouse, axe and Playwright, plus a mid-range phone test.
+  - Watch the title morph in a visible window.
+  - Netlify deploy preview, then switch production.
+  - Resubmit the sitemap in Search Console.
+- **Phase 5 notes:**
+  - **Fieldwork:** the shared `ExperienceTimeline` and `FieldPhotos`, which the homepage Field chapter also uses now. Training and outreach come from the CV.
+  - **About:** a first-person bio from the CV's "About me", plus one Journal detail (the starfruit saplings from Assam). No portrait: the only DatoCMS picture is a small casual photo, so Riju should supply one if wanted.
+  - **CV:** follows the PDF's sections and order, minus the phone number and address. The beehive trial isn't on the PDF CV, so it isn't listed. "Print or save as PDF" uses print styles that hide the site chrome.
+  - **Contact:** a plain HTML Netlify form with a honeypot that posts to `/thank-you/` (noindex). **Netlify form detection must be enabled** in the site settings for submissions to arrive.
+  - **Gallery:** the 8 DatoCMS photos, with code-owned captions and alt text that describe only what is visible.
+  - **404:** a real `404.html`, noindex.
 - **Phase 4 notes:**
   - The archive has 11 records: 6 studies and 5 CV semester projects.
     - Full case studies exist only for jujube and the beehive trial, the two with source documents (their Journal posts).

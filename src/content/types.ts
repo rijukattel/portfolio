@@ -75,6 +75,8 @@ export type ResearchEntry = {
 };
 
 export type ExperienceEntry = {
+  /** CV section it belongs to. */
+  category: 'work' | 'leadership' | 'academic';
   role: string;
   organisation: string;
   period: string;

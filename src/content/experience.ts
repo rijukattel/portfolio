@@ -3,6 +3,7 @@ import type { ExperienceEntry } from './types';
 /** Field and community experience, from Riju's CV (PLAN §5.4). */
 export const experience: ExperienceEntry[] = [
   {
+    category: 'work',
     role: 'Field facilitator intern',
     organisation: 'GeoKrishi Initiative',
     period: 'Jan – Apr 2024',
@@ -15,6 +16,7 @@ export const experience: ExperienceEntry[] = [
     verification: 'verified',
   },
   {
+    category: 'work',
     role: 'Farm manager',
     organisation: 'RS-Agro Farm (family farm)',
     period: '2023 – present',
@@ -27,6 +29,7 @@ export const experience: ExperienceEntry[] = [
     verification: 'verified',
   },
   {
+    category: 'leadership',
     role: 'Coordinator',
     organisation: 'Lamahi Youth Network, Amnesty International Nepal',
     period: 'Jan 2024 – Feb 2025',
@@ -39,6 +42,7 @@ export const experience: ExperienceEntry[] = [
     verification: 'verified',
   },
   {
+    category: 'academic',
     role: 'Participatory Rural Appraisal',
     organisation: 'Semester fieldwork',
     period: 'Jan 2024',
@@ -49,3 +53,19 @@ export const experience: ExperienceEntry[] = [
     verification: 'verified',
   },
 ];
+
+export const fieldworkCopy = {
+  label: 'Fieldwork',
+  title: 'Fieldwork',
+  lede: 'Farmer engagement with GeoKrishi, managing the family farm in Ratnanagar, community work with the Lamahi Youth Network, and the training behind it.',
+  sections: {
+    experience: 'Field experience',
+    training: 'Training',
+    outreach: 'Outreach',
+    photographs: 'Photographs',
+  },
+  outreachIntro:
+    'Sessions for school students in Lamahi, Dang, run with the Lamahi Youth Network.',
+  photographsText: 'More photographs from farms and fields are in the gallery.',
+  galleryLink: 'Open the gallery',
+};

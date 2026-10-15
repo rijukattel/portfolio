@@ -37,3 +37,9 @@
 .header[data-scrolled] .wordmark {
   transform: scale(0.9);
 }
+
+@media print {
+  .header {
+    display: none;
+  }
+}

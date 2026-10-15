@@ -20,6 +20,7 @@ export const responsiveImageFragment = /* GraphQL */ `
  */
 export const imageFragment = /* GraphQL */ `
   fragment ImageParts on FileFieldInterface {
+    id
     alt
     title
     width

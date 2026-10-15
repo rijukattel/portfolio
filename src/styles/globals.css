@@ -223,6 +223,7 @@
 
   .surface-paper {
     background: var(--paper);
+    --surface: var(--paper);
   }
 
   .skip-link {
@@ -282,5 +283,18 @@
       animation-duration: 0s !important;
       animation-delay: 0s !important;
     }
+  }
+}
+
+/* Printing (the CV in particular): plain paper, no site chrome. */
+@media print {
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .skip-link {
+    display: none;
   }
 }

@@ -1,0 +1,19 @@
+.split {
+  display: grid;
+  gap: var(--space-8) var(--gutter);
+}
+
+@media (min-width: 64em) {
+  .split {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .split > :first-child {
+    grid-column: 1 / span 5;
+  }
+
+  .photos {
+    grid-column: 6 / span 4;
+  }
+}

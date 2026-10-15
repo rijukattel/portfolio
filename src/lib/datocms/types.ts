@@ -10,6 +10,8 @@ export type ResponsiveImage = ResponsiveImageType & {
 export type FocalPoint = { x: number; y: number } | null;
 
 export type DatoImage = {
+  /** DatoCMS upload ID. */
+  id: string;
   alt: string | null;
   title: string | null;
   width: number;

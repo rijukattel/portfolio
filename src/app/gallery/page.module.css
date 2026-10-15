@@ -1,0 +1,40 @@
+/* Photos keep their own proportions, flowing in columns like a contact
+   sheet rather than being cropped to a grid. */
+.grid {
+  columns: 1;
+  column-gap: var(--gutter);
+}
+
+@media (min-width: 40em) {
+  .grid {
+    columns: 2;
+  }
+}
+
+@media (min-width: 64em) {
+  .grid {
+    columns: 3;
+  }
+}
+
+.figure {
+  break-inside: avoid;
+  margin-bottom: var(--space-7);
+}
+
+.caption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--step-small);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.caption::before {
+  content: '';
+  flex: 0 0 1.75rem;
+  height: 1px;
+  background: var(--rule-strong);
+}

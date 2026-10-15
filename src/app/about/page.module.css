@@ -1,0 +1,53 @@
+.bio {
+  font-size: var(--step-lede);
+  line-height: 1.55;
+}
+
+.bio:first-child {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--step-h3);
+  line-height: 1.35;
+}
+
+.degree {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.degreeTitle {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--step-h3);
+  line-height: 1.25;
+}
+
+.meta {
+  font-size: var(--step-small);
+  color: var(--ink-soft);
+}
+
+.thesis {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  border-left: 2px solid var(--earth);
+  background: var(--paper);
+}
+
+.interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.interests li {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  font-size: var(--step-small);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-6);
+}

@@ -1,0 +1,61 @@
+.list {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.item {
+  display: grid;
+  gap: var(--space-1);
+  break-inside: avoid;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-4);
+}
+
+.title {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--step-body);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.title a {
+  text-decoration-color: var(--rule-strong);
+}
+
+.title a:hover {
+  text-decoration-color: var(--earth);
+}
+
+.period {
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--sage-ink);
+}
+
+.detail {
+  font-size: var(--step-small);
+  color: var(--ink-soft);
+}
+
+.points {
+  display: grid;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  padding-left: 1.1em;
+  font-size: var(--step-small);
+  line-height: 1.55;
+}
+
+.points li::marker {
+  color: var(--sage);
+}

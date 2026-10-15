@@ -1,0 +1,60 @@
+.photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5) var(--gutter);
+}
+
+@media (min-width: 64em) {
+  .photos {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    row-gap: var(--space-6);
+  }
+
+  .photo:nth-child(1) {
+    grid-column: 1 / span 4;
+  }
+
+  .photo:nth-child(2) {
+    grid-column: 2 / span 5;
+  }
+
+  .photo:nth-child(3) {
+    grid-column: 1 / span 4;
+  }
+}
+
+.photo:nth-child(1) .frame {
+  aspect-ratio: 4 / 5;
+}
+
+.photo:nth-child(2) .frame {
+  aspect-ratio: 4 / 3;
+}
+
+.photo:nth-child(3) .frame {
+  aspect-ratio: 1;
+}
+
+@media (max-width: 63.99em) {
+  .photo:nth-child(2) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Field-note annotation: a hairline leader into a short caption. */
+.annotation {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--step-small);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.annotation::before {
+  content: '';
+  flex: 0 0 1.75rem;
+  height: 1px;
+  background: var(--rule-strong);
+}
