@@ -36,4 +36,9 @@
   :global([data-motion='ok']) .contours[data-draw][data-revealed] path {
     stroke-dashoffset: 0;
   }
+
+  :global([data-motion='ok']) .contours[data-pace='slow'] path {
+    transition-duration: 3.6s;
+    transition-delay: calc(var(--level) * 160ms);
+  }
 }

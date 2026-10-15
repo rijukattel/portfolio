@@ -10,6 +10,8 @@ type PostCardProps = {
   /** The newest post on the Journal page gets a wider, two-column layout. */
   lead?: boolean;
   priority?: boolean;
+  /** h3 when the card sits under a section heading (e.g. the home strip). */
+  headingLevel?: 'h2' | 'h3';
 };
 
 /**
@@ -20,6 +22,7 @@ export function PostCard({
   post,
   lead = false,
   priority = false,
+  headingLevel: Heading = 'h2',
 }: PostCardProps) {
   return (
     <article className={lead ? `${styles.card} ${styles.lead}` : styles.card}>
@@ -42,11 +45,11 @@ export function PostCard({
             date={post._firstPublishedAt}
             minutes={post.minutesOfReading}
           />
-          <h2 className={styles.title}>
+          <Heading className={styles.title}>
             <Link href={`/blog/${post.slug}` as Route} className={styles.link}>
               {post.title}
             </Link>
-          </h2>
+          </Heading>
           <p className={styles.excerpt}>{post.excerpt}</p>
         </div>
       </div>

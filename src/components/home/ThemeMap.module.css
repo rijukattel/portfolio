@@ -1,0 +1,181 @@
+.chapter {
+  border-top: 1px solid var(--rule);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-8) var(--gutter);
+}
+
+@media (min-width: 64em) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .intro {
+    grid-column: 1 / span 5;
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-6));
+  }
+
+  .detail {
+    grid-column: 7 / span 6;
+  }
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.themes {
+  min-width: 0;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.option {
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+}
+
+.radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-3) var(--space-4) var(--space-4);
+  border-left: 2px solid transparent;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--step-h3);
+  line-height: 1.25;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-micro) var(--ease-out),
+    background-color var(--dur-micro) var(--ease-out);
+}
+
+.label:hover {
+  background: color-mix(in srgb, var(--paper) 55%, transparent);
+}
+
+.radio:checked + .label {
+  border-left-color: var(--earth);
+  background: var(--paper);
+}
+
+.radio:focus-visible + .label {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.number {
+  min-width: 1.75rem;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--sage-ink);
+}
+
+/* The map */
+
+.map {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.mapLines {
+  position: absolute;
+  inset: 0;
+  --contour-color: var(--sage);
+  --contour-opacity: 0.5;
+}
+
+.marker {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transform: translate(-0.3rem, -50%);
+}
+
+.dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--forest);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--paper) 85%, transparent);
+  transition:
+    transform var(--dur-reveal) var(--ease-out),
+    background-color var(--dur-micro) var(--ease-out);
+}
+
+.markerLabel {
+  padding: 0 0.25rem;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--paper) 85%, transparent);
+  font-size: var(--step-caption);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--sage-ink);
+}
+
+/* The selected theme's work */
+
+.panel {
+  padding-top: var(--space-6);
+}
+
+.panelTitle {
+  font-size: var(--step-h3);
+}
+
+.panelSummary {
+  margin-top: var(--space-2);
+  color: var(--ink-soft);
+}
+
+.links {
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--rule);
+}
+
+.link {
+  display: grid;
+  gap: 0.15rem;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.linkLabel {
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.link:hover .linkLabel {
+  text-decoration: underline;
+  text-decoration-color: var(--earth);
+}
+
+.linkDetail {
+  font-size: var(--step-caption);
+  letter-spacing: 0.02em;
+  color: var(--sage-ink);
+}

@@ -7,10 +7,17 @@ type ContoursProps = {
   className?: string;
   /** Draw the lines in when they scroll into view (motion permitting). */
   draw?: boolean;
+  /** "slow" for the closing scene, where the movement settles (PLAN §7.2 E). */
+  pace?: 'normal' | 'slow';
 };
 
 /** Decorative topographic lines (PLAN §6.5). Always hidden from assistive tech. */
-export function Contours({ field, className, draw = false }: ContoursProps) {
+export function Contours({
+  field,
+  className,
+  draw = false,
+  pace = 'normal',
+}: ContoursProps) {
   const { viewBox, lines } = contourFields[field];
   return (
     <svg
@@ -23,6 +30,7 @@ export function Contours({ field, className, draw = false }: ContoursProps) {
       focusable="false"
       data-reveal={draw ? '' : undefined}
       data-draw={draw ? '' : undefined}
+      data-pace={draw && pace === 'slow' ? 'slow' : undefined}
     >
       {lines.map((line, i) => (
         <path

@@ -425,11 +425,14 @@ The Journal appears as a quiet strip (3 featured posts from DatoCMS) between Cha
 
 ## 11. Phases (each ends with a passing build and a review)
 
-**Status:** Phase 0 done (`248bbc0`); Phase 1 done (`a43544b`); Phase 2 done on `redesign/next`.
+**Status:** Phase 0 done (`248bbc0`); Phase 1 done (`a43544b`); Phase 2 done (`f5f01bf`); Phase 3 done on `redesign/next`.
 
-- **Next:** Phase 3.
-- **Carry into Phase 4:** link the Jujube and beehive Journal posts to their research pages, and vice versa.
-- **Carry into Phase 3:** Chapter 05 and the footer are both forest-dark, so give the closing scene its own ground or a clear divide.
+- **Next:** Phase 4.
+- **Carry into Phase 4:**
+  - Link the Jujube and beehive Journal posts to their research pages, and the reverse.
+  - Repoint the homepage "More on the research" and theme links from `/research/` to `/research/<slug>/` once those pages exist.
+  - Make the archive read `?theme=` for the Chapter 02 links.
+- **Done in Phase 3:** Chapter 05 now sits on paper with slow-drawing contours, so it no longer merges with the dark footer.
 
 0. **Setup**
    - Branch `redesign/next` and the Next 16 scaffold.
@@ -484,6 +487,17 @@ Production keeps building `main` until the deploy preview is approved. DNS is no
 - **Thesis:** year, site and season, number of genotypes, supervisor, results, figures [Brief page: title, B.Sc. thesis at IAAS/TU, the techniques used (agro-morphological traits, PCA, cluster analysis); no thesis year shown].
 - **Hybrid rice GA3:** lead researcher/authors, dates, status [role only; status "collaboration, being prepared for publication" per the CV].
 - **Academic profiles** [LinkedIn + Facebook only].
+
+### Homepage copy for Riju to review (written from the CV; interpretive wording)
+
+The facts all come from the CV or the Journal posts. The framing below is my wording; Riju should confirm or rewrite it in `src/content/home.ts`:
+
+- **Hero lede:** "…hands-on experience working with farmers and in field research in Nepal. Research interests: climate adaptation, pollinators and pesticide governance, and how farmers respond to change."
+- **Theme summaries in Chapter 02:** one sentence per theme, for example "Safer pest control, the health of pollinators, and who carries the risks of pesticide use."
+- **Chapter 05:**
+  - The intro says "through graduate study or research collaboration". Confirm the intent.
+  - The three direction sentences.
+- **Photo captions:** these describe only what is visible ("A farmers' day gathering", "A session in a school hall", "Pineapple harvest"). Riju can add where and when if wanted.
 
 ### Content clean-up in DatoCMS (optional; the site already works around each)
 

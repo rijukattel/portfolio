@@ -16,10 +16,19 @@ export type ThemeId =
 export type ResearchType =
   | 'thesis'
   | 'independent-study'
+  | 'study'
   | 'survey'
   | 'collaboration'
   | 'field-trial'
   | 'semester-project';
+
+/** Values exactly as reported in the source, never recomputed or rounded. */
+export type ChartData = {
+  title: string;
+  /** Units, sample and source, shown under the chart. */
+  caption: string;
+  rows: { label: string; value: number; highlight?: boolean }[];
+};
 
 /** "brief" shows CV-stated facts only; "full" is the six-section case study. */
 export type ResearchDepth = 'brief' | 'full';
@@ -41,14 +50,16 @@ export type ResearchEntry = {
   type: ResearchType;
   depth: ResearchDepth;
   themes: ThemeId[];
-  period: string;
+  period?: string;
   location?: string;
-  role: string;
+  /** Riju's part in the work; omitted where the CV doesn't say. */
+  role?: string;
   summary: string;
   question?: string;
   sample?: string;
   methods?: string[];
   findings: Finding[];
+  chart?: ChartData;
   limitations?: string[];
   implications?: string[];
   /** Plain-language status; never "published" without a publication record. */
