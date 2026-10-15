@@ -425,9 +425,10 @@ The Journal appears as a quiet strip (3 featured posts from DatoCMS) between Cha
 
 ## 11. Phases (each ends with a passing build and a review)
 
-**Status:** Phase 0 done (`248bbc0`); Phase 1 done on `redesign/next`.
+**Status:** Phase 0 done (`248bbc0`); Phase 1 done (`a43544b`); Phase 2 done on `redesign/next`.
 
-- **Next:** Phase 2.
+- **Next:** Phase 3.
+- **Carry into Phase 4:** link the Jujube and beehive Journal posts to their research pages, and vice versa.
 - **Carry into Phase 3:** Chapter 05 and the footer are both forest-dark, so give the closing scene its own ground or a clear divide.
 
 0. **Setup**
@@ -483,6 +484,14 @@ Production keeps building `main` until the deploy preview is approved. DNS is no
 - **Thesis:** year, site and season, number of genotypes, supervisor, results, figures [Brief page: title, B.Sc. thesis at IAAS/TU, the techniques used (agro-morphological traits, PCA, cluster analysis); no thesis year shown].
 - **Hybrid rice GA3:** lead researcher/authors, dates, status [role only; status "collaboration, being prepared for publication" per the CV].
 - **Academic profiles** [LinkedIn + Facebook only].
+
+### Content clean-up in DatoCMS (optional; the site already works around each)
+
+- **Post SEO fields:** every post's title is "Blog" or "Research" and its description "I write what I learn". The site ignores these: the title is the post title, and the description comes from the post body. A real SEO description entered in DatoCMS is used automatically.
+- **Image alt text:** most uploads have one-word alt text ("ant", "data", "jujube"). Better descriptions in the DatoCMS media library show up on the next build.
+- **Section titles:** six posts use bold paragraphs instead of headings. The site turns these into real `<h2>`s, but DatoCMS headings would be cleaner.
+- **Jujube post:** "·" bullets and "1." numbering are typed into paragraphs. DatoCMS list formatting would render as real lists.
+- **Default share image:** the DatoCMS default OG image is the old "Cultivating Knowledge" card. Replace it in DatoCMS, or make a new one in Phase 6.
 
 ## 14. Defaults (change any before Phase 0)
 

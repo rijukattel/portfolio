@@ -7,4 +7,20 @@ export const profile = {
   location: 'Ratnanagar, Chitwan, Nepal',
   statement:
     'Agricultural science graduate building research on pollinators, pesticide governance, and how farmers perceive and respond to agricultural change.',
+  education: {
+    degree: 'B.Sc. Agriculture',
+    institution: 'Institute of Agriculture and Animal Science',
+    university: 'Tribhuvan University',
+    years: '2020–2024',
+  },
+  researchInterests: [
+    'Climate change',
+    'Community resilience and equity',
+    'Participatory research',
+    'Pesticide governance and risk',
+    'Pollinators',
+    'Environmental justice',
+    'Soil health',
+    'Soil fertility',
+  ],
 } as const;

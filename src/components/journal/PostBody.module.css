@@ -1,0 +1,84 @@
+.body {
+  max-width: var(--measure);
+  font-size: var(--step-body);
+  line-height: 1.7;
+}
+
+.body > * + * {
+  margin-top: 1.2em;
+}
+
+.body h2 {
+  margin-top: 2.2em;
+  font-size: var(--step-h3);
+  line-height: 1.2;
+}
+
+.body h3,
+.body h4 {
+  margin-top: 1.8em;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.body h2 + *,
+.body h3 + *,
+.body h4 + * {
+  margin-top: 0.6em;
+}
+
+.body ul,
+.body ol {
+  padding-left: 1.25em;
+}
+
+.body li + li {
+  margin-top: 0.45em;
+}
+
+.body li::marker {
+  color: var(--sage);
+}
+
+.body li > p {
+  margin: 0;
+}
+
+.body a {
+  text-decoration-color: var(--earth);
+  text-decoration-thickness: 1.5px;
+}
+
+.body blockquote {
+  padding-left: 1.25em;
+  border-left: 2px solid var(--earth);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.2em;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.figure {
+  margin-block: 2.4em;
+}
+
+.picture {
+  background-color: transparent;
+}
+
+.figure figcaption {
+  margin-top: var(--space-3);
+  font-size: var(--step-small);
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.note {
+  padding: var(--space-5);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.note > p + p {
+  margin-top: 0.8em;
+}

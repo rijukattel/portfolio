@@ -1,9 +1,16 @@
-import type { Metadata } from 'next';
 import { PageIntro } from '@/components/layout/PageIntro';
+import { pageMetadata } from '@/lib/seo';
 import { ActionLink } from '@/components/ui/ActionLink';
 import { siteDefaults } from '@/config/site';
 
-export const metadata: Metadata = { title: 'Contact' };
+export function generateMetadata() {
+  return pageMetadata({
+    title: 'Contact',
+    description:
+      'Contact Riju Kattel to discuss agricultural research or postgraduate opportunities.',
+    path: '/contact/',
+  });
+}
 
 // Stub until Phase 5 (docs/PLAN.md §11).
 export default function ContactPage() {

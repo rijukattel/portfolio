@@ -1,7 +1,14 @@
-import type { Metadata } from 'next';
 import { PageIntro } from '@/components/layout/PageIntro';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = { title: 'Fieldwork' };
+export function generateMetadata() {
+  return pageMetadata({
+    title: 'Fieldwork',
+    description:
+      'Field experience: farmer engagement with GeoKrishi, managing a family farm in Ratnanagar, and community work with the Lamahi Youth Network.',
+    path: '/fieldwork/',
+  });
+}
 
 // Stub until Phase 5 (docs/PLAN.md §11).
 export default function FieldworkPage() {

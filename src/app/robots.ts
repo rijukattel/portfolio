@@ -1,0 +1,12 @@
+import type { MetadataRoute } from 'next';
+import { getSiteConfig } from '@/lib/datocms/site';
+
+export const dynamic = 'force-static';
+
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const site = await getSiteConfig();
+  return {
+    rules: { userAgent: '*', allow: '/' },
+    sitemap: `${site.url}/sitemap.xml`,
+  };
+}

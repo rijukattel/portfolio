@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@datocms/cda-client": "^0.3.2",
+    "datocms-structured-text-utils": "^6.0.1",
     "next": "16.4.1",
     "react": "19.3.0",
     "react-datocms": "^8.1.2",
@@ -27,7 +28,7 @@
     "prettier": "^3.9.10",
     "typescript": "^5"
   },
-  "description": "Riju Kattel \u2014 agricultural research portfolio",
+  "description": "Riju Kattel — agricultural research portfolio",
   "engines": {
     "node": ">=20.9"
   }

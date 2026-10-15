@@ -5,8 +5,21 @@ import {
   ChapterProgress,
   type Chapter,
 } from '@/components/navigation/ChapterProgress';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { ActionLink } from '@/components/ui/ActionLink';
+import { getSiteConfig } from '@/lib/datocms/site';
+import { pageMetadata } from '@/lib/seo';
+import { homeGraph } from '@/lib/structured-data';
 import styles from './page.module.css';
+
+export function generateMetadata() {
+  return pageMetadata({
+    absoluteTitle: 'Riju Kattel · Agricultural research portfolio',
+    description:
+      'Riju Kattel is an agricultural science graduate (Tribhuvan University) researching climate adaptation, pesticides and pollinators, and how farmers in Nepal respond to agricultural change.',
+    path: '/',
+  });
+}
 
 // Phase 1 foundation preview: exercises the shell, chapter rail, reveals and
 // contour drawing with the real chapter structure. Phase 3 replaces the
@@ -28,9 +41,11 @@ const themes = [
   'Farmers, markets and participation',
 ];
 
-export default function Home() {
+export default async function Home() {
+  const site = await getSiteConfig();
   return (
     <>
+      <JsonLd data={homeGraph(site)} />
       <ChapterProgress chapters={chapters} />
 
       <section id="landscape" className={styles.hero}>

@@ -1,7 +1,14 @@
-import type { Metadata } from 'next';
 import { PageIntro } from '@/components/layout/PageIntro';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = { title: 'About' };
+export function generateMetadata() {
+  return pageMetadata({
+    title: 'About',
+    description:
+      'About Riju Kattel: B.Sc. Agriculture graduate of the Institute of Agriculture and Animal Science, Tribhuvan University, with research interests in climate resilience and pesticide governance.',
+    path: '/about/',
+  });
+}
 
 // Stub until Phase 5 (docs/PLAN.md §11).
 export default function AboutPage() {

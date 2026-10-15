@@ -54,9 +54,15 @@ export type PostSummary = {
   _firstPublishedAt: string;
   _updatedAt: string;
   coverImage: DatoImage;
+  /** The card image chosen in DatoCMS, cropped 4:3 for listings. */
+  cardImage: { alt: string | null; responsiveImage: ResponsiveImage };
+  /** ~155 characters of body text, without section titles. */
+  excerpt: string;
 };
 
 export type Post = PostSummary & {
+  /** SEO description from DatoCMS, or the excerpt when that is a placeholder. */
+  description: string;
   seo: SeoField;
   author: { name: string; picture: DatoImage | null } | null;
   structuredBody: StructuredTextGraphQlResponse<PostBodyBlock, PostBodyLink>;
