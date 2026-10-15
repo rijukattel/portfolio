@@ -1,7 +1,7 @@
-import { categoryLabel } from '@/content/journal';
 import { getSitePage } from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
 import { getSiteConfig } from '@/lib/datocms/site';
+import { categoryLabel } from '@/lib/format';
 
 export const dynamic = 'force-static';
 

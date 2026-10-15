@@ -1,24 +1,31 @@
 'use client';
 
+import type { Route } from 'next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { primaryNav } from '@/config/navigation';
+import type { NavItem } from '@/lib/datocms/types';
 import styles from './HeaderNav.module.css';
-
-const inlineItems = primaryNav.filter((item) => item.href !== '/contact');
 
 function isCurrent(pathname: string, href: string) {
   const path = pathname.replace(/\/+$/, '') || '/';
   return path === href || path.startsWith(`${href}/`);
 }
 
+type HeaderNavProps = {
+  name: string;
+  email: string;
+  items: NavItem[];
+  labels: { menu: string; close: string };
+};
+
 /**
- * Desktop: inline links with Contact as the one emphasised action.
- * Below 1024 px: CV stays visible beside a Menu button that opens a modal
- * <dialog> (native focus trap, Escape to close, focus restored on close).
+ * Desktop: inline links, with any "Show as button" item emphasised.
+ * Below 1024 px: "Keep visible" items stay beside a Menu button that opens
+ * a modal <dialog> (native focus trap, Escape to close, focus restored).
+ * Items, their order and flags come from DatoCMS Site settings.
  */
-export function HeaderNav({ name, email }: { name: string; email: string }) {
+export function HeaderNav({ name, email, items, labels }: HeaderNavProps) {
   const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -35,33 +42,33 @@ export function HeaderNav({ name, email }: { name: string; email: string }) {
     <>
       <nav aria-label="Primary" className={styles.desktop}>
         <ul role="list" className={styles.list}>
-          {inlineItems.map((item) => (
+          {items.map((item) => (
             <li key={item.href}>
               <Link
-                href={item.href}
-                className={styles.link}
+                href={item.href as Route}
+                className={item.highlight ? styles.contact : styles.link}
                 aria-current={current(item.href)}
               >
                 {item.label}
               </Link>
             </li>
           ))}
-          <li>
-            <Link
-              href="/contact"
-              className={styles.contact}
-              aria-current={current('/contact')}
-            >
-              Contact
-            </Link>
-          </li>
         </ul>
       </nav>
 
       <div className={styles.compact}>
-        <Link href="/cv" className={styles.link} aria-current={current('/cv')}>
-          CV
-        </Link>
+        {items
+          .filter((item) => item.pinned)
+          .map((item) => (
+            <Link
+              key={item.href}
+              href={item.href as Route}
+              className={styles.link}
+              aria-current={current(item.href)}
+            >
+              {item.label}
+            </Link>
+          ))}
         <button
           type="button"
           className={styles.menuButton}
@@ -73,7 +80,7 @@ export function HeaderNav({ name, email }: { name: string; email: string }) {
             setMenuOpen(true);
           }}
         >
-          Menu
+          {labels.menu}
         </button>
       </div>
 
@@ -92,15 +99,15 @@ export function HeaderNav({ name, email }: { name: string; email: string }) {
               className={styles.menuButton}
               onClick={closeMenu}
             >
-              Close
+              {labels.close}
             </button>
           </div>
           <nav aria-label="Site">
             <ol role="list" className={styles.dialogList}>
-              {primaryNav.map((item, i) => (
+              {items.map((item, i) => (
                 <li key={item.href}>
                   <Link
-                    href={item.href}
+                    href={item.href as Route}
                     className={styles.dialogLink}
                     aria-current={current(item.href)}
                     onClick={closeMenu}

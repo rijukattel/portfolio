@@ -2,6 +2,7 @@ import { PageIntro } from '@/components/layout/PageIntro';
 import { PageSection } from '@/components/layout/PageSection';
 import { ActionLink } from '@/components/ui/ActionLink';
 import { getProfile, getSitePage } from '@/lib/datocms/content';
+import { getLabels } from '@/lib/datocms/labels';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
@@ -14,35 +15,35 @@ export async function generateMetadata() {
   });
 }
 
-const labels = { direct: 'Direct', form: 'Message' };
 /**
  * A plain HTML form handled by Netlify Forms: it works without JavaScript,
  * Netlify detects it in the static export at deploy time, and the honeypot
  * field filters most spam.
  */
 export default async function ContactPage() {
-  const [page, profile] = await Promise.all([
+  const [page, profile, labels] = await Promise.all([
     getSitePage('contact'),
     getProfile(),
+    getLabels(),
   ]);
   return (
     <>
       <PageIntro label={page.label} title={page.title} lede={page.lede} />
 
-      <PageSection id="direct" title={labels.direct}>
+      <PageSection id="direct" title={labels.contactDirect}>
         <div className={styles.direct}>
           <ActionLink href={`mailto:${profile.email}`}>
             {profile.email}
           </ActionLink>
           {profile.linkedinUrl ? (
             <a href={profile.linkedinUrl} rel="me" className={styles.link}>
-              LinkedIn
+              {labels.linkedinLabel}
             </a>
           ) : null}
         </div>
       </PageSection>
 
-      <PageSection id="message" title={labels.form}>
+      <PageSection id="message" title={labels.contactMessage}>
         <form
           name="contact"
           method="POST"
@@ -54,12 +55,12 @@ export default async function ContactPage() {
           <input type="hidden" name="form-name" value="contact" />
           <p hidden>
             <label>
-              Leave this empty: <input name="bot-field" tabIndex={-1} />
+              {labels.formHoneypot} <input name="bot-field" tabIndex={-1} />
             </label>
           </p>
 
           <div className={styles.field}>
-            <label htmlFor="contact-name">Name</label>
+            <label htmlFor="contact-name">{labels.formName}</label>
             <input
               id="contact-name"
               name="name"
@@ -70,7 +71,7 @@ export default async function ContactPage() {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="contact-email">Email</label>
+            <label htmlFor="contact-email">{labels.formEmail}</label>
             <input
               id="contact-email"
               name="email"
@@ -82,10 +83,11 @@ export default async function ContactPage() {
 
           <div className={styles.field}>
             <label htmlFor="contact-topic">
-              Topic <span className={styles.optional}>(optional)</span>
+              {labels.formTopic}{' '}
+              <span className={styles.optional}>{labels.formOptional}</span>
             </label>
             <select id="contact-topic" name="topic" defaultValue="">
-              <option value="">Choose a topic</option>
+              <option value="">{labels.formTopicPlaceholder}</option>
               {page.options.map((topic) => (
                 <option key={topic}>{topic}</option>
               ))}
@@ -93,13 +95,13 @@ export default async function ContactPage() {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="contact-message">Message</label>
+            <label htmlFor="contact-message">{labels.formMessage}</label>
             <textarea id="contact-message" name="message" rows={7} required />
           </div>
 
           <div className={styles.submit}>
             <button type="submit" className={styles.button}>
-              Send message
+              {labels.formSend}
             </button>
             {page.note ? <p className={styles.note}>{page.note}</p> : null}
           </div>

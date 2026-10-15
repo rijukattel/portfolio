@@ -11,3 +11,9 @@ const longDate = new Intl.DateTimeFormat('en-GB', {
 export function formatDate(iso: string): string {
   return longDate.format(new Date(iso));
 }
+
+/** A DatoCMS post category ("educational") as shown ("Educational"). */
+export function categoryLabel(category: string | null): string | null {
+  const value = category?.trim().toLowerCase();
+  return value ? value.charAt(0).toUpperCase() + value.slice(1) : null;
+}

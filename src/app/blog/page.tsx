@@ -1,9 +1,10 @@
 import { PageIntro } from '@/components/layout/PageIntro';
 import { PostCard } from '@/components/journal/PostCard';
 import { ChipFilter } from '@/components/ui/ChipFilter';
-import { categoryLabel, journalLabels } from '@/content/journal';
 import { getSitePage } from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
+import { getLabels } from '@/lib/datocms/labels';
+import { categoryLabel } from '@/lib/format';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
@@ -23,9 +24,10 @@ const slugify = (value: string) =>
     .replace(/^-|-$/g, '');
 
 export default async function JournalPage() {
-  const [posts, page] = await Promise.all([
+  const [posts, page, labels] = await Promise.all([
     getAllPosts(),
     getSitePage('journal'),
+    getLabels(),
   ]);
 
   const counts = new Map<string, number>();
@@ -57,10 +59,10 @@ export default async function JournalPage() {
         {categories.length > 1 ? (
           <>
             <ChipFilter
-              legend={journalLabels.filterLegend}
+              legend={labels.postsFilter}
               name="journal-filter"
               idPrefix="filter"
-              allLabel={journalLabels.allLabel}
+              allLabel={labels.allPostsFilter}
               allCount={posts.length}
               options={categories.map(([key, count]) => ({
                 value: key,

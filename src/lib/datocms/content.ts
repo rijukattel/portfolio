@@ -10,6 +10,7 @@ import type {
 } from '@/content/types';
 import { datoQuery, once } from './client';
 import { imageFragment } from './fragments';
+import { getLabels } from './labels';
 import type { DatoImage } from './types';
 
 /*
@@ -294,7 +295,10 @@ function required<T>(value: T | null, model: string): T {
 }
 
 export const getContent = once(async () => {
-  const raw = await datoQuery<RawContent>(contentQuery);
+  const [raw, labels] = await Promise.all([
+    datoQuery<RawContent>(contentQuery),
+    getLabels(),
+  ]);
   const home = required(raw.homePage, 'Home page');
   const profileRecord = required(raw.profile, 'Profile');
 
@@ -373,11 +377,13 @@ export const getContent = once(async () => {
     references: optionalList(entry.references),
     status: entry.researchStatus,
     sources: [
-      ...(entry.listedInCv ? [{ label: 'CV', kind: 'cv' as const }] : []),
+      ...(entry.listedInCv
+        ? [{ label: labels.cvSourceLabel, kind: 'cv' as const }]
+        : []),
       ...(entry.journalPost
         ? [
             {
-              label: `Journal: ${entry.journalPost.title.trim()}`,
+              label: `${labels.journalSourceLabel}: ${entry.journalPost.title.trim()}`,
               kind: 'journal' as const,
             },
           ]

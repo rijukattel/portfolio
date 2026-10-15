@@ -2,7 +2,7 @@ import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Contours } from '@/components/media/Contours';
 import { DatoImage } from '@/components/media/DatoImage';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeLabels } from '@/content/home';
+import { getLabels } from '@/lib/datocms/labels';
 import type { DatoImage as DatoImageData } from '@/lib/datocms/types';
 import styles from './Hero.module.css';
 
@@ -13,7 +13,8 @@ type HeroProps = { image: DatoImageData; title: string; lede: string };
  * the title settles and contour lines draw over the land. As the scene
  * scrolls away the photograph recedes and only the lines carry on.
  */
-export function Hero({ image, title, lede }: HeroProps) {
+export async function Hero({ image, title, lede }: HeroProps) {
+  const labels = await getLabels();
   return (
     <section id="landscape" className={`surface-dark ${styles.hero}`}>
       <div className={styles.media}>
@@ -34,17 +35,15 @@ export function Hero({ image, title, lede }: HeroProps) {
           as="h1"
           size="display"
           number="01"
-          label="The Landscape"
+          label={labels.chapterLandscape}
           title={title}
           className={styles.heading}
         />
         <p className={`lede ${styles.lede}`}>{lede}</p>
         <div className={styles.actions}>
-          <ActionLink href={homeLabels.primary.href}>
-            {homeLabels.primary.label}
-          </ActionLink>
-          <ActionLink href={homeLabels.secondary.href} variant="quiet">
-            {homeLabels.secondary.label}
+          <ActionLink href="/research">{labels.heroPrimary}</ActionLink>
+          <ActionLink href="/cv" variant="quiet">
+            {labels.heroSecondary}
           </ActionLink>
         </div>
       </div>

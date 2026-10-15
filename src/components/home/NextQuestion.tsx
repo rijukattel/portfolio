@@ -2,7 +2,7 @@ import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Contours } from '@/components/media/Contours';
 import { Reveal } from '@/components/motion/Reveal';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeLabels } from '@/content/home';
+import { getLabels } from '@/lib/datocms/labels';
 import styles from './NextQuestion.module.css';
 
 /**
@@ -15,7 +15,12 @@ type NextQuestionProps = {
   directions: { title: string; text: string }[];
 };
 
-export function NextQuestion({ title, intro, directions }: NextQuestionProps) {
+export async function NextQuestion({
+  title,
+  intro,
+  directions,
+}: NextQuestionProps) {
+  const labels = await getLabels();
   return (
     <section
       id="next-question"
@@ -30,7 +35,7 @@ export function NextQuestion({ title, intro, directions }: NextQuestionProps) {
       <div className={`container ${styles.grid}`}>
         <ChapterHeading
           number="05"
-          label="The Next Question"
+          label={labels.chapterNext}
           title={title}
           className={styles.heading}
         />
@@ -55,11 +60,11 @@ export function NextQuestion({ title, intro, directions }: NextQuestionProps) {
             ))}
           </ol>
           <div className={styles.actions}>
-            <ActionLink href={homeLabels.contact.href}>
-              {homeLabels.contact.label}
+            <ActionLink href="/contact">
+              {labels.discussOpportunities}
             </ActionLink>
-            <ActionLink href={homeLabels.secondary.href} variant="quiet">
-              {homeLabels.secondary.label}
+            <ActionLink href="/cv" variant="quiet">
+              {labels.heroSecondary}
             </ActionLink>
           </div>
         </div>

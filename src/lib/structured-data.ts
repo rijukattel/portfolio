@@ -1,6 +1,6 @@
-import { categoryLabel } from '@/content/journal';
 import type { Profile } from '@/lib/datocms/content';
 import type { Post, SiteConfig } from '@/lib/datocms/types';
+import { categoryLabel } from '@/lib/format';
 import type { SocialImage } from '@/lib/seo';
 
 /*

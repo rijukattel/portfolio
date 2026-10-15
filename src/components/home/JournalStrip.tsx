@@ -1,11 +1,11 @@
 import { PostCard } from '@/components/journal/PostCard';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeLabels } from '@/content/home';
+import { getLabels } from '@/lib/datocms/labels';
 import type { PostSummary } from '@/lib/datocms/types';
 import styles from './JournalStrip.module.css';
 
 /** A quiet strip of Journal posts between Chapters 04 and 05 (PLAN §8). */
-export function JournalStrip({
+export async function JournalStrip({
   title,
   posts,
 }: {
@@ -13,6 +13,7 @@ export function JournalStrip({
   posts: PostSummary[];
 }) {
   if (posts.length === 0) return null;
+  const labels = await getLabels();
   return (
     <section
       className={`section ${styles.strip}`}
@@ -24,7 +25,7 @@ export function JournalStrip({
             {title}
           </h2>
           <ActionLink href="/blog" variant="quiet">
-            {homeLabels.journalLinkLabel}
+            {labels.allJournalPosts}
           </ActionLink>
         </div>
         <ul role="list" className={styles.list}>

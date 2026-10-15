@@ -1,8 +1,8 @@
 import type { Route } from 'next';
 import Link from 'next/link';
 import { ViewTransition } from 'react';
-import { researchTypeLabels } from '@/content/research';
 import type { ResearchEntry } from '@/content/types';
+import { getLabels, researchTypeLabel } from '@/lib/datocms/labels';
 import styles from './ResearchCard.module.css';
 
 type ResearchCardProps = {
@@ -15,11 +15,14 @@ type ResearchCardProps = {
  * with the case-study heading, so it morphs into place on navigation
  * (PLAN §7.2 D); the link itself is an ordinary <a>.
  */
-export function ResearchCard({ entry, themeTitles }: ResearchCardProps) {
+export async function ResearchCard({ entry, themeTitles }: ResearchCardProps) {
+  const labels = await getLabels();
   return (
     <article className={styles.card}>
       <p className={styles.kicker}>
-        <span className={styles.type}>{researchTypeLabels[entry.type]}</span>
+        <span className={styles.type}>
+          {researchTypeLabel(labels, entry.type)}
+        </span>
         {entry.period ? <span>{entry.period}</span> : null}
       </p>
       <div className={styles.main}>
@@ -46,7 +49,9 @@ export function ResearchCard({ entry, themeTitles }: ResearchCardProps) {
           ))}
         </ul>
         <p className={styles.depth}>
-          {entry.depth === 'full' ? 'Case study' : 'Brief record'}
+          {entry.depth === 'full'
+            ? labels.caseStudyLabel
+            : labels.briefRecordLabel}
         </p>
       </div>
     </article>

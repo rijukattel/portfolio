@@ -2,9 +2,9 @@ import type { Route } from 'next';
 import { CvList, type CvListItem } from '@/components/cv/CvList';
 import { PrintButton } from '@/components/cv/PrintButton';
 import { PageSection } from '@/components/layout/PageSection';
-import { cvLabels } from '@/content/cv';
 import type { ExperienceEntry, ResearchEntry } from '@/content/types';
 import { getContent, getSitePage } from '@/lib/datocms/content';
+import { getLabels } from '@/lib/datocms/labels';
 import { getSiteConfig } from '@/lib/datocms/site';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
@@ -37,11 +37,14 @@ const toExperienceItem = (entry: ExperienceEntry): CvListItem => ({
 
 /** Web CV built from DatoCMS (PLAN §13: no PDF, no phone or street address). */
 export default async function CvPage() {
-  const [site, page, { profile, research, experience, cv }] = await Promise.all(
-    [getSiteConfig(), getSitePage('cv'), getContent()]
-  );
+  const [site, page, { profile, research, experience, cv }, labels] =
+    await Promise.all([
+      getSiteConfig(),
+      getSitePage('cv'),
+      getContent(),
+      getLabels(),
+    ]);
   const host = new URL(site.url).host;
-  const labels = cvLabels.sections;
   const { education } = profile;
 
   // The CV's "Research experience" lists records given a CV position, in
@@ -59,8 +62,8 @@ export default async function CvPage() {
       period: entry.period,
     }));
   const presentations = [
-    { title: labels.outreach, items: cv.outreach ?? [] },
-    { title: labels.academic, items: cv.academic_presentation ?? [] },
+    { title: labels.cvOutreach, items: cv.outreach ?? [] },
+    { title: labels.cvAcademic, items: cv.academic_presentation ?? [] },
   ].filter((group) => group.items.length);
 
   return (
@@ -86,12 +89,12 @@ export default async function CvPage() {
           {profile.location ? <li>{profile.location}</li> : null}
         </ul>
         <div className={styles.actions}>
-          <PrintButton label={cvLabels.printLabel} />
+          <PrintButton label={labels.printCv} />
           {page.note ? <p className={styles.updated}>{page.note}</p> : null}
         </div>
       </header>
 
-      <PageSection id="education" title={labels.education}>
+      <PageSection id="education" title={labels.cvEducation}>
         <CvList
           items={[
             {
@@ -109,7 +112,7 @@ export default async function CvPage() {
             ...(education.thesis
               ? [
                   {
-                    title: `${cvLabels.thesisPrefix}${education.thesis.title}`,
+                    title: `${labels.thesisPrefix}: ${education.thesis.title}`,
                     href: `/research/${education.thesis.slug}` as Route,
                     points: education.thesis.techniques,
                   },
@@ -120,12 +123,12 @@ export default async function CvPage() {
       </PageSection>
 
       {researchItems.length ? (
-        <PageSection id="research" title={labels.research}>
+        <PageSection id="research" title={labels.cvResearch}>
           <CvList items={researchItems} />
         </PageSection>
       ) : null}
 
-      <PageSection id="work" title={labels.work}>
+      <PageSection id="work" title={labels.cvWork}>
         <CvList
           items={experience
             .filter((entry) => entry.category === 'work')
@@ -133,7 +136,7 @@ export default async function CvPage() {
         />
       </PageSection>
 
-      <PageSection id="leadership" title={labels.leadership}>
+      <PageSection id="leadership" title={labels.cvLeadership}>
         <CvList
           items={experience
             .filter((entry) => entry.category === 'leadership')
@@ -142,19 +145,19 @@ export default async function CvPage() {
       </PageSection>
 
       {semesterItems.length ? (
-        <PageSection id="semester-projects" title={labels.semester}>
+        <PageSection id="semester-projects" title={labels.cvSemester}>
           <CvList items={semesterItems} />
         </PageSection>
       ) : null}
 
       {cv.training?.length ? (
-        <PageSection id="training" title={labels.training}>
+        <PageSection id="training" title={labels.cvTraining}>
           <CvList items={cv.training} />
         </PageSection>
       ) : null}
 
       {presentations.length ? (
-        <PageSection id="presentations" title={labels.presentations}>
+        <PageSection id="presentations" title={labels.cvPresentations}>
           {presentations.map((group) => (
             <div key={group.title} className={styles.group}>
               <h3 className="caption">{group.title}</h3>
@@ -165,22 +168,22 @@ export default async function CvPage() {
       ) : null}
 
       {cv.course?.length ? (
-        <PageSection id="courses" title={labels.courses}>
+        <PageSection id="courses" title={labels.cvCourses}>
           <CvList items={cv.course} />
         </PageSection>
       ) : null}
 
-      <PageSection id="skills" title={labels.skills}>
+      <PageSection id="skills" title={labels.cvSkills}>
         <CvList items={[...(cv.skill ?? []), ...(cv.language ?? [])]} />
       </PageSection>
 
       {cv.award?.length ? (
-        <PageSection id="awards" title={labels.awards}>
+        <PageSection id="awards" title={labels.cvAwards}>
           <CvList items={cv.award} />
         </PageSection>
       ) : null}
 
-      <PageSection id="interests" title={labels.interests}>
+      <PageSection id="interests" title={labels.cvInterests}>
         <p>{profile.researchInterests.join(' · ')}</p>
       </PageSection>
     </div>

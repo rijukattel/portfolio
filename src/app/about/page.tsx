@@ -5,8 +5,8 @@ import { PageIntro } from '@/components/layout/PageIntro';
 import { PageSection } from '@/components/layout/PageSection';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { aboutLabels } from '@/content/profile';
 import { getContent, getSitePage } from '@/lib/datocms/content';
+import { getLabels } from '@/lib/datocms/labels';
 import { getSiteConfig } from '@/lib/datocms/site';
 import { pageMetadata } from '@/lib/seo';
 import { personSchema } from '@/lib/structured-data';
@@ -22,19 +22,21 @@ export async function generateMetadata() {
 }
 
 export default async function AboutPage() {
-  const [site, page, { profile, cv }] = await Promise.all([
+  const [site, page, { profile, cv }, labels] = await Promise.all([
     getSiteConfig(),
     getSitePage('about'),
     getContent(),
+    getLabels(),
   ]);
   const { education } = profile;
-  const labels = aboutLabels.sections;
+  // "Next" links are the site navigation, without this page.
+  const nextLinks = site.navigation.filter((item) => item.href !== '/about');
 
   return (
     <>
       <PageIntro label={page.label} title={page.title} lede={page.lede} />
 
-      <PageSection id="biography" title={labels.bio}>
+      <PageSection id="biography" title={labels.aboutBiography}>
         {profile.bio.map((paragraph) => (
           <p key={paragraph} className={styles.bio}>
             {paragraph}
@@ -42,7 +44,7 @@ export default async function AboutPage() {
         ))}
       </PageSection>
 
-      <PageSection id="education" title={labels.education}>
+      <PageSection id="education" title={labels.aboutEducation}>
         <div className={styles.degree}>
           {education.degree ? (
             <p className={styles.degreeTitle}>{education.degree}</p>
@@ -60,7 +62,7 @@ export default async function AboutPage() {
         </div>
         {education.thesis ? (
           <div className={styles.thesis}>
-            <p className="caption">{aboutLabels.thesisLabel}</p>
+            <p className="caption">{labels.thesisLabel}</p>
             <p>
               <Link href={`/research/${education.thesis.slug}` as Route}>
                 {education.thesis.title}
@@ -70,7 +72,7 @@ export default async function AboutPage() {
         ) : null}
       </PageSection>
 
-      <PageSection id="interests" title={labels.interests}>
+      <PageSection id="interests" title={labels.aboutInterests}>
         <ul role="list" className={styles.interests}>
           {profile.researchInterests.map((interest) => (
             <li key={interest}>{interest}</li>
@@ -78,12 +80,12 @@ export default async function AboutPage() {
         </ul>
         <div>
           <ActionLink href="/research" variant="quiet">
-            {aboutLabels.interestsLink}
+            {labels.seeResearch}
           </ActionLink>
         </div>
       </PageSection>
 
-      <PageSection id="skills" title={labels.skills}>
+      <PageSection id="skills" title={labels.aboutSkills}>
         <CvList
           items={[
             ...(cv.skill ?? []),
@@ -94,16 +96,16 @@ export default async function AboutPage() {
       </PageSection>
 
       {cv.award?.length ? (
-        <PageSection id="awards" title={labels.awards}>
+        <PageSection id="awards" title={labels.aboutAwards}>
           <CvList items={cv.award} />
         </PageSection>
       ) : null}
 
-      <PageSection id="next" title={labels.next}>
+      <PageSection id="next" title={labels.aboutNext}>
         <ul role="list" className={styles.links}>
-          {aboutLabels.links.map((link) => (
+          {nextLinks.map((link) => (
             <li key={link.href}>
-              <ActionLink href={link.href} variant="quiet">
+              <ActionLink href={link.href as Route} variant="quiet">
                 {link.label}
               </ActionLink>
             </li>

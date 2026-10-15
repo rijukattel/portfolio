@@ -6,9 +6,9 @@ import { NextQuestion } from '@/components/home/NextQuestion';
 import { ThemeMap } from '@/components/home/ThemeMap';
 import { ChapterProgress } from '@/components/navigation/ChapterProgress';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { homeChapters } from '@/content/home';
 import { getContent } from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
+import { getLabels, homeChapters } from '@/lib/datocms/labels';
 import { getSiteConfig } from '@/lib/datocms/site';
 import { pageMetadata } from '@/lib/seo';
 import { homeGraph } from '@/lib/structured-data';
@@ -24,10 +24,11 @@ export async function generateMetadata() {
 
 /** Five chapters: Landscape → Questions → Field → Evidence → Next Question. */
 export default async function Home() {
-  const [site, content, posts] = await Promise.all([
+  const [site, content, posts, labels] = await Promise.all([
     getSiteConfig(),
     getContent(),
     getAllPosts(),
+    getLabels(),
   ]);
   const { home, profile, themes, research, experience } = content;
 
@@ -42,7 +43,7 @@ export default async function Home() {
   return (
     <>
       <JsonLd data={homeGraph(site, profile)} />
-      <ChapterProgress chapters={homeChapters} />
+      <ChapterProgress chapters={homeChapters(labels)} />
       <Hero
         image={home.heroImage}
         title={home.heroTitle}

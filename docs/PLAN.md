@@ -57,7 +57,7 @@ A professor must be able to read the background, inspect a study, and download t
 | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------- |
 | `blog_post`                                                                                 | 7 published (categories: lifestyle 3, educational 3, literature 1); all have covers | **Yes**, as the Journal       |
 | `author`                                                                                    | 1 (Riju, with photo)                                                                | **Yes**                       |
-| `website_setting`                                                                           | singleton                                                                           | **Yes, config only**          |
+| `website_setting`                                                                           | singleton                                                                           | No; replaced by Site settings |
 | `other_page` → `gallery`                                                                    | 8 photos                                                                            | **Yes, images only**          |
 | about / contact / thank-you, `homepage`, `menu`, `footer`, `archive_page`, `not_found_page` | template copy                                                                       | No; the copy moves to code    |
 | `projects_done`, `project_archive`                                                          | 0 records / developer leftover                                                      | No                            |
@@ -72,10 +72,12 @@ A professor must be able to read the background, inspect a study, and download t
 - **DatoCMS:**
   - Homepage copy, page titles and intros, research, themes and experience.
   - CV entries, the profile and About bio, photos and captions.
-  - The Journal and the site config.
+  - The Journal.
+  - Site settings (name, URL, share image, social links) and the navigation.
+  - Every visible interface label, including chapter names (the Interface text model).
 - **Code:**
-  - Interface labels (buttons, form labels, filter and section names) and chapter names.
-  - Design tokens, motion and layout.
+  - Design tokens, motion, layout and routes.
+  - Screen-reader-only landmark names.
 - **Old Gatsby models** stay untouched until cutover. The new site doesn't read them.
 
 Every build reads DatoCMS with the read-only token. Missing required records fail the build rather than ship an empty page.
@@ -498,7 +500,7 @@ Production keeps building `main` until the deploy preview is approved. DNS is no
 
 ### Homepage copy for Riju to review (written from the CV; interpretive wording)
 
-The facts all come from the CV or the Journal posts. The framing below is my wording; Riju should confirm or rewrite it in `src/content/home.ts`:
+The facts all come from the CV or the Journal posts. The framing below is my wording; Riju should confirm or rewrite it in DatoCMS (Home page and Research theme records):
 
 - **Hero lede:** "…hands-on experience working with farmers and in field research in Nepal. Research interests: climate adaptation, pollinators and pesticide governance, and how farmers respond to change."
 - **Theme summaries in Chapter 02:** one sentence per theme, for example "Safer pest control, the health of pollinators, and who carries the risks of pesticide use."

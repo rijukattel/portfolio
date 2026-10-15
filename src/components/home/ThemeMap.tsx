@@ -3,8 +3,8 @@ import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Contours } from '@/components/media/Contours';
-import { homeLabels } from '@/content/home';
 import type { ResearchEntry, Theme } from '@/content/types';
+import { getLabels } from '@/lib/datocms/labels';
 import styles from './ThemeMap.module.css';
 
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -32,17 +32,25 @@ type ThemeMapProps = {
 };
 
 /** Chapter 02: research themes as points on a contour map (PLAN §8). */
-export function ThemeMap({ title, intro, themes, research }: ThemeMapProps) {
+export async function ThemeMap({
+  title,
+  intro,
+  themes,
+  research,
+}: ThemeMapProps) {
+  const labels = await getLabels();
   return (
     <section id="questions" className={`section ${styles.chapter}`}>
       <div className={`container ${styles.grid}`} data-theme-map="">
         <div className={styles.intro}>
-          <ChapterHeading number="02" label="The Questions" title={title} />
+          <ChapterHeading
+            number="02"
+            label={labels.chapterQuestions}
+            title={title}
+          />
           {intro ? <p className="lede">{intro}</p> : null}
           <fieldset className={styles.themes}>
-            <legend className="visually-hidden">
-              {homeLabels.questionsLegend}
-            </legend>
+            <legend className="visually-hidden">{labels.themesLegend}</legend>
             {themes.map((theme, i) => (
               <div key={theme.id} className={styles.option}>
                 <input
@@ -104,7 +112,7 @@ export function ThemeMap({ title, intro, themes, research }: ThemeMapProps) {
                   href={`/research?theme=${theme.id}` as Route}
                   className={styles.allWork}
                 >
-                  {homeLabels.allWorkLabel} <span aria-hidden="true">→</span>
+                  {labels.allWorkOnTheme} <span aria-hidden="true">→</span>
                 </Link>
               ) : null}
             </div>

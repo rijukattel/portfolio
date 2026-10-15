@@ -5,8 +5,8 @@ import {
 } from '@/components/fieldwork/FieldPhotos';
 import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeLabels } from '@/content/home';
 import type { ExperienceEntry } from '@/content/types';
+import { getLabels } from '@/lib/datocms/labels';
 import styles from './FieldChapter.module.css';
 
 /**
@@ -20,17 +20,22 @@ type FieldChapterProps = {
   photos: FieldPhoto[];
 };
 
-export function FieldChapter({
+export async function FieldChapter({
   title,
   intro,
   experience,
   photos,
 }: FieldChapterProps) {
+  const labels = await getLabels();
   return (
     <section id="field" className={`section surface-paper ${styles.chapter}`}>
       <div className={`container ${styles.grid}`}>
         <div className={styles.head}>
-          <ChapterHeading number="03" label="The Field" title={title} />
+          <ChapterHeading
+            number="03"
+            label={labels.chapterField}
+            title={title}
+          />
           {intro ? <p className="lede">{intro}</p> : null}
         </div>
 
@@ -39,7 +44,7 @@ export function FieldChapter({
 
         <div className={styles.more}>
           <ActionLink href="/fieldwork" variant="quiet">
-            {homeLabels.fieldMoreLabel}
+            {labels.allFieldExperience}
           </ActionLink>
         </div>
       </div>

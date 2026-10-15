@@ -6,15 +6,15 @@ import { PostMeta } from '@/components/journal/PostMeta';
 import { DatoImage } from '@/components/media/DatoImage';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { categoryLabel, journalLabels } from '@/content/journal';
-import { researchTypeLabels } from '@/content/research';
 import {
   getProfile,
   getResearchForJournalPost,
   getSitePage,
 } from '@/lib/datocms/content';
 import { getAllPosts, getNeighbours, getPost } from '@/lib/datocms/journal';
+import { getLabels, researchTypeLabel } from '@/lib/datocms/labels';
 import { getSiteConfig } from '@/lib/datocms/site';
+import { categoryLabel } from '@/lib/format';
 import { pageMetadata, socialImage } from '@/lib/seo';
 import { blogPostingGraph } from '@/lib/structured-data';
 import styles from './page.module.css';
@@ -48,12 +48,13 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: PageProps<'/blog/[slug]'>) {
   const { slug } = await params;
-  const [post, site, neighbours, profile, journal] = await Promise.all([
+  const [post, site, neighbours, profile, journal, labels] = await Promise.all([
     getPost(slug),
     getSiteConfig(),
     getNeighbours(slug),
     getProfile(),
     getSitePage('journal'),
+    getLabels(),
   ]);
   if (!post) notFound();
 
@@ -75,7 +76,7 @@ export default async function PostPage({ params }: PageProps<'/blog/[slug]'>) {
           <h1 className={styles.title}>{post.title}</h1>
           {subtitle ? <p className="lede">{subtitle}</p> : null}
           <p className={styles.byline}>
-            By <Link href="/about">{profile.name}</Link>
+            {labels.byLabel} <Link href="/about">{profile.name}</Link>
           </p>
         </div>
         <DatoImage
@@ -93,14 +94,14 @@ export default async function PostPage({ params }: PageProps<'/blog/[slug]'>) {
         {research ? (
           <aside className={styles.research} aria-labelledby="part-of-research">
             <p id="part-of-research" className="caption">
-              {journalLabels.researchLabel}
+              {labels.partOfResearch}
             </p>
             <Link
               href={`/research/${research.slug}` as Route}
               className={styles.researchLink}
             >
               <span className={styles.researchType}>
-                {researchTypeLabels[research.type]}
+                {researchTypeLabel(labels, research.type)}
               </span>
               <span className={styles.researchTitle}>{research.title}</span>
             </Link>
@@ -110,18 +111,18 @@ export default async function PostPage({ params }: PageProps<'/blog/[slug]'>) {
 
       <footer className={`container ${styles.footer}`}>
         <div className={styles.author}>
-          <p className="caption">Written by</p>
+          <p className="caption">{labels.writtenBy}</p>
           <p className={styles.authorName}>{profile.name}</p>
           <p className={styles.authorText}>{profile.statement}</p>
           <ActionLink href="/about" variant="quiet">
-            About Riju
+            {labels.aboutAuthor}
           </ActionLink>
         </div>
 
         <nav aria-label="More from the Journal" className={styles.pager}>
           {[
-            { post: neighbours.newer, label: journalLabels.newerLabel },
-            { post: neighbours.older, label: journalLabels.olderLabel },
+            { post: neighbours.newer, label: labels.newerLabel },
+            { post: neighbours.older, label: labels.olderLabel },
           ].map(({ post: other, label }) =>
             other ? (
               <Link
@@ -135,7 +136,7 @@ export default async function PostPage({ params }: PageProps<'/blog/[slug]'>) {
             ) : null
           )}
           <ActionLink href="/blog" variant="quiet">
-            {journalLabels.backLabel}
+            {labels.allJournalPosts}
           </ActionLink>
         </nav>
       </footer>

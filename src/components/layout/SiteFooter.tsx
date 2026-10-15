@@ -1,12 +1,17 @@
 import Link from 'next/link';
 import { Contours } from '@/components/media/Contours';
-import { primaryNav } from '@/config/navigation';
+import type { Route } from 'next';
 import { getProfile } from '@/lib/datocms/content';
+import { getLabels } from '@/lib/datocms/labels';
 import { getSiteConfig } from '@/lib/datocms/site';
 import styles from './SiteFooter.module.css';
 
 export async function SiteFooter() {
-  const [site, profile] = await Promise.all([getSiteConfig(), getProfile()]);
+  const [site, profile, labels] = await Promise.all([
+    getSiteConfig(),
+    getProfile(),
+    getLabels(),
+  ]);
   const year = new Date().getFullYear();
 
   return (
@@ -19,18 +24,18 @@ export async function SiteFooter() {
         </div>
         <nav aria-labelledby="footer-explore" className={styles.explore}>
           <h2 id="footer-explore" className="caption">
-            Explore
+            {labels.footerExplore}
           </h2>
           <ul role="list" className={styles.links}>
-            {primaryNav.map((item) => (
+            {site.navigation.map((item) => (
               <li key={item.href}>
-                <Link href={item.href}>{item.label}</Link>
+                <Link href={item.href as Route}>{item.label}</Link>
               </li>
             ))}
           </ul>
         </nav>
         <div className={styles.contact}>
-          <h2 className="caption">Contact</h2>
+          <h2 className="caption">{labels.footerContact}</h2>
           <ul role="list" className={styles.links}>
             <li>
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -38,14 +43,14 @@ export async function SiteFooter() {
             {profile.linkedinUrl ? (
               <li>
                 <a href={profile.linkedinUrl} rel="me">
-                  LinkedIn
+                  {labels.linkedinLabel}
                 </a>
               </li>
             ) : null}
             {site.facebookUrl ? (
               <li>
                 <a href={site.facebookUrl} rel="me">
-                  Facebook
+                  {labels.facebookLabel}
                 </a>
               </li>
             ) : null}

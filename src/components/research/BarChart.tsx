@@ -1,13 +1,12 @@
 import type { CSSProperties } from 'react';
 import type { ChartData } from '@/content/types';
+import { getLabels } from '@/lib/datocms/labels';
 import styles from './BarChart.module.css';
 
 type BarChartProps = {
   data: ChartData;
   title: string;
   figureNumber: number;
-  /** Header for the value column, read by screen readers. */
-  valueLabel?: string;
   className?: string;
 };
 
@@ -17,13 +16,13 @@ type BarChartProps = {
  * first frame; only the bars grow in. The key finding is marked in text as
  * well as colour.
  */
-export function BarChart({
+export async function BarChart({
   data,
   title,
   figureNumber,
-  valueLabel = 'Share of respondents',
   className,
 }: BarChartProps) {
+  const labels = await getLabels();
   return (
     <figure
       className={className ? `${styles.figure} ${className}` : styles.figure}
@@ -32,12 +31,15 @@ export function BarChart({
     >
       <table className={styles.table}>
         <caption className={styles.title}>
-          <span className={styles.number}>Fig. {figureNumber}</span> {title}
+          <span className={styles.number}>
+            {labels.figurePrefix} {figureNumber}
+          </span>{' '}
+          {title}
         </caption>
         <thead className="visually-hidden">
           <tr>
-            <th scope="col">Measure</th>
-            <th scope="col">{valueLabel}</th>
+            <th scope="col">{labels.chartMeasure}</th>
+            <th scope="col">{labels.chartShare}</th>
           </tr>
         </thead>
         <tbody>
@@ -57,7 +59,7 @@ export function BarChart({
                 <span className={styles.value}>
                   {row.value}%
                   {row.highlight ? (
-                    <span className={styles.flag}> · key finding</span>
+                    <span className={styles.flag}> · {labels.keyFinding}</span>
                   ) : null}
                 </span>
               </td>

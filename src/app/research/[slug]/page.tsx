@@ -9,15 +9,16 @@ import {
 } from '@/components/navigation/ChapterProgress';
 import { BarChart } from '@/components/research/BarChart';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { researchLabels, researchTypeLabels } from '@/content/research';
 import {
   getContent,
+  getProfile,
   getRelatedResearch,
   getResearch,
   getResearchEntry,
   getSitePage,
 } from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
+import { getLabels, researchTypeLabel } from '@/lib/datocms/labels';
 import { getSiteConfig } from '@/lib/datocms/site';
 import { pageMetadata } from '@/lib/seo';
 import { breadcrumbSchema } from '@/lib/structured-data';
@@ -37,14 +38,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const entry = await getResearchEntry(slug);
   if (!entry) return {};
+  const [profile, labels] = await Promise.all([getProfile(), getLabels()]);
   return pageMetadata({
     title: entry.title,
-    description: `${researchTypeLabels[entry.type]} by Riju Kattel: ${lowerFirst(entry.summary)}`,
+    description: `${researchTypeLabel(labels, entry.type)} by ${profile.name}: ${lowerFirst(entry.summary)}`,
     path: `/research/${entry.slug}/`,
   });
 }
 
-type SectionKey = keyof typeof researchLabels.sections;
+type SectionKey =
+  'question' | 'context' | 'method' | 'findings' | 'implications' | 'record';
 
 // "How young…" → "how young…", but leave acronyms such as "PRA" alone.
 const lowerFirst = (text: string) =>
@@ -57,17 +60,29 @@ export default async function ResearchEntryPage({
   const entry = await getResearchEntry(slug);
   if (!entry) notFound();
 
-  const [site, posts, { themes }, page] = await Promise.all([
+  const [site, posts, { themes }, page, labels] = await Promise.all([
     getSiteConfig(),
     getAllPosts(),
     getContent(),
     getSitePage('research'),
+    getLabels(),
   ]);
+  const typeLabel = (type: typeof entry.type) =>
+    researchTypeLabel(labels, type);
   const themeTitles = Object.fromEntries(themes.map((t) => [t.id, t.title]));
   const journalPost = entry.journalSlug
     ? (posts.find((post) => post.slug === entry.journalSlug) ?? null)
     : null;
   const related = await getRelatedResearch(entry);
+
+  const sectionTitles: Record<SectionKey, string> = {
+    question: labels.sectionQuestion,
+    context: labels.sectionContext,
+    method: labels.sectionMethod,
+    findings: labels.sectionFindings,
+    implications: labels.sectionImplications,
+    record: labels.sectionRecord,
+  };
 
   // Sections appear only when the source supports them, numbered in order.
   const present: Record<SectionKey, boolean> = {
@@ -88,25 +103,25 @@ export default async function ResearchEntryPage({
   const chapters: Chapter[] = sections.map((key) => ({
     id: key,
     number: number(key),
-    title: researchLabels.sections[key],
+    title: sectionTitles[key],
   }));
 
   const heading = (key: SectionKey) => (
     <h2 className={styles.sectionTitle}>
       <span className={styles.sectionNumber}>{number(key)} /</span>{' '}
-      {researchLabels.sections[key]}
+      {sectionTitles[key]}
     </h2>
   );
 
   const record: [string, ReactNode][] = [
-    ['Type', researchTypeLabels[entry.type]],
-    ['Period', entry.period],
-    ['Location', entry.location],
-    ['Role', entry.role],
-    ['Sample', entry.sample],
-    ['Status', entry.status],
+    [labels.recordType, typeLabel(entry.type)],
+    [labels.recordPeriod, entry.period],
+    [labels.recordLocation, entry.location],
+    [labels.recordRole, entry.role],
+    [labels.recordSample, entry.sample],
+    [labels.recordStatus, entry.status],
     [
-      'Themes',
+      labels.recordThemes,
       <ul role="list" key="themes" className={styles.inlineList}>
         {entry.themes.map((theme) => (
           <li key={theme}>
@@ -118,7 +133,7 @@ export default async function ResearchEntryPage({
       </ul>,
     ],
     [
-      'Sources',
+      labels.recordSources,
       <ul role="list" key="sources" className={styles.inlineList}>
         {entry.sources.map((source) => (
           <li key={source.label}>
@@ -136,7 +151,7 @@ export default async function ResearchEntryPage({
       </ul>,
     ],
     [
-      researchLabels.referencesLabel,
+      labels.referencesLabel,
       entry.references?.length ? entry.references.join('; ') : undefined,
     ],
   ];
@@ -147,10 +162,10 @@ export default async function ResearchEntryPage({
 
       <header className={`container ${styles.header}`}>
         <Link href="/research" className={styles.back}>
-          <span aria-hidden="true">←</span> {researchLabels.backLabel}
+          <span aria-hidden="true">←</span> {labels.backToResearch}
         </Link>
         <p className={styles.kicker}>
-          {[researchTypeLabels[entry.type], entry.period, entry.location]
+          {[typeLabel(entry.type), entry.period, entry.location]
             .filter(Boolean)
             .map((part) => (
               <span key={part}>{part}</span>
@@ -191,7 +206,7 @@ export default async function ResearchEntryPage({
             {heading('method')}
             {entry.sample ? (
               <p>
-                <strong>Sample:</strong> {entry.sample}
+                <strong>{labels.recordSample}:</strong> {entry.sample}
               </p>
             ) : null}
             {entry.methods?.length ? (
@@ -237,9 +252,7 @@ export default async function ResearchEntryPage({
             ) : null}
             {entry.limitations?.length ? (
               <>
-                <h3 className={styles.subheading}>
-                  {researchLabels.limitationsLabel}
-                </h3>
+                <h3 className={styles.subheading}>{labels.limitationsLabel}</h3>
                 <ul className={styles.list}>
                   {entry.limitations.map((item) => (
                     <li key={item}>{item}</li>
@@ -269,14 +282,14 @@ export default async function ResearchEntryPage({
         <footer className={`container ${styles.footer}`}>
           {journalPost ? (
             <div className={styles.journal}>
-              <p className="caption">{researchLabels.journalLabel}</p>
+              <p className="caption">{labels.readJournalPost}</p>
               <PostCard post={journalPost} headingLevel="h3" />
             </div>
           ) : null}
           {related.length ? (
             <nav aria-labelledby="related-title" className={styles.related}>
               <h2 id="related-title" className="caption">
-                {researchLabels.relatedLabel}
+                {labels.relatedWork}
               </h2>
               <ul role="list">
                 {related.map((other) => (
@@ -286,7 +299,7 @@ export default async function ResearchEntryPage({
                       className={styles.relatedLink}
                     >
                       <span className={styles.relatedType}>
-                        {researchTypeLabels[other.type]}
+                        {typeLabel(other.type)}
                       </span>
                       <span className={styles.relatedTitle}>{other.title}</span>
                     </Link>

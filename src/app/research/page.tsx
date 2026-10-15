@@ -2,9 +2,12 @@ import { PageIntro } from '@/components/layout/PageIntro';
 import { ResearchCard } from '@/components/research/ResearchCard';
 import { ThemeFromQuery } from '@/components/research/ThemeFromQuery';
 import { ChipFilter } from '@/components/ui/ChipFilter';
-import { researchLabels, researchTypeLabels } from '@/content/research';
-import type { ResearchType } from '@/content/types';
 import { getContent, getSitePage } from '@/lib/datocms/content';
+import {
+  getLabels,
+  researchTypeLabel,
+  researchTypes,
+} from '@/lib/datocms/labels';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
@@ -18,17 +21,18 @@ export async function generateMetadata() {
 }
 
 export default async function ResearchPage() {
-  const [page, { themes, research }] = await Promise.all([
+  const [page, { themes, research }, labels] = await Promise.all([
     getSitePage('research'),
     getContent(),
+    getLabels(),
   ]);
 
   const themeTitles = Object.fromEntries(themes.map((t) => [t.id, t.title]));
   const usedThemes = themes.filter((theme) =>
     research.some((entry) => entry.themes.includes(theme.id))
   );
-  const usedTypes = (Object.keys(researchTypeLabels) as ResearchType[]).filter(
-    (type) => research.some((entry) => entry.type === type)
+  const usedTypes = researchTypes.filter((type) =>
+    research.some((entry) => entry.type === type)
   );
 
   // Theme and type filters combine (AND). Combinations with no work are known
@@ -65,14 +69,14 @@ export default async function ResearchPage() {
       <section
         className={`container section ${styles.archive}`}
         data-research=""
-        aria-label={researchLabels.listLabel}
+        aria-label="Research archive"
       >
         <div className={styles.filters}>
           <ChipFilter
-            legend={researchLabels.themeLegend}
+            legend={labels.themeFilter}
             name="research-theme"
             idPrefix="rt-theme"
-            allLabel={researchLabels.allThemesLabel}
+            allLabel={labels.allThemes}
             options={usedThemes.map((theme) => ({
               value: theme.id,
               label: theme.title,
@@ -80,13 +84,13 @@ export default async function ResearchPage() {
             }))}
           />
           <ChipFilter
-            legend={researchLabels.typeLegend}
+            legend={labels.typeFilter}
             name="research-type"
             idPrefix="rt-type"
-            allLabel={researchLabels.allTypesLabel}
+            allLabel={labels.allTypes}
             options={usedTypes.map((type) => ({
               value: type,
-              label: researchTypeLabels[type],
+              label: researchTypeLabel(labels, type),
               count: research.filter((e) => e.type === type).length,
             }))}
           />
@@ -94,7 +98,7 @@ export default async function ResearchPage() {
         </div>
 
         <p className={styles.empty} data-empty="" role="status">
-          {researchLabels.empty}
+          {labels.noMatches}
         </p>
 
         <ol role="list" className={styles.list}>

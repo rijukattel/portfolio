@@ -4,9 +4,8 @@ import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Reveal } from '@/components/motion/Reveal';
 import { BarChart } from '@/components/research/BarChart';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeLabels } from '@/content/home';
-import { researchTypeLabels } from '@/content/research';
 import type { ResearchEntry } from '@/content/types';
+import { getLabels, researchTypeLabel } from '@/lib/datocms/labels';
 import styles from './EvidenceChapter.module.css';
 
 /**
@@ -19,11 +18,12 @@ type EvidenceChapterProps = {
   studies: ResearchEntry[];
 };
 
-export function EvidenceChapter({
+export async function EvidenceChapter({
   title,
   intro,
   studies,
 }: EvidenceChapterProps) {
+  const labels = await getLabels();
   // Figures are numbered in reading order across the chapter.
   const numbered = studies.map((study, i, all) => ({
     study,
@@ -36,7 +36,11 @@ export function EvidenceChapter({
     <section id="evidence" className={`section ${styles.chapter}`}>
       <div className="container">
         <div className={styles.head}>
-          <ChapterHeading number="04" label="The Evidence" title={title} />
+          <ChapterHeading
+            number="04"
+            label={labels.chapterEvidence}
+            title={title}
+          />
           {intro ? <p className="lede">{intro}</p> : null}
         </div>
 
@@ -53,7 +57,7 @@ export function EvidenceChapter({
               <Reveal as="article" className={styles.text}>
                 <p className={styles.kicker}>
                   {[
-                    researchTypeLabels[study.type],
+                    researchTypeLabel(labels, study.type),
                     study.period,
                     study.location,
                   ]
@@ -76,7 +80,7 @@ export function EvidenceChapter({
                 )}
                 {study.sample ? (
                   <p className={styles.sample}>
-                    <span className="caption">{homeLabels.sampleLabel}</span>{' '}
+                    <span className="caption">{labels.sampleLabel}</span>{' '}
                     {study.sample}
                   </p>
                 ) : null}
@@ -88,7 +92,7 @@ export function EvidenceChapter({
                   </ul>
                 ) : study.methods ? (
                   <div className={styles.methods}>
-                    <p className="caption">{homeLabels.methodsLabel}</p>
+                    <p className="caption">{labels.methodsLabel}</p>
                     <ul>
                       {study.methods.map((method) => (
                         <li key={method}>{method}</li>
@@ -100,7 +104,7 @@ export function EvidenceChapter({
                   href={`/research/${study.slug}` as Route}
                   variant="quiet"
                 >
-                  {homeLabels.studyLinkLabel}
+                  {labels.moreOnResearch}
                 </ActionLink>
               </Reveal>
               {study.chart && figureNumber ? (
