@@ -1,24 +1,124 @@
+import type { Route } from 'next';
+import Link from 'next/link';
+import { CvList } from '@/components/cv/CvList';
 import { PageIntro } from '@/components/layout/PageIntro';
+import { PageSection } from '@/components/layout/PageSection';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { ActionLink } from '@/components/ui/ActionLink';
+import { getContent, getSitePage } from '@/lib/datocms/content';
+import { getLabels } from '@/lib/datocms/labels';
+import { getSiteConfig } from '@/lib/datocms/site';
 import { pageMetadata } from '@/lib/seo';
+import { personSchema } from '@/lib/structured-data';
+import styles from './page.module.css';
 
-export function generateMetadata() {
+export async function generateMetadata() {
+  const page = await getSitePage('about');
   return pageMetadata({
-    title: 'About',
-    description:
-      'About Riju Kattel: B.Sc. Agriculture graduate of the Institute of Agriculture and Animal Science, Tribhuvan University, with research interests in climate resilience and pesticide governance.',
+    title: page.title,
+    description: page.description,
     path: '/about/',
   });
 }
 
-// Stub until Phase 5 (docs/PLAN.md §11).
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [site, page, { profile, cv }, labels] = await Promise.all([
+    getSiteConfig(),
+    getSitePage('about'),
+    getContent(),
+    getLabels(),
+  ]);
+  const { education } = profile;
+  // "Next" links are the site navigation, without this page.
+  const nextLinks = site.navigation.filter((item) => item.href !== '/about');
+
   return (
-    <PageIntro
-      label="About"
-      title="About"
-      lede="B.Sc. Agriculture, Institute of Agriculture and Animal Science, Tribhuvan University, 2020–2024."
-    >
-      <p className="caption">In preparation</p>
-    </PageIntro>
+    <>
+      <PageIntro label={page.label} title={page.title} lede={page.lede} />
+
+      <PageSection id="biography" title={labels.aboutBiography}>
+        {profile.bio.map((paragraph) => (
+          <p key={paragraph} className={styles.bio}>
+            {paragraph}
+          </p>
+        ))}
+      </PageSection>
+
+      <PageSection id="education" title={labels.aboutEducation}>
+        <div className={styles.degree}>
+          {education.degree ? (
+            <p className={styles.degreeTitle}>{education.degree}</p>
+          ) : null}
+          <p>
+            {[education.institution, education.place]
+              .filter(Boolean)
+              .join(', ')}
+          </p>
+          <p className={styles.meta}>
+            {[education.period, ...education.details]
+              .filter(Boolean)
+              .join(' · ')}
+          </p>
+        </div>
+        {education.thesis ? (
+          <div className={styles.thesis}>
+            <p className="caption">{labels.thesisLabel}</p>
+            <p>
+              <Link href={`/research/${education.thesis.slug}` as Route}>
+                {education.thesis.title}
+              </Link>
+            </p>
+          </div>
+        ) : null}
+      </PageSection>
+
+      <PageSection id="interests" title={labels.aboutInterests}>
+        <ul role="list" className={styles.interests}>
+          {profile.researchInterests.map((interest) => (
+            <li key={interest}>{interest}</li>
+          ))}
+        </ul>
+        <div>
+          <ActionLink href="/research" variant="quiet">
+            {labels.seeResearch}
+          </ActionLink>
+        </div>
+      </PageSection>
+
+      <PageSection id="skills" title={labels.aboutSkills}>
+        <CvList
+          items={[
+            ...(cv.skill ?? []),
+            ...(cv.language ?? []),
+            ...(cv.course ?? []),
+          ]}
+        />
+      </PageSection>
+
+      {cv.award?.length ? (
+        <PageSection id="awards" title={labels.aboutAwards}>
+          <CvList items={cv.award} />
+        </PageSection>
+      ) : null}
+
+      <PageSection id="next" title={labels.aboutNext}>
+        <ul role="list" className={styles.links}>
+          {nextLinks.map((link) => (
+            <li key={link.href}>
+              <ActionLink href={link.href as Route} variant="quiet">
+                {link.label}
+              </ActionLink>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
+
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          ...personSchema(site, profile),
+        }}
+      />
+    </>
   );
 }

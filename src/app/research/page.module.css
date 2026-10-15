@@ -1,0 +1,20 @@
+.archive {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.filters {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.empty {
+  display: none;
+  padding: var(--space-5);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.list {
+  border-bottom: 1px solid var(--rule);
+}

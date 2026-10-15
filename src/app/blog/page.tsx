@@ -1,14 +1,18 @@
 import { PageIntro } from '@/components/layout/PageIntro';
 import { PostCard } from '@/components/journal/PostCard';
-import { categoryLabel, journalCopy } from '@/content/journal';
+import { ChipFilter } from '@/components/ui/ChipFilter';
+import { getSitePage } from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
+import { getLabels } from '@/lib/datocms/labels';
+import { categoryLabel } from '@/lib/format';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
-export function generateMetadata() {
+export async function generateMetadata() {
+  const page = await getSitePage('journal');
   return pageMetadata({
-    title: journalCopy.title,
-    description: journalCopy.description,
+    title: page.title,
+    description: page.description,
     path: '/blog/',
   });
 }
@@ -20,7 +24,11 @@ const slugify = (value: string) =>
     .replace(/^-|-$/g, '');
 
 export default async function JournalPage() {
-  const posts = await getAllPosts();
+  const [posts, page, labels] = await Promise.all([
+    getAllPosts(),
+    getSitePage('journal'),
+    getLabels(),
+  ]);
 
   const counts = new Map<string, number>();
   for (const post of posts) {
@@ -42,46 +50,28 @@ export default async function JournalPage() {
 
   return (
     <>
-      <PageIntro
-        label={journalCopy.label}
-        title={journalCopy.title}
-        lede={journalCopy.lede}
-      />
+      <PageIntro label={page.label} title={page.title} lede={page.lede} />
       <section
         className={`container section ${styles.journal}`}
         data-journal=""
         aria-label="Posts"
       >
         {categories.length > 1 ? (
-          <fieldset className={styles.filter}>
-            <legend className="caption">{journalCopy.filterLegend}</legend>
-            <div className={styles.options}>
-              <input
-                type="radio"
-                name="journal-filter"
-                id="filter-all"
-                className={`${styles.radio} ${styles.radioAll}`}
-                defaultChecked
-              />
-              <label htmlFor="filter-all" className={styles.option}>
-                {journalCopy.allLabel} <span>{posts.length}</span>
-              </label>
-              {categories.map(([key, count]) => (
-                <span key={key} className={styles.optionGroup}>
-                  <input
-                    type="radio"
-                    name="journal-filter"
-                    id={`filter-${key}`}
-                    className={styles.radio}
-                  />
-                  <label htmlFor={`filter-${key}`} className={styles.option}>
-                    {categoryLabel(key)} <span>{count}</span>
-                  </label>
-                </span>
-              ))}
-            </div>
+          <>
+            <ChipFilter
+              legend={labels.postsFilter}
+              name="journal-filter"
+              idPrefix="filter"
+              allLabel={labels.allPostsFilter}
+              allCount={posts.length}
+              options={categories.map(([key, count]) => ({
+                value: key,
+                label: categoryLabel(key) ?? key,
+                count,
+              }))}
+            />
             <style>{filterRules}</style>
-          </fieldset>
+          </>
         ) : null}
 
         <ol role="list" className={styles.list}>

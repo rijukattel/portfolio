@@ -5,12 +5,13 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { motionBootstrap } from '@/components/motion/motionBootstrap';
 import { RevealRuntime } from '@/components/motion/RevealRuntime';
-import { profile } from '@/content/profile';
+import { getProfile } from '@/lib/datocms/content';
+import { getLabels } from '@/lib/datocms/labels';
 import { getSiteConfig } from '@/lib/datocms/site';
 import { bodyFont, displayFont } from './fonts';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSiteConfig();
+  const [site, profile] = await Promise.all([getSiteConfig(), getProfile()]);
   return {
     metadataBase: new URL(site.url),
     title: { default: site.name, template: `%s · ${site.name}` },
@@ -18,7 +19,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+export default async function RootLayout({ children }: LayoutProps<'/'>) {
+  const labels = await getLabels();
   return (
     <html
       lang="en"
@@ -31,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       </head>
       <body>
         <a href="#main" className="skip-link">
-          Skip to content
+          {labels.skipLink}
         </a>
         <SiteHeader />
         <main id="main" tabIndex={-1}>

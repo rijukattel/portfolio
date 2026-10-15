@@ -1,0 +1,110 @@
+.card {
+  position: relative;
+  display: grid;
+  gap: var(--space-3) var(--gutter);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 64em) {
+  .card {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: baseline;
+  }
+
+  .kicker {
+    grid-column: 1 / span 3;
+  }
+
+  .main {
+    grid-column: 4 / span 6;
+  }
+
+  .aside {
+    grid-column: 10 / span 3;
+  }
+}
+
+.card:has(.link:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+@media (min-width: 64em) {
+  .kicker {
+    flex-direction: column;
+  }
+}
+
+.type {
+  color: var(--ink);
+}
+
+.main {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: var(--step-h3);
+  line-height: 1.22;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+/* The whole row is the click target; the title stays the link text. */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.card:hover .link {
+  text-decoration: underline;
+  text-decoration-color: var(--earth);
+  text-decoration-thickness: 1px;
+}
+
+.summary {
+  max-width: 60ch;
+  color: var(--ink-soft);
+}
+
+.aside {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  font-size: var(--step-caption);
+  color: var(--sage-ink);
+}
+
+.depth {
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--earth-ink);
+}

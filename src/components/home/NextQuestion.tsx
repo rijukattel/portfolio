@@ -2,16 +2,25 @@ import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Contours } from '@/components/media/Contours';
 import { Reveal } from '@/components/motion/Reveal';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeCopy } from '@/content/home';
+import { getLabels } from '@/lib/datocms/labels';
 import styles from './NextQuestion.module.css';
-
-const copy = homeCopy.next;
 
 /**
  * Chapter 05, the closing scene (PLAN §7.2 E): the contour lines return and
  * draw in slowly while the directions and the contact action settle in.
  */
-export function NextQuestion() {
+type NextQuestionProps = {
+  title: string;
+  intro?: string;
+  directions: { title: string; text: string }[];
+};
+
+export async function NextQuestion({
+  title,
+  intro,
+  directions,
+}: NextQuestionProps) {
+  const labels = await getLabels();
   return (
     <section
       id="next-question"
@@ -26,14 +35,14 @@ export function NextQuestion() {
       <div className={`container ${styles.grid}`}>
         <ChapterHeading
           number="05"
-          label="The Next Question"
-          title={copy.title}
+          label={labels.chapterNext}
+          title={title}
           className={styles.heading}
         />
         <div className={styles.body}>
-          <p className="lede">{copy.intro}</p>
+          {intro ? <p className="lede">{intro}</p> : null}
           <ol role="list" className={styles.directions}>
-            {copy.directions.map((direction, i) => (
+            {directions.map((direction, i) => (
               <Reveal
                 as="li"
                 key={direction.title}
@@ -51,11 +60,11 @@ export function NextQuestion() {
             ))}
           </ol>
           <div className={styles.actions}>
-            <ActionLink href={copy.primary.href}>
-              {copy.primary.label}
+            <ActionLink href="/contact">
+              {labels.discussOpportunities}
             </ActionLink>
-            <ActionLink href={copy.secondary.href} variant="quiet">
-              {copy.secondary.label}
+            <ActionLink href="/cv" variant="quiet">
+              {labels.heroSecondary}
             </ActionLink>
           </div>
         </div>

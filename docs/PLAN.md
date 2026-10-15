@@ -57,7 +57,7 @@ A professor must be able to read the background, inspect a study, and download t
 | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------- |
 | `blog_post`                                                                                 | 7 published (categories: lifestyle 3, educational 3, literature 1); all have covers | **Yes**, as the Journal       |
 | `author`                                                                                    | 1 (Riju, with photo)                                                                | **Yes**                       |
-| `website_setting`                                                                           | singleton                                                                           | **Yes, config only**          |
+| `website_setting`                                                                           | singleton                                                                           | No; replaced by Site settings |
 | `other_page` → `gallery`                                                                    | 8 photos                                                                            | **Yes, images only**          |
 | about / contact / thank-you, `homepage`, `menu`, `footer`, `archive_page`, `not_found_page` | template copy                                                                       | No; the copy moves to code    |
 | `projects_done`, `project_archive`                                                          | 0 records / developer leftover                                                      | No                            |
@@ -67,25 +67,20 @@ A professor must be able to read the background, inspect a study, and download t
 
 ## 2. Content ownership
 
-**DatoCMS supplies:**
+**Changed 16 Oct 2026 at the user's request:** all editorial content now lives in DatoCMS, in new purpose-built models. See [CONTENT-MODEL.md](CONTENT-MODEL.md) for the full model and editing rules.
 
-- Blog posts, the author, post images, and gallery images.
-- Site config:
-  - `name`, `site_url`, `posts_per_page`
-  - default OG image, logo and PWA icon
-  - global SEO fallback and the Facebook URL
+- **DatoCMS:**
+  - Homepage copy, page titles and intros, research, themes and experience.
+  - CV entries, the profile and About bio, photos and captions.
+  - The Journal.
+  - Site settings (name, URL, share image, social links) and the navigation.
+  - Every visible interface label, including chapter names (the Interface text model).
+- **Code:**
+  - Design tokens, motion, layout and routes.
+  - Screen-reader-only landmark names.
+- **Old Gatsby models** stay untouched until cutover. The new site doesn't read them.
 
-**Code supplies (`src/content/*.ts`):**
-
-- All page copy and the homepage chapters.
-- Research, experience, education, training, awards and contact text.
-- Navigation and design tokens.
-
-**Images chosen in code:** a content file can reference a DatoCMS upload by ID, which gives responsive imgix `srcset` for free. The text stays in code.
-
-**Ignored from DatoCMS:** colour fields, template copy, and the contact-form HTML.
-
-Every config value has a default in code. If DatoCMS can't be reached at build time, the **build fails** rather than shipping an empty journal.
+Every build reads DatoCMS with the read-only token. Missing required records fail the build rather than ship an empty page.
 
 ---
 
@@ -425,13 +420,28 @@ The Journal appears as a quiet strip (3 featured posts from DatoCMS) between Cha
 
 ## 11. Phases (each ends with a passing build and a review)
 
-**Status:** Phase 0 done (`248bbc0`); Phase 1 done (`a43544b`); Phase 2 done (`f5f01bf`); Phase 3 done on `redesign/next`.
+**Status:** Phases 0–4 committed (`248bbc0`, `a43544b`, `f5f01bf`, `cf5a907`, `2b9af60`); Phase 5 done on `redesign/next`.
 
-- **Next:** Phase 4.
-- **Carry into Phase 4:**
-  - Link the Jujube and beehive Journal posts to their research pages, and the reverse.
-  - Repoint the homepage "More on the research" and theme links from `/research/` to `/research/<slug>/` once those pages exist.
-  - Make the archive read `?theme=` for the Chapter 02 links.
+- **Next:** Phase 6, QA and release.
+  - Lighthouse, axe and Playwright, plus a mid-range phone test.
+  - Watch the title morph in a visible window.
+  - Netlify deploy preview, then switch production.
+  - Resubmit the sitemap in Search Console.
+- **Phase 5 notes:**
+  - **Fieldwork:** the shared `ExperienceTimeline` and `FieldPhotos`, which the homepage Field chapter also uses now. Training and outreach come from the CV.
+  - **About:** a first-person bio from the CV's "About me", plus one Journal detail (the starfruit saplings from Assam). No portrait: the only DatoCMS picture is a small casual photo, so Riju should supply one if wanted.
+  - **CV:** follows the PDF's sections and order, minus the phone number and address. The beehive trial isn't on the PDF CV, so it isn't listed. "Print or save as PDF" uses print styles that hide the site chrome.
+  - **Contact:** a plain HTML Netlify form with a honeypot that posts to `/thank-you/` (noindex). **Netlify form detection must be enabled** in the site settings for submissions to arrive.
+  - **Gallery:** the 8 DatoCMS photos, with code-owned captions and alt text that describe only what is visible.
+  - **404:** a real `404.html`, noindex.
+- **Phase 4 notes:**
+  - The archive has 11 records: 6 studies and 5 CV semester projects.
+    - Full case studies exist only for jujube and the beehive trial, the two with source documents (their Journal posts).
+    - The rest are brief records with a notice explaining why.
+  - Research pages carry `BreadcrumbList` JSON-LD only. `ScholarlyArticle` waits for a verified publication record.
+  - The title morph (`ViewTransition`, `share="morph"`) is wired on archive cards, homepage Evidence titles and case-study headings.
+    - React starts the transition on client navigation, but browsers skip it on hidden pages, so the morph itself still needs checking in a visible window (Phase 6 QA).
+    - Back navigation works and doesn't animate.
 - **Done in Phase 3:** Chapter 05 now sits on paper with slow-drawing contours, so it no longer merges with the dark footer.
 
 0. **Setup**
@@ -490,7 +500,7 @@ Production keeps building `main` until the deploy preview is approved. DNS is no
 
 ### Homepage copy for Riju to review (written from the CV; interpretive wording)
 
-The facts all come from the CV or the Journal posts. The framing below is my wording; Riju should confirm or rewrite it in `src/content/home.ts`:
+The facts all come from the CV or the Journal posts. The framing below is my wording; Riju should confirm or rewrite it in DatoCMS (Home page and Research theme records):
 
 - **Hero lede:** "…hands-on experience working with farmers and in field research in Nepal. Research interests: climate adaptation, pollinators and pesticide governance, and how farmers respond to change."
 - **Theme summaries in Chapter 02:** one sentence per theme, for example "Safer pest control, the health of pollinators, and who carries the risks of pesticide use."

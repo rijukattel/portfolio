@@ -223,6 +223,7 @@
 
   .surface-paper {
     background: var(--paper);
+    --surface: var(--paper);
   }
 
   .skip-link {
@@ -267,5 +268,33 @@
       opacity: 0;
       transform: translateY(var(--reveal-distance));
     }
+  }
+
+  /* Research titles morph from list to case study (PLAN §7.2 D). */
+  ::view-transition-group(.morph) {
+    animation-duration: var(--dur-reveal);
+    animation-timing-function: var(--ease-in-out);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+    }
+  }
+}
+
+/* Printing (the CV in particular): plain paper, no site chrome. */
+@media print {
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .skip-link {
+    display: none;
   }
 }

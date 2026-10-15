@@ -1,31 +1,30 @@
-import { categoryLabel, journalCopy } from '@/content/journal';
-import { profile } from '@/content/profile';
-import { siteDefaults } from '@/config/site';
+import type { Profile } from '@/lib/datocms/content';
 import type { Post, SiteConfig } from '@/lib/datocms/types';
+import { categoryLabel } from '@/lib/format';
 import type { SocialImage } from '@/lib/seo';
 
 /*
- * schema.org JSON-LD (PLAN §9). Only facts already on the page or in the CV:
- * no invented affiliations, positions or publications.
+ * schema.org JSON-LD (PLAN §9). Only facts already on the page and in the
+ * DatoCMS Profile: no invented affiliations, positions or publications.
  */
 
 const personId = (site: SiteConfig) => `${site.url}/#person`;
 const websiteId = (site: SiteConfig) => `${site.url}/#website`;
 
-export function personSchema(site: SiteConfig) {
+export function personSchema(site: SiteConfig, profile: Profile) {
+  const { institution } = profile.education;
   return {
     '@type': 'Person',
     '@id': personId(site),
     name: profile.name,
     url: `${site.url}/`,
     description: profile.statement,
-    email: `mailto:${siteDefaults.email}`,
-    alumniOf: {
-      '@type': 'CollegeOrUniversity',
-      name: `${profile.education.institution}, ${profile.education.university}`,
-    },
+    email: `mailto:${profile.email}`,
+    ...(institution
+      ? { alumniOf: { '@type': 'CollegeOrUniversity', name: institution } }
+      : {}),
     knowsAbout: profile.researchInterests,
-    sameAs: [siteDefaults.linkedinUrl, site.facebookUrl].filter(Boolean),
+    sameAs: [profile.linkedinUrl, site.facebookUrl].filter(Boolean),
   };
 }
 
@@ -40,10 +39,10 @@ export function websiteSchema(site: SiteConfig) {
   };
 }
 
-export function homeGraph(site: SiteConfig) {
+export function homeGraph(site: SiteConfig, profile: Profile) {
   return {
     '@context': 'https://schema.org',
-    '@graph': [websiteSchema(site), personSchema(site)],
+    '@graph': [websiteSchema(site), personSchema(site, profile)],
   };
 }
 
@@ -63,8 +62,10 @@ export function breadcrumbSchema(site: SiteConfig, crumbs: Crumb[]) {
 
 export function blogPostingGraph(
   site: SiteConfig,
+  profile: Profile,
   post: Post,
-  image: SocialImage
+  image: SocialImage,
+  journalTitle: string
 ) {
   const url = `${site.url}/blog/${post.slug}/`;
   return {
@@ -86,10 +87,10 @@ export function blogPostingGraph(
         publisher: { '@id': personId(site) },
         isPartOf: { '@id': websiteId(site) },
       },
-      personSchema(site),
+      personSchema(site, profile),
       breadcrumbSchema(site, [
         { name: 'Home', path: '/' },
-        { name: journalCopy.title, path: '/blog/' },
+        { name: journalTitle, path: '/blog/' },
         { name: post.title, path: `/blog/${post.slug}/` },
       ]),
     ],

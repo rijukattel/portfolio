@@ -1,57 +1,75 @@
-import { siteDefaults } from '@/config/site';
 import { datoQuery, once } from './client';
 import type { SiteConfig } from './types';
 
+/*
+ * Site settings and navigation from the DatoCMS "Site settings" singleton.
+ * (The legacy "Website settings" model belongs to the old Gatsby site.)
+ */
 const siteConfigQuery = /* GraphQL */ `
   query SiteConfig {
-    _site {
-      favicon {
-        url
-      }
-      globalSeo {
-        facebookPageUrl
-      }
-    }
-    websiteSetting {
-      name
+    siteConfig {
+      siteName
       shortName
       siteUrl
-      postsPerPage
-      defaultOgImage {
+      defaultShareImage {
         url
         width
         height
+        alt
+      }
+      facebookUrl
+      navigation {
+        label
+        path
+        highlight
+        pinned
       }
     }
   }
 `;
 
 type SiteConfigQuery = {
-  _site: {
-    favicon: { url: string } | null;
-    globalSeo: { facebookPageUrl: string | null } | null;
-  };
-  websiteSetting: {
-    name: string | null;
+  siteConfig: {
+    siteName: string;
     shortName: string | null;
-    siteUrl: string | null;
-    postsPerPage: number | null;
-    defaultOgImage: { url: string; width: number; height: number } | null;
+    siteUrl: string;
+    defaultShareImage: {
+      url: string;
+      width: number;
+      height: number;
+      alt: string | null;
+    } | null;
+    facebookUrl: string | null;
+    navigation: {
+      label: string;
+      path: string;
+      highlight: boolean;
+      pinned: boolean;
+    }[];
   } | null;
 };
 
 export const getSiteConfig = once(async (): Promise<SiteConfig> => {
-  const { _site, websiteSetting: settings } =
-    await datoQuery<SiteConfigQuery>(siteConfigQuery);
+  const { siteConfig } = await datoQuery<SiteConfigQuery>(siteConfigQuery);
+  if (!siteConfig) throw new Error('DatoCMS record missing: Site settings');
+
+  const url = toOrigin(siteConfig.siteUrl);
+  if (!url)
+    throw new Error(`Site settings: invalid site URL "${siteConfig.siteUrl}"`);
 
   return {
-    name: settings?.name?.trim() || siteDefaults.name,
-    shortName: settings?.shortName?.trim() || siteDefaults.shortName,
-    url: toOrigin(settings?.siteUrl) ?? siteDefaults.url,
-    postsPerPage: settings?.postsPerPage || siteDefaults.postsPerPage,
-    defaultOgImage: settings?.defaultOgImage ?? null,
-    faviconUrl: _site.favicon?.url ?? null,
-    facebookUrl: _site.globalSeo?.facebookPageUrl || siteDefaults.facebookUrl,
+    name: siteConfig.siteName.trim(),
+    shortName: siteConfig.shortName?.trim() || siteConfig.siteName.trim(),
+    url,
+    defaultOgImage: siteConfig.defaultShareImage,
+    facebookUrl: siteConfig.facebookUrl?.trim() || null,
+    navigation: siteConfig.navigation.map((item) => ({
+      label: item.label,
+      // Typed routes are path strings without the trailing slash.
+      href: item.path.replace(/(.)\/$/, '$1'),
+      highlight: item.highlight,
+      pinned: item.pinned,
+    })),
   };
 });
 

@@ -10,6 +10,8 @@ export type ResponsiveImage = ResponsiveImageType & {
 export type FocalPoint = { x: number; y: number } | null;
 
 export type DatoImage = {
+  /** DatoCMS upload ID. */
+  id: string;
   alt: string | null;
   title: string | null;
   width: number;
@@ -68,19 +70,26 @@ export type Post = PostSummary & {
   structuredBody: StructuredTextGraphQlResponse<PostBodyBlock, PostBodyLink>;
 };
 
-export type GalleryPhoto = {
-  id: string;
-  caption: string | null;
-  description: string | null;
-  src: DatoImage;
+export type NavItem = {
+  label: string;
+  /** Site path without trailing slash, e.g. "/research". */
+  href: string;
+  /** Shown as the emphasised button (Contact). */
+  highlight: boolean;
+  /** Stays visible beside the menu button on small screens (CV). */
+  pinned: boolean;
 };
 
 export type SiteConfig = {
   name: string;
   shortName: string;
   url: string;
-  postsPerPage: number;
-  defaultOgImage: { url: string; width: number; height: number } | null;
-  faviconUrl: string | null;
+  defaultOgImage: {
+    url: string;
+    width: number;
+    height: number;
+    alt: string | null;
+  } | null;
   facebookUrl: string | null;
+  navigation: NavItem[];
 };

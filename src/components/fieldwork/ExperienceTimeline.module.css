@@ -1,0 +1,66 @@
+/* Timeline: a hairline with an earth node at each field note. */
+.notes {
+  border-left: 1px solid var(--rule-strong);
+}
+
+.note {
+  position: relative;
+  padding: 0 0 var(--space-7) var(--space-6);
+}
+
+.note:last-child {
+  padding-bottom: 0;
+}
+
+.note::before {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  left: -0.3125rem;
+  width: 0.5625rem;
+  height: 0.5625rem;
+  border-radius: 50%;
+  background: var(--earth);
+  /* A ring in the surface colour lifts the node off the hairline. */
+  box-shadow: 0 0 0 4px var(--surface, var(--canvas));
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  font-size: var(--step-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--sage-ink);
+}
+
+.meta > * + *::before {
+  content: '·';
+  margin-right: var(--space-2);
+}
+
+.role {
+  margin-top: var(--space-2);
+  font-size: var(--step-h3);
+}
+
+.organisation {
+  margin-top: 0.15rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.points {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-left: 1.1em;
+  font-size: var(--step-small);
+  line-height: 1.55;
+}
+
+.points li::marker {
+  color: var(--sage);
+}

@@ -3,75 +3,6 @@
   gap: var(--space-8);
 }
 
-.filter {
-  display: grid;
-  gap: var(--space-3);
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-.options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.optionGroup {
-  display: contents;
-}
-
-/* Visually hidden but focusable; the label is the visible control. */
-.radio {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-}
-
-.option {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  min-height: 2.75rem;
-  padding-inline: 1rem;
-  border: 1px solid var(--rule-strong);
-  border-radius: 999px;
-  font-size: var(--step-small);
-  font-weight: 500;
-  cursor: pointer;
-  transition:
-    background-color var(--dur-micro) var(--ease-out),
-    color var(--dur-micro) var(--ease-out),
-    border-color var(--dur-micro) var(--ease-out);
-}
-
-.option span {
-  font-size: var(--step-caption);
-  font-variant-numeric: tabular-nums;
-  color: var(--sage-ink);
-}
-
-.option:hover {
-  border-color: var(--forest);
-}
-
-.radio:checked + .option {
-  border-color: var(--forest);
-  background: var(--forest);
-  color: var(--ivory);
-}
-
-.radio:checked + .option span {
-  color: color-mix(in srgb, var(--ivory) 75%, var(--forest));
-}
-
-.radio:focus-visible + .option {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-
 .list {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -85,8 +16,8 @@
 
   /* The newest post spans the full width in the unfiltered view only; its
      card switches to the two-column lead layout by container query. */
-  .journal:has(.radioAll:checked) .item:first-child,
-  .journal:not(:has(.radio)) .item:first-child {
+  .journal:has([id='filter-all']:checked) .item:first-child,
+  .journal:not(:has(fieldset)) .item:first-child {
     grid-column: 1 / -1;
   }
 }

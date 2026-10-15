@@ -1,36 +1,51 @@
+import type { Route } from 'next';
+import { ViewTransition } from 'react';
 import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Reveal } from '@/components/motion/Reveal';
 import { BarChart } from '@/components/research/BarChart';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeCopy } from '@/content/home';
-import { featuredResearch, researchTypeLabels } from '@/content/research';
+import type { ResearchEntry } from '@/content/types';
+import { getLabels, researchTypeLabel } from '@/lib/datocms/labels';
 import styles from './EvidenceChapter.module.css';
-
-const copy = homeCopy.evidence;
-
-// Figures are numbered in reading order across the chapter.
-const studies = featuredResearch.map((study, i, all) => ({
-  study,
-  figureNumber: study.chart
-    ? all.slice(0, i + 1).filter((entry) => entry.chart).length
-    : null,
-}));
 
 /**
  * Chapter 04: the featured studies with their reported findings, and a chart
  * wherever the source gives numbers (PLAN §7.2 C). Nothing is extrapolated.
  */
-export function EvidenceChapter() {
+type EvidenceChapterProps = {
+  title: string;
+  intro?: string;
+  studies: ResearchEntry[];
+};
+
+export async function EvidenceChapter({
+  title,
+  intro,
+  studies,
+}: EvidenceChapterProps) {
+  const labels = await getLabels();
+  // Figures are numbered in reading order across the chapter.
+  const numbered = studies.map((study, i, all) => ({
+    study,
+    figureNumber: study.chart
+      ? all.slice(0, i + 1).filter((entry) => entry.chart).length
+      : null,
+  }));
+
   return (
     <section id="evidence" className={`section ${styles.chapter}`}>
       <div className="container">
         <div className={styles.head}>
-          <ChapterHeading number="04" label="The Evidence" title={copy.title} />
-          <p className="lede">{copy.intro}</p>
+          <ChapterHeading
+            number="04"
+            label={labels.chapterEvidence}
+            title={title}
+          />
+          {intro ? <p className="lede">{intro}</p> : null}
         </div>
 
         <ol role="list" className={styles.studies}>
-          {studies.map(({ study, figureNumber }) => (
+          {numbered.map(({ study, figureNumber }) => (
             <li
               key={study.slug}
               className={
@@ -42,7 +57,7 @@ export function EvidenceChapter() {
               <Reveal as="article" className={styles.text}>
                 <p className={styles.kicker}>
                   {[
-                    researchTypeLabels[study.type],
+                    researchTypeLabel(labels, study.type),
                     study.period,
                     study.location,
                   ]
@@ -51,7 +66,13 @@ export function EvidenceChapter() {
                       <span key={part}>{part}</span>
                     ))}
                 </p>
-                <h3 className={styles.title}>{study.title}</h3>
+                <ViewTransition
+                  name={`research-${study.slug}`}
+                  share="morph"
+                  default="none"
+                >
+                  <h3 className={styles.title}>{study.title}</h3>
+                </ViewTransition>
                 {study.question ? (
                   <p className={styles.question}>{study.question}</p>
                 ) : (
@@ -59,7 +80,7 @@ export function EvidenceChapter() {
                 )}
                 {study.sample ? (
                   <p className={styles.sample}>
-                    <span className="caption">{copy.sampleLabel}</span>{' '}
+                    <span className="caption">{labels.sampleLabel}</span>{' '}
                     {study.sample}
                   </p>
                 ) : null}
@@ -71,7 +92,7 @@ export function EvidenceChapter() {
                   </ul>
                 ) : study.methods ? (
                   <div className={styles.methods}>
-                    <p className="caption">{copy.methodsLabel}</p>
+                    <p className="caption">{labels.methodsLabel}</p>
                     <ul>
                       {study.methods.map((method) => (
                         <li key={method}>{method}</li>
@@ -79,8 +100,11 @@ export function EvidenceChapter() {
                     </ul>
                   </div>
                 ) : null}
-                <ActionLink href="/research" variant="quiet">
-                  {copy.linkLabel}
+                <ActionLink
+                  href={`/research/${study.slug}` as Route}
+                  variant="quiet"
+                >
+                  {labels.moreOnResearch}
                 </ActionLink>
               </Reveal>
               {study.chart && figureNumber ? (

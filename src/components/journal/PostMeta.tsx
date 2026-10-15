@@ -1,5 +1,5 @@
-import { categoryLabel } from '@/content/journal';
-import { formatDate } from '@/lib/format';
+import { getLabels } from '@/lib/datocms/labels';
+import { categoryLabel, formatDate } from '@/lib/format';
 import styles from './PostMeta.module.css';
 
 type PostMetaProps = {
@@ -10,18 +10,23 @@ type PostMetaProps = {
 };
 
 /** "Educational · 1 October 2025 · 4 min read" */
-export function PostMeta({
+export async function PostMeta({
   category,
   date,
   minutes,
   className,
 }: PostMetaProps) {
+  const labels = await getLabels();
   const label = categoryLabel(category);
   return (
     <p className={className ? `${styles.meta} ${className}` : styles.meta}>
       {label ? <span className={styles.category}>{label}</span> : null}
       <time dateTime={date}>{formatDate(date)}</time>
-      {minutes ? <span>{minutes} min read</span> : null}
+      {minutes ? (
+        <span>
+          {minutes} {labels.minutesRead}
+        </span>
+      ) : null}
     </p>
   );
 }
