@@ -67,25 +67,18 @@ A professor must be able to read the background, inspect a study, and download t
 
 ## 2. Content ownership
 
-**DatoCMS supplies:**
+**Changed 16 Oct 2026 at the user's request:** all editorial content now lives in DatoCMS, in new purpose-built models. See [CONTENT-MODEL.md](CONTENT-MODEL.md) for the full model and editing rules.
 
-- Blog posts, the author, post images, and gallery images.
-- Site config:
-  - `name`, `site_url`, `posts_per_page`
-  - default OG image, logo and PWA icon
-  - global SEO fallback and the Facebook URL
+- **DatoCMS:**
+  - Homepage copy, page titles and intros, research, themes and experience.
+  - CV entries, the profile and About bio, photos and captions.
+  - The Journal and the site config.
+- **Code:**
+  - Interface labels (buttons, form labels, filter and section names) and chapter names.
+  - Design tokens, motion and layout.
+- **Old Gatsby models** stay untouched until cutover. The new site doesn't read them.
 
-**Code supplies (`src/content/*.ts`):**
-
-- All page copy and the homepage chapters.
-- Research, experience, education, training, awards and contact text.
-- Navigation and design tokens.
-
-**Images chosen in code:** a content file can reference a DatoCMS upload by ID, which gives responsive imgix `srcset` for free. The text stays in code.
-
-**Ignored from DatoCMS:** colour fields, template copy, and the contact-form HTML.
-
-Every config value has a default in code. If DatoCMS can't be reached at build time, the **build fails** rather than shipping an empty journal.
+Every build reads DatoCMS with the read-only token. Missing required records fail the build rather than ship an empty page.
 
 ---
 

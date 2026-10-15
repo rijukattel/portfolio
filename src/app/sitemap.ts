@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { research } from '@/content/research';
+import { getResearch } from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
 import { getSiteConfig } from '@/lib/datocms/site';
 
@@ -17,7 +17,11 @@ const staticPaths = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [site, posts] = await Promise.all([getSiteConfig(), getAllPosts()]);
+  const [site, posts, research] = await Promise.all([
+    getSiteConfig(),
+    getAllPosts(),
+    getResearch(),
+  ]);
   const latestPost = posts[0]?._updatedAt;
 
   return [

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { primaryNav } from '@/config/navigation';
-import { siteDefaults } from '@/config/site';
 import styles from './HeaderNav.module.css';
 
 const inlineItems = primaryNav.filter((item) => item.href !== '/contact');
@@ -19,7 +18,7 @@ function isCurrent(pathname: string, href: string) {
  * Below 1024 px: CV stays visible beside a Menu button that opens a modal
  * <dialog> (native focus trap, Escape to close, focus restored on close).
  */
-export function HeaderNav() {
+export function HeaderNav({ name, email }: { name: string; email: string }) {
   const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -87,7 +86,7 @@ export function HeaderNav() {
       >
         <div className={styles.dialogInner}>
           <div className={styles.dialogTop}>
-            <span className={styles.dialogName}>{siteDefaults.name}</span>
+            <span className={styles.dialogName}>{name}</span>
             <button
               type="button"
               className={styles.menuButton}
@@ -115,11 +114,8 @@ export function HeaderNav() {
               ))}
             </ol>
           </nav>
-          <a
-            href={`mailto:${siteDefaults.email}`}
-            className={styles.dialogEmail}
-          >
-            {siteDefaults.email}
+          <a href={`mailto:${email}`} className={styles.dialogEmail}>
+            {email}
           </a>
         </div>
       </dialog>

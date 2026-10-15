@@ -1,54 +1,48 @@
 import { PageIntro } from '@/components/layout/PageIntro';
 import { PageSection } from '@/components/layout/PageSection';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { siteDefaults } from '@/config/site';
+import { getProfile, getSitePage } from '@/lib/datocms/content';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
-export function generateMetadata() {
+export async function generateMetadata() {
+  const page = await getSitePage('contact');
   return pageMetadata({
-    title: 'Contact',
-    description:
-      'Contact Riju Kattel to discuss agricultural research or postgraduate opportunities.',
+    title: page.title,
+    description: page.description,
     path: '/contact/',
   });
 }
 
-const copy = {
-  lede: 'To discuss research, collaboration or postgraduate opportunities, write by email or use the form.',
-  direct: 'Direct',
-  form: 'Message',
-  topics: [
-    'Research collaboration',
-    'Postgraduate opportunity',
-    'A question about a study',
-    'Something else',
-  ],
-  note: 'Messages are sent through Netlify Forms. Your details are used only to reply.',
-};
-
+const labels = { direct: 'Direct', form: 'Message' };
 /**
  * A plain HTML form handled by Netlify Forms: it works without JavaScript,
  * Netlify detects it in the static export at deploy time, and the honeypot
  * field filters most spam.
  */
-export default function ContactPage() {
+export default async function ContactPage() {
+  const [page, profile] = await Promise.all([
+    getSitePage('contact'),
+    getProfile(),
+  ]);
   return (
     <>
-      <PageIntro label="Contact" title="Contact" lede={copy.lede} />
+      <PageIntro label={page.label} title={page.title} lede={page.lede} />
 
-      <PageSection id="direct" title={copy.direct}>
+      <PageSection id="direct" title={labels.direct}>
         <div className={styles.direct}>
-          <ActionLink href={`mailto:${siteDefaults.email}`}>
-            {siteDefaults.email}
+          <ActionLink href={`mailto:${profile.email}`}>
+            {profile.email}
           </ActionLink>
-          <a href={siteDefaults.linkedinUrl} rel="me" className={styles.link}>
-            LinkedIn
-          </a>
+          {profile.linkedinUrl ? (
+            <a href={profile.linkedinUrl} rel="me" className={styles.link}>
+              LinkedIn
+            </a>
+          ) : null}
         </div>
       </PageSection>
 
-      <PageSection id="message" title={copy.form}>
+      <PageSection id="message" title={labels.form}>
         <form
           name="contact"
           method="POST"
@@ -92,7 +86,7 @@ export default function ContactPage() {
             </label>
             <select id="contact-topic" name="topic" defaultValue="">
               <option value="">Choose a topic</option>
-              {copy.topics.map((topic) => (
+              {page.options.map((topic) => (
                 <option key={topic}>{topic}</option>
               ))}
             </select>
@@ -107,7 +101,7 @@ export default function ContactPage() {
             <button type="submit" className={styles.button}>
               Send message
             </button>
-            <p className={styles.note}>{copy.note}</p>
+            {page.note ? <p className={styles.note}>{page.note}</p> : null}
           </div>
         </form>
       </PageSection>

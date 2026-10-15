@@ -70,13 +70,6 @@ export type Post = PostSummary & {
   structuredBody: StructuredTextGraphQlResponse<PostBodyBlock, PostBodyLink>;
 };
 
-export type GalleryPhoto = {
-  id: string;
-  caption: string | null;
-  description: string | null;
-  src: DatoImage;
-};
-
 export type SiteConfig = {
   name: string;
   shortName: string;

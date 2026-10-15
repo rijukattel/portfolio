@@ -2,41 +2,21 @@ import type { Route } from 'next';
 import { CvList, type CvListItem } from '@/components/cv/CvList';
 import { PrintButton } from '@/components/cv/PrintButton';
 import { PageSection } from '@/components/layout/PageSection';
-import { siteDefaults } from '@/config/site';
-import {
-  awards,
-  courses,
-  cvCopy,
-  education,
-  languages,
-  presentations,
-  skills,
-  training,
-} from '@/content/cv';
-import { experience } from '@/content/experience';
-import { profile } from '@/content/profile';
-import { research } from '@/content/research';
+import { cvLabels } from '@/content/cv';
 import type { ExperienceEntry, ResearchEntry } from '@/content/types';
+import { getContent, getSitePage } from '@/lib/datocms/content';
 import { getSiteConfig } from '@/lib/datocms/site';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
-export function generateMetadata() {
+export async function generateMetadata() {
+  const page = await getSitePage('cv');
   return pageMetadata({
-    title: cvCopy.title,
-    description: cvCopy.description,
+    title: page.title,
+    description: page.description,
     path: '/cv/',
   });
 }
-
-// Research experience as listed in the CV, in the CV's order. The beehive
-// trial comes from the Journal, not the CV, so it isn't listed here.
-const CV_RESEARCH = [
-  'hybrid-rice-ga3',
-  'jujube-consumer-preferences',
-  'unseasonal-rainfall-ratnanagar',
-  'climate-perceptions-gauradaha',
-];
 
 const toResearchItem = (entry: ResearchEntry): CvListItem => ({
   title: entry.title,
@@ -55,74 +35,97 @@ const toExperienceItem = (entry: ExperienceEntry): CvListItem => ({
   points: entry.points,
 });
 
-const researchItems = CV_RESEARCH.map((slug) =>
-  research.find((entry) => entry.slug === slug)
-)
-  .filter((entry): entry is ResearchEntry => Boolean(entry))
-  .map(toResearchItem);
-
-const semesterItems = research
-  .filter((entry) => entry.type === 'semester-project')
-  .map((entry) => ({
-    title: entry.title,
-    href: `/research/${entry.slug}` as Route,
-    detail: entry.location,
-    period: entry.period,
-  }));
-
-/** Web CV (PLAN §13: no PDF, no phone number or street address). */
+/** Web CV built from DatoCMS (PLAN §13: no PDF, no phone or street address). */
 export default async function CvPage() {
-  const site = await getSiteConfig();
+  const [site, page, { profile, research, experience, cv }] = await Promise.all(
+    [getSiteConfig(), getSitePage('cv'), getContent()]
+  );
   const host = new URL(site.url).host;
+  const labels = cvLabels.sections;
+  const { education } = profile;
+
+  // The CV's "Research experience" lists records given a CV position, in
+  // that order; semester projects get their own section.
+  const researchItems = research
+    .filter((entry) => entry.cvPosition != null)
+    .sort((a, b) => (a.cvPosition ?? 0) - (b.cvPosition ?? 0))
+    .map(toResearchItem);
+  const semesterItems = research
+    .filter((entry) => entry.type === 'semester-project' && entry.listedInCv)
+    .map((entry) => ({
+      title: entry.title,
+      href: `/research/${entry.slug}` as Route,
+      detail: entry.location,
+      period: entry.period,
+    }));
+  const presentations = [
+    { title: labels.outreach, items: cv.outreach ?? [] },
+    { title: labels.academic, items: cv.academic_presentation ?? [] },
+  ].filter((group) => group.items.length);
 
   return (
     <div className={styles.cv}>
       <header className={`container ${styles.header}`}>
-        <p className="caption">{cvCopy.label}</p>
+        <p className="caption">{page.label}</p>
         <h1 className={styles.name}>{profile.name}</h1>
         <p className={`lede ${styles.statement}`}>{profile.statement}</p>
         <ul role="list" className={styles.contact}>
           <li>
-            <a href={`mailto:${siteDefaults.email}`}>{siteDefaults.email}</a>
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
           </li>
-          <li>
-            <a href={siteDefaults.linkedinUrl} rel="me">
-              linkedin.com/in/rijukattel222
-            </a>
-          </li>
+          {profile.linkedinUrl ? (
+            <li>
+              <a href={profile.linkedinUrl} rel="me">
+                {profile.linkedinUrl.replace(/^https?:\/\/(www\.)?/, '')}
+              </a>
+            </li>
+          ) : null}
           <li>
             <a href={site.url}>{host}</a>
           </li>
-          <li>{profile.location}</li>
+          {profile.location ? <li>{profile.location}</li> : null}
         </ul>
         <div className={styles.actions}>
-          <PrintButton label={cvCopy.printLabel} />
-          <p className={styles.updated}>{cvCopy.updated}</p>
+          <PrintButton label={cvLabels.printLabel} />
+          {page.note ? <p className={styles.updated}>{page.note}</p> : null}
         </div>
       </header>
 
-      <PageSection id="education" title="Education">
+      <PageSection id="education" title={labels.education}>
         <CvList
           items={[
             {
-              title: education.degree,
-              detail: `${education.institution}, ${education.place} · ${education.details.join(' · ')}`,
+              title: education.degree ?? '',
+              detail: [
+                [education.institution, education.place]
+                  .filter(Boolean)
+                  .join(', '),
+                ...education.details,
+              ]
+                .filter(Boolean)
+                .join(' · '),
               period: education.period,
             },
-            {
-              title: `Thesis: ${education.thesis.title}`,
-              href: `/research/${education.thesis.slug}` as Route,
-              points: education.thesis.techniques,
-            },
+            ...(education.thesis
+              ? [
+                  {
+                    title: `${cvLabels.thesisPrefix}${education.thesis.title}`,
+                    href: `/research/${education.thesis.slug}` as Route,
+                    points: education.thesis.techniques,
+                  },
+                ]
+              : []),
           ]}
         />
       </PageSection>
 
-      <PageSection id="research" title="Research experience">
-        <CvList items={researchItems} />
-      </PageSection>
+      {researchItems.length ? (
+        <PageSection id="research" title={labels.research}>
+          <CvList items={researchItems} />
+        </PageSection>
+      ) : null}
 
-      <PageSection id="work" title="Work experience">
+      <PageSection id="work" title={labels.work}>
         <CvList
           items={experience
             .filter((entry) => entry.category === 'work')
@@ -130,7 +133,7 @@ export default async function CvPage() {
         />
       </PageSection>
 
-      <PageSection id="leadership" title="Management and leadership">
+      <PageSection id="leadership" title={labels.leadership}>
         <CvList
           items={experience
             .filter((entry) => entry.category === 'leadership')
@@ -138,36 +141,46 @@ export default async function CvPage() {
         />
       </PageSection>
 
-      <PageSection id="semester-projects" title="Semester projects">
-        <CvList items={semesterItems} />
+      {semesterItems.length ? (
+        <PageSection id="semester-projects" title={labels.semester}>
+          <CvList items={semesterItems} />
+        </PageSection>
+      ) : null}
+
+      {cv.training?.length ? (
+        <PageSection id="training" title={labels.training}>
+          <CvList items={cv.training} />
+        </PageSection>
+      ) : null}
+
+      {presentations.length ? (
+        <PageSection id="presentations" title={labels.presentations}>
+          {presentations.map((group) => (
+            <div key={group.title} className={styles.group}>
+              <h3 className="caption">{group.title}</h3>
+              <CvList items={group.items} />
+            </div>
+          ))}
+        </PageSection>
+      ) : null}
+
+      {cv.course?.length ? (
+        <PageSection id="courses" title={labels.courses}>
+          <CvList items={cv.course} />
+        </PageSection>
+      ) : null}
+
+      <PageSection id="skills" title={labels.skills}>
+        <CvList items={[...(cv.skill ?? []), ...(cv.language ?? [])]} />
       </PageSection>
 
-      <PageSection id="training" title="Skill development">
-        <CvList items={training} />
-      </PageSection>
+      {cv.award?.length ? (
+        <PageSection id="awards" title={labels.awards}>
+          <CvList items={cv.award} />
+        </PageSection>
+      ) : null}
 
-      <PageSection id="presentations" title="Presentations">
-        {presentations.map((group) => (
-          <div key={group.group} className={styles.group}>
-            <h3 className="caption">{group.group}</h3>
-            <CvList items={group.items} />
-          </div>
-        ))}
-      </PageSection>
-
-      <PageSection id="courses" title="Courses">
-        <CvList items={courses} />
-      </PageSection>
-
-      <PageSection id="skills" title="Skills and languages">
-        <CvList items={[...skills, ...languages]} />
-      </PageSection>
-
-      <PageSection id="awards" title="Awards and honours">
-        <CvList items={awards} />
-      </PageSection>
-
-      <PageSection id="interests" title="Research interests">
+      <PageSection id="interests" title={labels.interests}>
         <p>{profile.researchInterests.join(' · ')}</p>
       </PageSection>
     </div>

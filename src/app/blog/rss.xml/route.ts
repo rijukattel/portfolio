@@ -1,4 +1,5 @@
-import { categoryLabel, journalCopy } from '@/content/journal';
+import { categoryLabel } from '@/content/journal';
+import { getSitePage } from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
 import { getSiteConfig } from '@/lib/datocms/site';
 
@@ -14,7 +15,11 @@ const escapeXml = (value: string) =>
 
 /** RSS 2.0 feed of the Journal, written to out/blog/rss.xml at build time. */
 export async function GET() {
-  const [site, posts] = await Promise.all([getSiteConfig(), getAllPosts()]);
+  const [site, posts, journal] = await Promise.all([
+    getSiteConfig(),
+    getAllPosts(),
+    getSitePage('journal'),
+  ]);
   const feedUrl = `${site.url}/blog/rss.xml`;
 
   const items = posts
@@ -37,9 +42,9 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-<title>${escapeXml(journalCopy.feedTitle)}</title>
+<title>${escapeXml(`${site.name} — ${journal.title}`)}</title>
 <link>${site.url}/blog/</link>
-<description>${escapeXml(journalCopy.description)}</description>
+<description>${escapeXml(journal.description)}</description>
 <language>en</language>
 <atom:link href="${feedUrl}" rel="self" type="application/rss+xml"/>
 ${posts[0] ? `<lastBuildDate>${new Date(posts[0]._updatedAt).toUTCString()}</lastBuildDate>` : ''}

@@ -4,68 +4,63 @@ import { FieldPhotos } from '@/components/fieldwork/FieldPhotos';
 import { PageIntro } from '@/components/layout/PageIntro';
 import { PageSection } from '@/components/layout/PageSection';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { presentations, training } from '@/content/cv';
-import { experience, fieldworkCopy } from '@/content/experience';
-import { homeCopy, homeImages } from '@/content/home';
-import { getUploads } from '@/lib/datocms/uploads';
+import { fieldworkLabels } from '@/content/experience';
+import { getContent, getSitePage } from '@/lib/datocms/content';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
-export function generateMetadata() {
+export async function generateMetadata() {
+  const page = await getSitePage('fieldwork');
   return pageMetadata({
-    title: 'Fieldwork',
-    description:
-      'Field experience: farmer engagement with GeoKrishi, managing a family farm in Ratnanagar, and community work with the Lamahi Youth Network.',
+    title: page.title,
+    description: page.description,
     path: '/fieldwork/',
   });
 }
 
-const outreach =
-  presentations.find((group) => group.group.startsWith('Outreach'))?.items ??
-  [];
-
 export default async function FieldworkPage() {
-  const photoKeys = homeCopy.field.photos.map((photo) => photo.key);
-  const images = await getUploads(photoKeys.map((key) => homeImages[key]));
-  const photos = homeCopy.field.photos.map((photo) => ({
-    image: images[homeImages[photo.key]],
-    alt: photo.alt,
-    caption: photo.caption,
+  const [page, { experience, cv }] = await Promise.all([
+    getSitePage('fieldwork'),
+    getContent(),
+  ]);
+  const photos = page.photos.map((image) => ({
+    image,
+    alt: image.alt ?? '',
+    caption: image.title ?? '',
   }));
+  const labels = fieldworkLabels.sections;
 
   return (
     <>
-      <PageIntro
-        label={fieldworkCopy.label}
-        title={fieldworkCopy.title}
-        lede={fieldworkCopy.lede}
-      />
+      <PageIntro label={page.label} title={page.title} lede={page.lede} />
 
-      <PageSection
-        id="experience"
-        title={fieldworkCopy.sections.experience}
-        wide
-      >
+      <PageSection id="experience" title={labels.experience} wide>
         <div className={styles.split}>
           <ExperienceTimeline entries={experience} />
-          <FieldPhotos photos={photos} className={styles.photos} />
+          {photos.length ? (
+            <FieldPhotos photos={photos} className={styles.photos} />
+          ) : null}
         </div>
       </PageSection>
 
-      <PageSection id="training" title={fieldworkCopy.sections.training}>
-        <CvList items={training} />
-      </PageSection>
+      {cv.training?.length ? (
+        <PageSection id="training" title={labels.training}>
+          <CvList items={cv.training} />
+        </PageSection>
+      ) : null}
 
-      <PageSection id="outreach" title={fieldworkCopy.sections.outreach}>
-        <p>{fieldworkCopy.outreachIntro}</p>
-        <CvList items={outreach} />
-      </PageSection>
+      {cv.outreach?.length ? (
+        <PageSection id="outreach" title={labels.outreach}>
+          {page.intro ? <p>{page.intro}</p> : null}
+          <CvList items={cv.outreach} />
+        </PageSection>
+      ) : null}
 
-      <PageSection id="photographs" title={fieldworkCopy.sections.photographs}>
-        <p>{fieldworkCopy.photographsText}</p>
+      <PageSection id="photographs" title={labels.photographs}>
+        {page.note ? <p>{page.note}</p> : null}
         <div>
           <ActionLink href="/gallery" variant="quiet">
-            {fieldworkCopy.galleryLink}
+            {fieldworkLabels.galleryLink}
           </ActionLink>
         </div>
       </PageSection>

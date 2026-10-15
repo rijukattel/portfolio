@@ -5,12 +5,12 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { motionBootstrap } from '@/components/motion/motionBootstrap';
 import { RevealRuntime } from '@/components/motion/RevealRuntime';
-import { profile } from '@/content/profile';
+import { getProfile } from '@/lib/datocms/content';
 import { getSiteConfig } from '@/lib/datocms/site';
 import { bodyFont, displayFont } from './fonts';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSiteConfig();
+  const [site, profile] = await Promise.all([getSiteConfig(), getProfile()]);
   return {
     metadataBase: new URL(site.url),
     title: { default: site.name, template: `%s · ${site.name}` },

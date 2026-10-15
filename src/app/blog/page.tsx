@@ -1,15 +1,17 @@
 import { PageIntro } from '@/components/layout/PageIntro';
 import { PostCard } from '@/components/journal/PostCard';
 import { ChipFilter } from '@/components/ui/ChipFilter';
-import { categoryLabel, journalCopy } from '@/content/journal';
+import { categoryLabel, journalLabels } from '@/content/journal';
+import { getSitePage } from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
-export function generateMetadata() {
+export async function generateMetadata() {
+  const page = await getSitePage('journal');
   return pageMetadata({
-    title: journalCopy.title,
-    description: journalCopy.description,
+    title: page.title,
+    description: page.description,
     path: '/blog/',
   });
 }
@@ -21,7 +23,10 @@ const slugify = (value: string) =>
     .replace(/^-|-$/g, '');
 
 export default async function JournalPage() {
-  const posts = await getAllPosts();
+  const [posts, page] = await Promise.all([
+    getAllPosts(),
+    getSitePage('journal'),
+  ]);
 
   const counts = new Map<string, number>();
   for (const post of posts) {
@@ -43,11 +48,7 @@ export default async function JournalPage() {
 
   return (
     <>
-      <PageIntro
-        label={journalCopy.label}
-        title={journalCopy.title}
-        lede={journalCopy.lede}
-      />
+      <PageIntro label={page.label} title={page.title} lede={page.lede} />
       <section
         className={`container section ${styles.journal}`}
         data-journal=""
@@ -56,10 +57,10 @@ export default async function JournalPage() {
         {categories.length > 1 ? (
           <>
             <ChipFilter
-              legend={journalCopy.filterLegend}
+              legend={journalLabels.filterLegend}
               name="journal-filter"
               idPrefix="filter"
-              allLabel={journalCopy.allLabel}
+              allLabel={journalLabels.allLabel}
               allCount={posts.length}
               options={categories.map(([key, count]) => ({
                 value: key,

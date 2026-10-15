@@ -1,6 +1,6 @@
 import type { Route } from 'next';
 import Link from 'next/link';
-import type { CvItem } from '@/content/cv';
+import type { CvItem } from '@/content/types';
 import styles from './CvList.module.css';
 
 export type CvListItem = CvItem & { href?: Route };

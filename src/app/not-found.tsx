@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { PageIntro } from '@/components/layout/PageIntro';
 import { ActionLink } from '@/components/ui/ActionLink';
+import { getSitePage } from '@/lib/datocms/content';
 
 export const metadata: Metadata = {
   title: 'Page not found',
@@ -12,13 +13,10 @@ export const metadata: Metadata = {
  * Exported as 404.html, which Netlify serves with a real 404 status for any
  * unknown URL (the old site answered every URL with the homepage and 200).
  */
-export default function NotFound() {
+export default async function NotFound() {
+  const page = await getSitePage('not-found');
   return (
-    <PageIntro
-      label="404"
-      title="This page could not be found."
-      lede="It may have moved when the site was rebuilt. The research, the Journal and the CV are all still here."
-    >
+    <PageIntro label={page.label} title={page.title} lede={page.lede}>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem 2rem' }}>
         <ActionLink href="/">Go to the homepage</ActionLink>
         <ActionLink href="/research" variant="quiet">

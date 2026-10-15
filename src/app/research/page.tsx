@@ -2,75 +2,77 @@ import { PageIntro } from '@/components/layout/PageIntro';
 import { ResearchCard } from '@/components/research/ResearchCard';
 import { ThemeFromQuery } from '@/components/research/ThemeFromQuery';
 import { ChipFilter } from '@/components/ui/ChipFilter';
-import { themes } from '@/content/home';
-import { research, researchCopy, researchTypeLabels } from '@/content/research';
+import { researchLabels, researchTypeLabels } from '@/content/research';
 import type { ResearchType } from '@/content/types';
+import { getContent, getSitePage } from '@/lib/datocms/content';
 import { pageMetadata } from '@/lib/seo';
 import styles from './page.module.css';
 
-export function generateMetadata() {
+export async function generateMetadata() {
+  const page = await getSitePage('research');
   return pageMetadata({
-    title: researchCopy.title,
-    description: researchCopy.description,
+    title: page.title,
+    description: page.description,
     path: '/research/',
   });
 }
 
-const themeTitles = Object.fromEntries(themes.map((t) => [t.id, t.title]));
-const usedThemes = themes.filter((theme) =>
-  research.some((entry) => entry.themes.includes(theme.id))
-);
-const usedTypes = (Object.keys(researchTypeLabels) as ResearchType[]).filter(
-  (type) => research.some((entry) => entry.type === type)
-);
+export default async function ResearchPage() {
+  const [page, { themes, research }] = await Promise.all([
+    getSitePage('research'),
+    getContent(),
+  ]);
 
-// Theme and type filters combine (AND). Combinations with no work are known
-// at build time, so they get a rule that shows the empty-state message.
-const emptyCombinations = usedThemes.flatMap((theme) =>
-  usedTypes
-    .filter(
+  const themeTitles = Object.fromEntries(themes.map((t) => [t.id, t.title]));
+  const usedThemes = themes.filter((theme) =>
+    research.some((entry) => entry.themes.includes(theme.id))
+  );
+  const usedTypes = (Object.keys(researchTypeLabels) as ResearchType[]).filter(
+    (type) => research.some((entry) => entry.type === type)
+  );
+
+  // Theme and type filters combine (AND). Combinations with no work are known
+  // at build time, so they get a rule that shows the empty-state message.
+  const emptyCombinations = usedThemes.flatMap((theme) =>
+    usedTypes
+      .filter(
+        (type) =>
+          !research.some(
+            (entry) => entry.type === type && entry.themes.includes(theme.id)
+          )
+      )
+      .map((type) => [theme.id, type] as const)
+  );
+
+  const filterRules = [
+    ...usedThemes.map(
+      ({ id }) =>
+        `[data-research]:has(#rt-theme-${id}:checked) [data-item]:not([data-themes~="${id}"]){display:none}`
+    ),
+    ...usedTypes.map(
       (type) =>
-        !research.some(
-          (entry) => entry.type === type && entry.themes.includes(theme.id)
-        )
-    )
-    .map((type) => [theme.id, type] as const)
-);
+        `[data-research]:has(#rt-type-${type}:checked) [data-item]:not([data-type="${type}"]){display:none}`
+    ),
+    ...emptyCombinations.map(
+      ([theme, type]) =>
+        `[data-research]:has(#rt-theme-${theme}:checked):has(#rt-type-${type}:checked) [data-empty]{display:block}`
+    ),
+  ].join('');
 
-const filterRules = [
-  ...usedThemes.map(
-    ({ id }) =>
-      `[data-research]:has(#rt-theme-${id}:checked) [data-item]:not([data-themes~="${id}"]){display:none}`
-  ),
-  ...usedTypes.map(
-    (type) =>
-      `[data-research]:has(#rt-type-${type}:checked) [data-item]:not([data-type="${type}"]){display:none}`
-  ),
-  ...emptyCombinations.map(
-    ([theme, type]) =>
-      `[data-research]:has(#rt-theme-${theme}:checked):has(#rt-type-${type}:checked) [data-empty]{display:block}`
-  ),
-].join('');
-
-export default function ResearchPage() {
   return (
     <>
-      <PageIntro
-        label={researchCopy.label}
-        title={researchCopy.title}
-        lede={researchCopy.lede}
-      />
+      <PageIntro label={page.label} title={page.title} lede={page.lede} />
       <section
         className={`container section ${styles.archive}`}
         data-research=""
-        aria-label={researchCopy.listLabel}
+        aria-label={researchLabels.listLabel}
       >
         <div className={styles.filters}>
           <ChipFilter
-            legend={researchCopy.themeLegend}
+            legend={researchLabels.themeLegend}
             name="research-theme"
             idPrefix="rt-theme"
-            allLabel={researchCopy.allThemesLabel}
+            allLabel={researchLabels.allThemesLabel}
             options={usedThemes.map((theme) => ({
               value: theme.id,
               label: theme.title,
@@ -78,10 +80,10 @@ export default function ResearchPage() {
             }))}
           />
           <ChipFilter
-            legend={researchCopy.typeLegend}
+            legend={researchLabels.typeLegend}
             name="research-type"
             idPrefix="rt-type"
-            allLabel={researchCopy.allTypesLabel}
+            allLabel={researchLabels.allTypesLabel}
             options={usedTypes.map((type) => ({
               value: type,
               label: researchTypeLabels[type],
@@ -92,7 +94,7 @@ export default function ResearchPage() {
         </div>
 
         <p className={styles.empty} data-empty="" role="status">
-          {researchCopy.empty}
+          {researchLabels.empty}
         </p>
 
         <ol role="list" className={styles.list}>

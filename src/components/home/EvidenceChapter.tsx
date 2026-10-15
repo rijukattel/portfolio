@@ -4,35 +4,44 @@ import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Reveal } from '@/components/motion/Reveal';
 import { BarChart } from '@/components/research/BarChart';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeCopy } from '@/content/home';
-import { featuredResearch, researchTypeLabels } from '@/content/research';
+import { homeLabels } from '@/content/home';
+import { researchTypeLabels } from '@/content/research';
+import type { ResearchEntry } from '@/content/types';
 import styles from './EvidenceChapter.module.css';
-
-const copy = homeCopy.evidence;
-
-// Figures are numbered in reading order across the chapter.
-const studies = featuredResearch.map((study, i, all) => ({
-  study,
-  figureNumber: study.chart
-    ? all.slice(0, i + 1).filter((entry) => entry.chart).length
-    : null,
-}));
 
 /**
  * Chapter 04: the featured studies with their reported findings, and a chart
  * wherever the source gives numbers (PLAN §7.2 C). Nothing is extrapolated.
  */
-export function EvidenceChapter() {
+type EvidenceChapterProps = {
+  title: string;
+  intro?: string;
+  studies: ResearchEntry[];
+};
+
+export function EvidenceChapter({
+  title,
+  intro,
+  studies,
+}: EvidenceChapterProps) {
+  // Figures are numbered in reading order across the chapter.
+  const numbered = studies.map((study, i, all) => ({
+    study,
+    figureNumber: study.chart
+      ? all.slice(0, i + 1).filter((entry) => entry.chart).length
+      : null,
+  }));
+
   return (
     <section id="evidence" className={`section ${styles.chapter}`}>
       <div className="container">
         <div className={styles.head}>
-          <ChapterHeading number="04" label="The Evidence" title={copy.title} />
-          <p className="lede">{copy.intro}</p>
+          <ChapterHeading number="04" label="The Evidence" title={title} />
+          {intro ? <p className="lede">{intro}</p> : null}
         </div>
 
         <ol role="list" className={styles.studies}>
-          {studies.map(({ study, figureNumber }) => (
+          {numbered.map(({ study, figureNumber }) => (
             <li
               key={study.slug}
               className={
@@ -67,7 +76,7 @@ export function EvidenceChapter() {
                 )}
                 {study.sample ? (
                   <p className={styles.sample}>
-                    <span className="caption">{copy.sampleLabel}</span>{' '}
+                    <span className="caption">{homeLabels.sampleLabel}</span>{' '}
                     {study.sample}
                   </p>
                 ) : null}
@@ -79,7 +88,7 @@ export function EvidenceChapter() {
                   </ul>
                 ) : study.methods ? (
                   <div className={styles.methods}>
-                    <p className="caption">{copy.methodsLabel}</p>
+                    <p className="caption">{homeLabels.methodsLabel}</p>
                     <ul>
                       {study.methods.map((method) => (
                         <li key={method}>{method}</li>
@@ -91,7 +100,7 @@ export function EvidenceChapter() {
                   href={`/research/${study.slug}` as Route}
                   variant="quiet"
                 >
-                  {copy.linkLabel}
+                  {homeLabels.studyLinkLabel}
                 </ActionLink>
               </Reveal>
               {study.chart && figureNumber ? (

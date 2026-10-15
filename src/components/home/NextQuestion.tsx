@@ -2,16 +2,20 @@ import { ChapterHeading } from '@/components/layout/ChapterHeading';
 import { Contours } from '@/components/media/Contours';
 import { Reveal } from '@/components/motion/Reveal';
 import { ActionLink } from '@/components/ui/ActionLink';
-import { homeCopy } from '@/content/home';
+import { homeLabels } from '@/content/home';
 import styles from './NextQuestion.module.css';
-
-const copy = homeCopy.next;
 
 /**
  * Chapter 05, the closing scene (PLAN §7.2 E): the contour lines return and
  * draw in slowly while the directions and the contact action settle in.
  */
-export function NextQuestion() {
+type NextQuestionProps = {
+  title: string;
+  intro?: string;
+  directions: { title: string; text: string }[];
+};
+
+export function NextQuestion({ title, intro, directions }: NextQuestionProps) {
   return (
     <section
       id="next-question"
@@ -27,13 +31,13 @@ export function NextQuestion() {
         <ChapterHeading
           number="05"
           label="The Next Question"
-          title={copy.title}
+          title={title}
           className={styles.heading}
         />
         <div className={styles.body}>
-          <p className="lede">{copy.intro}</p>
+          {intro ? <p className="lede">{intro}</p> : null}
           <ol role="list" className={styles.directions}>
-            {copy.directions.map((direction, i) => (
+            {directions.map((direction, i) => (
               <Reveal
                 as="li"
                 key={direction.title}
@@ -51,11 +55,11 @@ export function NextQuestion() {
             ))}
           </ol>
           <div className={styles.actions}>
-            <ActionLink href={copy.primary.href}>
-              {copy.primary.label}
+            <ActionLink href={homeLabels.contact.href}>
+              {homeLabels.contact.label}
             </ActionLink>
-            <ActionLink href={copy.secondary.href} variant="quiet">
-              {copy.secondary.label}
+            <ActionLink href={homeLabels.secondary.href} variant="quiet">
+              {homeLabels.secondary.label}
             </ActionLink>
           </div>
         </div>

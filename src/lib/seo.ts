@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { journalCopy } from '@/content/journal';
+import { getSitePage } from '@/lib/datocms/content';
 import { getSiteConfig } from '@/lib/datocms/site';
 import type { DatoImage } from '@/lib/datocms/types';
 
@@ -54,7 +54,10 @@ export function socialImage(image: DatoImage, alt?: string): SocialImage {
  * openGraph and alternates per page, so every page gets the full set here.
  */
 export async function pageMetadata(seo: PageSeo): Promise<Metadata> {
-  const site = await getSiteConfig();
+  const [site, journal] = await Promise.all([
+    getSiteConfig(),
+    getSitePage('journal'),
+  ]);
   const image =
     seo.image ??
     (site.defaultOgImage ? { ...site.defaultOgImage, alt: site.name } : null);
@@ -77,7 +80,7 @@ export async function pageMetadata(seo: PageSeo): Promise<Metadata> {
       canonical: seo.path,
       types: {
         'application/rss+xml': [
-          { url: '/blog/rss.xml', title: journalCopy.feedTitle },
+          { url: '/blog/rss.xml', title: `${site.name} — ${journal.title}` },
         ],
       },
     },

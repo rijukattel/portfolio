@@ -9,14 +9,14 @@ import {
 } from '@/components/navigation/ChapterProgress';
 import { BarChart } from '@/components/research/BarChart';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { themes } from '@/content/home';
+import { researchLabels, researchTypeLabels } from '@/content/research';
 import {
+  getContent,
+  getRelatedResearch,
   getResearch,
-  relatedResearch,
-  research,
-  researchCopy,
-  researchTypeLabels,
-} from '@/content/research';
+  getResearchEntry,
+  getSitePage,
+} from '@/lib/datocms/content';
 import { getAllPosts } from '@/lib/datocms/journal';
 import { getSiteConfig } from '@/lib/datocms/site';
 import { pageMetadata } from '@/lib/seo';
@@ -26,7 +26,8 @@ import styles from './page.module.css';
 // One page per research record; anything else is a real 404.
 export const dynamicParams = false;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const research = await getResearch();
   return research.map((entry) => ({ slug: entry.slug }));
 }
 
@@ -34,7 +35,7 @@ export async function generateMetadata({
   params,
 }: PageProps<'/research/[slug]'>): Promise<Metadata> {
   const { slug } = await params;
-  const entry = getResearch(slug);
+  const entry = await getResearchEntry(slug);
   if (!entry) return {};
   return pageMetadata({
     title: entry.title,
@@ -43,26 +44,30 @@ export async function generateMetadata({
   });
 }
 
-type SectionKey = keyof typeof researchCopy.sections;
+type SectionKey = keyof typeof researchLabels.sections;
 
 // "How young…" → "how young…", but leave acronyms such as "PRA" alone.
 const lowerFirst = (text: string) =>
   /^[A-Z](?![A-Z])/.test(text) ? text[0].toLowerCase() + text.slice(1) : text;
 
-const themeTitles = Object.fromEntries(themes.map((t) => [t.id, t.title]));
-
 export default async function ResearchEntryPage({
   params,
 }: PageProps<'/research/[slug]'>) {
   const { slug } = await params;
-  const entry = getResearch(slug);
+  const entry = await getResearchEntry(slug);
   if (!entry) notFound();
 
-  const [site, posts] = await Promise.all([getSiteConfig(), getAllPosts()]);
+  const [site, posts, { themes }, page] = await Promise.all([
+    getSiteConfig(),
+    getAllPosts(),
+    getContent(),
+    getSitePage('research'),
+  ]);
+  const themeTitles = Object.fromEntries(themes.map((t) => [t.id, t.title]));
   const journalPost = entry.journalSlug
     ? (posts.find((post) => post.slug === entry.journalSlug) ?? null)
     : null;
-  const related = relatedResearch(entry);
+  const related = await getRelatedResearch(entry);
 
   // Sections appear only when the source supports them, numbered in order.
   const present: Record<SectionKey, boolean> = {
@@ -83,13 +88,13 @@ export default async function ResearchEntryPage({
   const chapters: Chapter[] = sections.map((key) => ({
     id: key,
     number: number(key),
-    title: researchCopy.sections[key],
+    title: researchLabels.sections[key],
   }));
 
   const heading = (key: SectionKey) => (
     <h2 className={styles.sectionTitle}>
       <span className={styles.sectionNumber}>{number(key)} /</span>{' '}
-      {researchCopy.sections[key]}
+      {researchLabels.sections[key]}
     </h2>
   );
 
@@ -131,7 +136,7 @@ export default async function ResearchEntryPage({
       </ul>,
     ],
     [
-      researchCopy.referencesLabel,
+      researchLabels.referencesLabel,
       entry.references?.length ? entry.references.join('; ') : undefined,
     ],
   ];
@@ -142,7 +147,7 @@ export default async function ResearchEntryPage({
 
       <header className={`container ${styles.header}`}>
         <Link href="/research" className={styles.back}>
-          <span aria-hidden="true">←</span> {researchCopy.backLabel}
+          <span aria-hidden="true">←</span> {researchLabels.backLabel}
         </Link>
         <p className={styles.kicker}>
           {[researchTypeLabels[entry.type], entry.period, entry.location]
@@ -159,8 +164,8 @@ export default async function ResearchEntryPage({
           <h1 className={styles.title}>{entry.title}</h1>
         </ViewTransition>
         <p className={`lede ${styles.summary}`}>{entry.summary}</p>
-        {entry.depth === 'brief' ? (
-          <p className={styles.notice}>{researchCopy.briefNotice}</p>
+        {entry.depth === 'brief' && page.note ? (
+          <p className={styles.notice}>{page.note}</p>
         ) : null}
       </header>
 
@@ -233,7 +238,7 @@ export default async function ResearchEntryPage({
             {entry.limitations?.length ? (
               <>
                 <h3 className={styles.subheading}>
-                  {researchCopy.limitationsLabel}
+                  {researchLabels.limitationsLabel}
                 </h3>
                 <ul className={styles.list}>
                   {entry.limitations.map((item) => (
@@ -264,14 +269,14 @@ export default async function ResearchEntryPage({
         <footer className={`container ${styles.footer}`}>
           {journalPost ? (
             <div className={styles.journal}>
-              <p className="caption">{researchCopy.journalLabel}</p>
+              <p className="caption">{researchLabels.journalLabel}</p>
               <PostCard post={journalPost} headingLevel="h3" />
             </div>
           ) : null}
           {related.length ? (
             <nav aria-labelledby="related-title" className={styles.related}>
               <h2 id="related-title" className="caption">
-                {researchCopy.relatedLabel}
+                {researchLabels.relatedLabel}
               </h2>
               <ul role="list">
                 {related.map((other) => (
@@ -298,7 +303,7 @@ export default async function ResearchEntryPage({
           '@context': 'https://schema.org',
           ...breadcrumbSchema(site, [
             { name: 'Home', path: '/' },
-            { name: researchCopy.title, path: '/research/' },
+            { name: page.title, path: '/research/' },
             { name: entry.title, path: `/research/${entry.slug}/` },
           ]),
         }}

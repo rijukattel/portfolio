@@ -1,16 +1,13 @@
-/** Code-owned copy for the Journal (blog). Posts themselves come from DatoCMS. */
-export const journalCopy = {
-  label: 'Journal',
-  title: 'Journal',
-  lede: 'Notes from the family orchard, the field and the classroom: pests and pollinators, indigenous fruit, and what farming teaches.',
-  description:
-    'Field notes and short essays by Riju Kattel on orchard pests, beekeeping, indigenous fruit and smallholder farming in Nepal.',
+/**
+ * Journal interface labels. Posts come from DatoCMS, and so does the
+ * Journal page's own title and intro (Site page "journal").
+ */
+export const journalLabels = {
   filterLegend: 'Show posts about',
   allLabel: 'All',
   backLabel: 'All Journal posts',
   newerLabel: 'Newer',
   olderLabel: 'Older',
-  feedTitle: 'Riju Kattel — Journal',
   researchLabel: 'Part of the research',
 };
 

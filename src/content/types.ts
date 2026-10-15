@@ -72,6 +72,9 @@ export type ResearchEntry = {
   /** Related Journal post in DatoCMS, if any. */
   journalSlug?: string;
   featured?: boolean;
+  /** Listed in the PDF CV; cvPosition orders the CV research section. */
+  listedInCv?: boolean;
+  cvPosition?: number | null;
 };
 
 export type ExperienceEntry = {
@@ -84,3 +87,43 @@ export type ExperienceEntry = {
   points: string[];
   verification: Verification;
 };
+
+/* Content models from DatoCMS (lib/datocms/content.ts maps them to these). */
+
+export type ThemeLink = { label: string; detail: string; href: string };
+
+export type Theme = {
+  id: ThemeId;
+  title: string;
+  summary: string;
+  /** Marker position on the Chapter 02 contour map, in percent. */
+  position: { x: number; y: number };
+  links: ThemeLink[];
+};
+
+export type CvItem = {
+  title: string;
+  detail?: string;
+  period?: string;
+  points?: string[];
+};
+
+export type CvSection =
+  | 'training'
+  | 'outreach'
+  | 'academic_presentation'
+  | 'course'
+  | 'skill'
+  | 'language'
+  | 'award';
+
+export type PageKey =
+  | 'research'
+  | 'journal'
+  | 'fieldwork'
+  | 'about'
+  | 'cv'
+  | 'contact'
+  | 'gallery'
+  | 'thank-you'
+  | 'not-found';
