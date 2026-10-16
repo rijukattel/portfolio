@@ -125,6 +125,8 @@ const LABEL_KEYS = [
   'formMessage',
   'formSend',
   'formHoneypot',
+  'formSending',
+  'formError',
   // Thank-you and 404
   'thanksPrimary',
   'thanksSecondary',
